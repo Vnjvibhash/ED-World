@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<!-- Start of Header section-!> -->
+<!-- Start of banner section-!> -->
 <section id="slider" class="slider-element bgcolor clearfix slide_pad" style="height: auto;background: url('public/assets/front/img/banner/banner.jpg') no-repeat center center / 100% 100%;">
 				
 	<section id="hero">
@@ -131,7 +131,6 @@
 
 </section>
 <!-- banner-end -->
-<!-- banner-end -->
 <div class="container">
 	<div class="course-teacher">
 		<div class="course-advantage">
@@ -144,8 +143,8 @@
 						<i class="text-gradiant flaticon-graduation-hat"></i>
 					</div>
 					<div class="service-text">
-						<h3 class="bold-font">Find A Teacher.</h3>
-						<p>We work to provide the best music teachers for your enrichment. Get in touch by logging into our website.</p>
+						<h3 class="bold-font">Find A Developper.</h3>
+						<p>We work to provide the best developers for your enrichment. Get in touch by logging into our website.</p>
 					</div>
 				</div>
 				<div class="service-text-icon">
@@ -153,7 +152,7 @@
 						<i class="text-gradiant flaticon-clipboard-with-pencil"></i>
 					</div>
 					<div class="service-text">
-						<h3 class="bold-font">Schedule A Class.</h3>
+						<h3 class="bold-font">Practice your coading skills</h3>
 						<p>The next step is to schedule a class with your selected teacher. Get your routine dedicated to music class.</p>
 					</div>
 				</div>
@@ -162,7 +161,7 @@
 						<i class="text-gradiant flaticon-technology"></i>
 					</div>
 					<div class="service-text">
-						<h3 class="bold-font">Join The Class.</h3>
+						<h3 class="bold-font">Join The Community.</h3>
 						<p>Meet your teacher in those scheduled hours and enjoy learning music.</p>
 					</div>
 				</div>
@@ -171,7 +170,7 @@
 						<i class="text-gradiant flaticon-technology-1"></i>
 					</div>
 					<div class="service-text">
-						<h3 class="bold-font">Get Certified.</h3>
+						<h3 class="bold-font">Generate you QR</h3>
 						<p>After completing the course, we provide a certificate that holds value in the market.</p>
 					</div>
 				</div>
@@ -181,10 +180,10 @@
 		<!-- /course-advantage -->
 		<div class="teacher-details-content mb45 mt-5">
 			<div class="section-title-2  headline text-left pt-5">
-				<h2>Learn to Sing in 4 classes. <span>Beginner's Course/Crash Course</span></h2>
+				<h2>Sing in 4 Membership. <span>Beginner's Can go through with our website.</span></h2>
 				<!--<div class="teacher-deg">
-												Specialities: <span></span> 
-											</div>-->
+					Specialities: <span></span> 
+				</div>-->
 			</div>
 			<div class="row">
 				<div class="col-md-4">
@@ -195,23 +194,20 @@
 				<div class="col-md-8 pt-5">
 					<div class="teacher-details-text">
 						<!--<div class="section-title-2  headline text-left pt-5">
-											<h2>Learn to Sing in <span>4 classes.</span></h2>
-											<div class="teacher-deg">
-												Specialities: <span>Beginner's course/Summer Camp</span> 
-											</div>
-										</div>-->
-
+							<h2>Learn to Sing in <span>4 classes.</span></h2>
+							<div class="teacher-deg">
+								Specialities: <span>Beginner's course/Summer Camp</span> 
+							</div>
+						</div>-->
 						<div class="teacher-address">
 							<div class="address-details">
 								<!--<ul>
-													<li>1: Introduction to Music and Spataswaras</li>
-													<li>2: Proficiency in 8 keertanai/Songs</li>
-													<li>3: Master in five different Slokas</li>
-													<li>4: Recordings and assignments provided</li>
-													<li>5: A Course Completion Certificate</li>													
-												</ul>-->
-
-
+									<li>1: Introduction to Music and Spataswaras</li>
+									<li>2: Proficiency in 8 keertanai/Songs</li>
+									<li>3: Master in five different Slokas</li>
+									<li>4: Recordings and assignments provided</li>
+									<li>5: A Course Completion Certificate</li>													
+								</ul>-->
 								<div class="category-item">
 									<div class="row">
 										<div class="col-md-2">
@@ -277,18 +273,13 @@
 									<!--<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font" style="float: left;background: #08B3EF;"><a href="{{url('/')}}/student-register">Enroll Now <i class="fas fa-caret-right"></i></a></div>-->
 									<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font ml-3" style="float: left;"><a href="{{url('/')}}/contact">Request Details <i class="fas fa-caret-right"></i></a></div>
 								</div>
-
-
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
 		<!-- /course-categori -->
-
 	</div>
 </div>
 
@@ -296,246 +287,19 @@
 	<div class="container">
 		<div class="section-title mb35 headline text-left">
 			<span class="subtitle ml42  text-uppercase">Vocal, Instrumental and Dance</span>
-			<h2>Search Our <span>Courses</span></h2>
-		</div>
-		<div class="teacher-third-slide">
-									<a href="{{url('/')}}/course-detail/4">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/60ad103097127.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Carnatic Vocal</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/12">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/60adeba29d191.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Bharatanatyam</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/29">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/1622136777_Veena.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Veena</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/30">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/1622136985_violin.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Violin</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/31">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/60afe82d9a244.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Guitar</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/32">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/1622141178_keyboard.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Keyboard</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/33">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/1622141364_flute1.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Flute</span>
-					</div>
-				</div>
-			</a>
-												<a href="{{url('/')}}/course-detail/35">
-				<div class="teacher-img-text course-title relative-position text-center">
-					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
-					<div class="teacher-img-social relative-position trending_css">
-												<img src="{{url('/')}}/public/assets/images/course/1622141856_mridangam.jpg" alt="">
-						<!--						<div class="trend-badge-2 text-center text-uppercase">
-							<i class="fas fa-bolt"></i>
-							<span>Trending</span>
-						</div>
-						-->
-											</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Mridangam </span>
-					</div>
-				</div>
-			</a>
-						
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/2.jpg" alt="">
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Vocal</span>
-					</div>
-				</div>
-			</a> -->
-
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/3.jpg" alt="">
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Drums</span>
-					</div>
-				</div>
-			</a> -->
-
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/4.jpg" alt="">
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Guitar</span>
-					</div>
-				</div>
-			</a> -->
-
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/5.jpg" alt="">
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Flute</span>
-					</div>
-				</div>
-			</a> -->
-
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/6.jpg" alt="">
-
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Bharathanatyam</span>
-					</div>
-				</div>
-			</a> -->
-
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/7.jpg" alt="">
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Keyboard</span>
-					</div>
-				</div>
-			</a> -->
-
-			<!-- <a href="#">
-				<div class="teacher-img-text relative-position text-center">
-					<div class="teacher-img-social relative-position">
-						<img src="img/courses/8.jpg" alt="">
-
-					</div>
-					<div class="teacher-name-designation mt15">
-						<span class="teacher-name">Veena</span>
-					</div>
-				</div>
-			</a> -->
-
-		</div>
-		<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font mt-3">
-			<a href="{{url('/')}}/courses">All Courses<i class="fas fa-caret-right"></i></a>
-		</div>
-	</div>
-</section>
-
-<section id="best-course" class="best-course-section py-3">
-	<div class="container">
-		<div class="section-title mb45 headline">
-			<h2>Browse Our<span> Self-Study Courses.</span></h2>
+			<h2>Search Our Website <span>Features</span></h2>
 		</div>
 		<div class="best-course-area mb45">
 			<div class="row">
-								<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="best-course-pic-text relative-position ">
 						<div class="best-course-pic relative-position">
 							<img src="{{url('/')}}/public/assets/images/products/60b0fec28f37c.jpg" style="height: 220px;width:270px;" alt="">
-														<div class="trend-badge-2 text-center text-uppercase">
+							<div class="trend-badge-2 text-center text-uppercase">
 								<i class="fas fa-bolt"></i>
 								<span>Trending</span>
 							</div>
-																					<div class="course-rate ul-li">
+							<div class="course-rate ul-li">
 								<ul>
 									<li>Click</li>
 								</ul>
@@ -553,15 +317,15 @@
 					</div>
 				</div>
 				<!-- /course -->
-								<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="best-course-pic-text relative-position ">
 						<div class="best-course-pic relative-position">
 							<img src="{{url('/')}}/public/assets/images/products/1621254058_Muthuswami-DikshitarArt.jpg" style="height: 220px;width:270px;" alt="">
-														<div class="trend-badge-2 text-center text-uppercase">
+							<div class="trend-badge-2 text-center text-uppercase">
 								<i class="fas fa-bolt"></i>
 								<span>Trending</span>
 							</div>
-																					<div class="course-rate ul-li">
+							<div class="course-rate ul-li">
 								<ul>
 									<li>Click</li>
 								</ul>
@@ -579,15 +343,15 @@
 					</div>
 				</div>
 				<!-- /course -->
-								<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="best-course-pic-text relative-position ">
 						<div class="best-course-pic relative-position">
 							<img src="{{url('/')}}/public/assets/images/products/1621254845_saint-thyagaraja.jpg" style="height: 220px;width:270px;" alt="">
-														<div class="trend-badge-2 text-center text-uppercase">
+							<div class="trend-badge-2 text-center text-uppercase">
 								<i class="fas fa-bolt"></i>
 								<span>Trending</span>
 							</div>
-																					<div class="course-rate ul-li">
+							<div class="course-rate ul-li">
 								<ul>
 									<li>Click</li>
 								</ul>
@@ -605,15 +369,15 @@
 					</div>
 				</div>
 				<!-- /course -->
-								<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="best-course-pic-text relative-position ">
 						<div class="best-course-pic relative-position">
 							<img src="{{url('/')}}/public/assets/images/products/1621255181_Devi Kritis.jpg" style="height: 220px;width:270px;" alt="">
-														<div class="trend-badge-2 text-center text-uppercase">
+							<div class="trend-badge-2 text-center text-uppercase">
 								<i class="fas fa-bolt"></i>
 								<span>Trending</span>
 							</div>
-																					<div class="course-rate ul-li">
+							<div class="course-rate ul-li">
 								<ul>
 									<li>Click</li>
 								</ul>
@@ -631,15 +395,15 @@
 					</div>
 				</div>
 				<!-- /course -->
-								<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="best-course-pic-text relative-position ">
 						<div class="best-course-pic relative-position">
 							<img src="{{url('/')}}/public/assets/images/products/1622178611_bharathiyar.jpg" style="height: 220px;width:270px;" alt="">
-														<div class="trend-badge-2 text-center text-uppercase">
+							<div class="trend-badge-2 text-center text-uppercase">
 								<i class="fas fa-bolt"></i>
 								<span>Trending</span>
 							</div>
-																					<div class="course-rate ul-li">
+							<div class="course-rate ul-li">
 								<ul>
 									<li>Click</li>
 								</ul>
@@ -657,15 +421,15 @@
 					</div>
 				</div>
 				<!-- /course -->
-								<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="best-course-pic-text relative-position ">
 						<div class="best-course-pic relative-position">
 							<img src="{{url('/')}}/public/assets/images/products/60b105aba56c1.jpg" style="height: 220px;width:270px;" alt="">
-														<div class="trend-badge-2 text-center text-uppercase">
+							<div class="trend-badge-2 text-center text-uppercase">
 								<i class="fas fa-bolt"></i>
 								<span>Trending</span>
 							</div>
-																					<div class="course-rate ul-li">
+							<div class="course-rate ul-li">
 								<ul>
 									<li>Click</li>
 								</ul>
@@ -683,91 +447,11 @@
 					</div>
 				</div>
 				<!-- /course -->
-								<!-- <div class="col-md-3">
-					<div class="best-course-pic-text relative-position ">
-						<div class="best-course-pic relative-position">
-							<img src="img/courses/9.jpg" alt="">
-							<div class="course-price text-center gradient-bg">
-								<span>Rs.99.00</span>
-							</div>
-							<div class="course-rate ul-li">
-								<ul>
-									<li>Click</li>
-								</ul>
-							</div>
-							<div class="course-details-btn">
-								<a href="#">WORKSHOP DETAIL <i class="fas fa-arrow-right"></i></a>
-							</div>
-							<div class="blakish-overlay"></div>
-						</div>
-						<div class="best-course-text">
-							<div class="course-title mb20 headline relative-position">
-								<h3><a href="#">Name of the workshop</a></h3>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<!-- /course -->
-
-				<!-- <div class="col-md-3">
-					<div class="best-course-pic-text relative-position ">
-						<div class="best-course-pic relative-position">
-							<img src="img/courses/9.jpg" alt="">
-							<div class="course-price text-center gradient-bg">
-								<span>Rs.99.00</span>
-							</div>
-							<div class="course-rate ul-li">
-								<ul>
-									<li>Click</li>
-								</ul>
-							</div>
-							<div class="course-details-btn">
-								<a href="#">WORKSHOP DETAIL <i class="fas fa-arrow-right"></i></a>
-							</div>
-							<div class="blakish-overlay"></div>
-						</div>
-						<div class="best-course-text">
-							<div class="course-title mb20 headline relative-position">
-								<h3><a href="#">Name of the workshop</a></h3>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<!-- /course -->
-
-				<!-- <div class="col-md-3">
-					<div class="best-course-pic-text relative-position ">
-						<div class="best-course-pic relative-position">
-							<img src="img/courses/9.jpg" alt="">
-							<div class="course-price text-center gradient-bg">
-								<span>Rs.99.00</span>
-							</div>
-							<div class="course-rate ul-li">
-								<ul>
-									<li>Click</li>
-								</ul>
-							</div>
-							<div class="course-details-btn">
-								<a href="#">WORKSHOP DETAIL <i class="fas fa-arrow-right"></i></a>
-							</div>
-							<div class="blakish-overlay"></div>
-						</div>
-						<div class="best-course-text">
-							<div class="course-title mb20 headline relative-position">
-								<h3><a href="#">Name of the workshop</a></h3>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<!-- /course -->
-
 			</div>
 			<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font" style="margin: 0px auto;">
 				<a href="{{url('/')}}/workshop">All Self-Study Courses<i class="fas fa-caret-right"></i></a>
 			</div>
 		</div>
-
-
 	</div>
 </section>
 
