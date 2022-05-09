@@ -63,7 +63,7 @@
                 <div class="container">
                     <div class="navbar-default">
                         <div class="navbar-header float-left">
-                            <a class="navbar-brand text-uppercase" href="{{url('/')}}"><img src="{{url('/')}}/public/assets/front/img/mus1.png" alt="logo" width="240" /></a>
+                            <a class="navbar-brand text-uppercase" href="{{url('/')}}"><img src="{{url('/')}}/public/assets/front/img/logo.png" alt="logo" width="240" /></a>
                         </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <nav class="navbar navbar-default w3_megamenu desktop_view" role="navigation">
