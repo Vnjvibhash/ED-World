@@ -1,155 +1,136 @@
 @extends('layouts.app')
 @section('content')
 <!-- Start of Header section-!> -->
-	   <section id="slider" class="slider-element bgcolor clearfix slide_pad" style="height: auto;background: url('public/assets/front/img/banner_bg.jpg') no-repeat center center / 100% 100%;">
-
-			
+<section id="slider" class="slider-element bgcolor clearfix slide_pad" style="height: auto;background: url('public/assets/front/img/banner/banner.jpg') no-repeat center center / 100% 100%;">
 				
-				<section id="hero">
-    <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+	<section id="hero">
+		<div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+			<div class="carousel-inner" role="listbox">
 
-      <!--<ol class="carousel-indicators" id="hero-carousel-indicators"></ol>-->
-
-      <div class="carousel-inner" role="listbox">
-
-        <!-- Slide 1 -->
-        <div class="carousel-item active">
-          <div class="carousel-container">
-            <div class="container">
-				<div class="row d-flex">
-					<div class="col-lg-6 col-md-6" style="text-align: left;">
-              <h2 class="animate__animated animate__fadeInDown">Want to Learn Music Online?</h2>
-              <h4 class="animate__animated animate__fadeInUp text-white py-3">Full time Online Music Courses conducted by highly Renowned AIR Senior Artists</h4><p class="animate__animated animate__fadeInUp">Vocal | Veena | Violin | Mridangam | Ghatam | Flute | Guitar | Keyboard and More</p>
-              <a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
-					</div>
-					<div class="col-lg-6 col-md-6 center">
-					<img src="{{url('/')}}/public/assets/front/img/Pic 1.png" alt="Video" class="animate__animated animate__fadeInDown">
-								<!--<a href="https://vimeo.com/101373765" data-lightbox="iframe" style="position: relative;">
-									<img src="images/diversity.jpg" alt="Video" class="animate__animated animate__fadeInDown">
-									<span class="i-overlay nobg"><img src="images/video-play.png" alt="Play" class="animate__animated animate__fadeInDown"></span>
-								</a>-->
-		
-							
+				<!-- Slide 1 -->
+				<div class="carousel-item active">
+					<div class="carousel-container">
+						<div class="container">
+							<div class="row d-flex">
+								<div class="col-lg-6 col-md-6" style="text-align: left;">
+									<h2 class="animate__animated animate__fadeInDown">Want to Learn Music Online?</h2>
+									<h4 class="animate__animated animate__fadeInUp text-white py-3">Full time Online Music Courses conducted by highly Renowned AIR Senior Artists</h4><p class="animate__animated animate__fadeInUp">Vocal | Veena | Violin | Mridangam | Ghatam | Flute | Guitar | Keyboard and More</p>
+									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+								</div>
+								<div class="col-lg-6 col-md-6 center">
+									<img src="{{url('/')}}/public/assets/front/img/banner/banner-1.jpg" alt="Video" class="animate__animated animate__fadeInDown">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Slide 2 -->
-        <div class="carousel-item">
-          <div class="carousel-container">
-            <div class="container">
-				<div class="row d-flex">
-					<div class="col-lg-6 col-md-6" style="text-align: left;">
-              <h2 class="animate__animated animate__fadeInDown"><br>
-Learn Dance online at the comfort from your home from highly talented senior artists</h2>
-              <ul class="animate__animated animate__fadeInUp text-white">
-<li>Bharathnatyam</li>
-<li>Kuchipudi</li>
-<li>Kathak</li>
-<li>Mohiniattam</li>
-<li>Bollywood Dance</li>
-<li>Others</li></ul>
-              <a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
-					</div>
-					<div class="col-lg-6 col-md-6 center">
-					
-								<img src="{{url('/')}}/public/assets/front/img/bharatnatyam.png" alt="Video" class="animate__animated animate__fadeInDown">
-		
-							
+				<!-- Slide 2 -->
+				<div class="carousel-item">
+					<div class="carousel-container">
+						<div class="container">
+							<div class="row d-flex">
+								<div class="col-lg-6 col-md-6" style="text-align: left;">
+									<h2 class="animate__animated animate__fadeInDown"><br>
+										Learn Dance online at the comfort from your home from highly talented senior artists</h2>
+									<ul class="animate__animated animate__fadeInUp text-white">
+										<li>Bharathnatyam</li>
+										<li>Kuchipudi</li>
+										<li>Kathak</li>
+										<li>Mohiniattam</li>
+										<li>Bollywood Dance</li>
+										<li>Others</li>
+									</ul>
+									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+								</div>
+								<div class="col-lg-6 col-md-6 center">
+									<img src="{{url('/')}}/public/assets/front/img/banner/banner-2.jpg" alt="Video" class="animate__animated animate__fadeInDown">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Slide 3 -->
-        <div class="carousel-item">
-          <div class="carousel-container">
-            <div class="container">
-				<div class="row d-flex">
-					<div class="col-lg-6 col-md-6" style="text-align: left;">
-              <h2 class="animate__animated animate__fadeInDown">* Rare Vocal Carnatic Self-Study Courses conducted</h2>
-              <h2 class="animate__animated animate__fadeInUp">* Special Coaching provided to take all levels of Carnatic Music Exams - Government/ Private</h2>
-              <a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
-					</div>
-					<div class="col-lg-6 col-md-6 center">
-					
-								<img src="{{url('/')}}/public/assets/front/img/Pic 3.png" alt="Video" class="animate__animated animate__fadeInDown">
-		
-							
+				<!-- Slide 3 -->
+				<div class="carousel-item">
+					<div class="carousel-container">
+						<div class="container">
+							<div class="row d-flex">
+								<div class="col-lg-6 col-md-6" style="text-align: left;">
+									<h2 class="animate__animated animate__fadeInDown">* Rare Vocal Carnatic Self-Study Courses conducted</h2>
+									<h2 class="animate__animated animate__fadeInUp">* Special Coaching provided to take all levels of Carnatic Music Exams - Government/ Private</h2>
+									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+								</div>
+								<div class="col-lg-6 col-md-6 center">
+									<img src="{{url('/')}}/public/assets/front/img/banner/banner-3.jpg" alt="Video" class="animate__animated animate__fadeInDown">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-            </div>
-          </div>
-        </div>
-		       <!-- Slide 4 -->
-        <div class="carousel-item">
-          <div class="carousel-container">
-            <div class="container">
-				<div class="row d-flex">
-					<div class="col-lg-6 col-md-6" style="text-align: left;">
-              <h2 class="animate__animated animate__fadeInDown">Turn Your Dream into Career.<br>
-Get trained by Highly experienced and certified professionals for</h2>
-              <ul class="animate__animated animate__fadeInUp text-white"><li>Sound Engineering</li>
-<li>Audio Engineering</li>
-<li>Sound Production</li>
-<li>Orchestration</li>
-<li>Film scoring</li></ul>
-              <a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
-					</div>
-					<div class="col-lg-6 col-md-6 center">
-					
-								<img src="{{url('/')}}/public/assets/front/img/Pic 2.png" alt="Video" class="animate__animated animate__fadeInDown">
-		
-							
-					</div>
-				</div>
-            </div>
-          </div>
-        </div>
-		       <!-- Slide 5 -->
-        <div class="carousel-item">
-          <div class="carousel-container">
-            <div class="container">
-				<div class="row d-flex">
-					<div class="col-lg-6 col-md-6" style="text-align: left;">
-              <h2 class="animate__animated animate__fadeInDown">"DISABILITY IS NOT INABILITY":</h2>
-              <p class="animate__animated animate__fadeInUp">Breaking down stigma and help children and Adults to sing and play music from specially trained certified Teachers</p>
-              <a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
-					</div>
-					<div class="col-lg-6 col-md-6 center">
-					
-								<img src="{{url('/')}}/public/assets/front/img/pic5.png" alt="Video" class="animate__animated animate__fadeInDown">
-		
-							
+				
+				<!-- Slide 4 -->
+				<div class="carousel-item">
+					<div class="carousel-container">
+						<div class="container">
+							<div class="row d-flex">
+								<div class="col-lg-6 col-md-6" style="text-align: left;">
+									<h2 class="animate__animated animate__fadeInDown">Turn Your Dream into Career.<br>
+										Get trained by Highly experienced and certified professionals for</h2>
+									<ul class="animate__animated animate__fadeInUp text-white"><li>Sound Engineering</li>
+										<li>Audio Engineering</li>
+										<li>Sound Production</li>
+										<li>Orchestration</li>
+										<li>Film scoring</li>
+									</ul>
+									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+								</div>
+								<div class="col-lg-6 col-md-6 center">
+									<img src="{{url('/')}}/public/assets/front/img/banner/banner-4.jpg" alt="Video" class="animate__animated animate__fadeInDown">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-            </div>
-          </div>
-        </div>
+				
+				<!-- Slide 5 -->
+				<div class="carousel-item">
+					<div class="carousel-container">
+						<div class="container">
+							<div class="row d-flex">
+								<div class="col-lg-6 col-md-6" style="text-align: left;">
+									<h2 class="animate__animated animate__fadeInDown">"DISABILITY IS NOT INABILITY":</h2>
+									<p class="animate__animated animate__fadeInUp">Breaking down stigma and help children and Adults to sing and play music from specially trained certified Teachers</p>
+									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+								</div>
+								<div class="col-lg-6 col-md-6 center">
+									<img src="{{url('/')}}/public/assets/front/img/banner/banner-5.jpg" alt="Video" class="animate__animated animate__fadeInDown">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-      </div>
+			</div>
 
-      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon icofont-simple-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
+		<a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon icofont-simple-left" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
 
-      <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon icofont-simple-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+		<a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+			<span class="carousel-control-next-icon icofont-simple-right" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
 
-    </div>
-  </section>
+		</div>
+	</section>
 			
 
 			
 
-		</section>
-	   <!-- banner-end -->
+</section>
+<!-- banner-end -->
 <!-- banner-end -->
 <div class="container">
 	<div class="course-teacher">
@@ -798,233 +779,156 @@ Get trained by Highly experienced and certified professionals for</h2>
 		<div class="container">
 			<div class="section-title mb20 headline text-center ">
 				<span class="subtitle text-uppercase">OUR PROFESSIONAL</span>
-				<h2>Most Privileged <span>Teachers.</span></h2>
+				<h2>Most Privileged <span>Team Members</span></h2>
 			</div>
 
 			<div class="teacher-list">
 				<div class="row justify-content-center">
-															<div class="col-md-3">
+					<div class="col-md-3">
 						<div class="teacher-img-content ">
 							<div class="teacher-cntent">
 								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
 									<div class="teacher-name">
-										<span>Vasanthi Annamalai</span>
+										<span>Vivek Kumar</span>
 									</div>
+									<ul>
+										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/1621268126_vasanthi_photo.jpg" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
+										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										<div class="course-price text-uppercase text-center gradient-bg">
 											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-																																																		<span class="st-name">Carnatic Vocal</span>,
-																																																																																																																																																																																			</div>
+										<span class="st-name">Full-Sack Developper</span>,
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-																				<div class="col-md-3">
+					<div class="col-md-3">
 						<div class="teacher-img-content ">
 							<div class="teacher-cntent">
 								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
 									<div class="teacher-name">
-										<span>Rekha</span>
+										<span>ShivKant Kumar</span>
 									</div>
+									<ul>
+										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/60b3a710da43a.jpeg" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/7"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
+										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										<div class="course-price text-uppercase text-center gradient-bg">
+											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-																																																		<span class="st-name">Carnatic Vocal</span>,
-																																																																																																																																																																																																																																																																																																																																																																							</div>
+										<span class="st-name">Front-End Developper</span>,
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-																				<div class="col-md-3">
+					<div class="col-md-3">
 						<div class="teacher-img-content ">
 							<div class="teacher-cntent">
 								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
 									<div class="teacher-name">
-										<span>Anandhu</span>
+										<span>Sagar Saini</span>
 									</div>
+									<ul>
+										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/60bf391aa9883.png" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/16"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
+										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										<div class="course-price text-uppercase text-center gradient-bg">
+											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-																																																																																																														<span class="st-name">Violin</span>,
-																																																																																																																																																																																																																												<span class="st-name">Guitar</span>,
-																																																																																																																																																																																																																																																<span class="st-name">Flute</span>,
-																																																											</div>
+										<span class="st-name">AI Developper</span>,
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-																				<div class="col-md-3">
+					<div class="col-md-3">
 						<div class="teacher-img-content ">
 							<div class="teacher-cntent">
 								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
 									<div class="teacher-name">
-										<span>Veena Arvind</span>
+										<span>Versha Kumari</span>
 									</div>
+									<ul>
+										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/60b7cf01ba1dd.png" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/33"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
+										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										<div class="course-price text-uppercase text-center gradient-bg">
+											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						<span class="st-name">Veena</span>,
-																																																																																																																																																																																																																																																																																																																															</div>
+										<span class="st-name">Content Writter</span>,
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-																				<div class="col-md-3">
+					<div class="col-md-3">
 						<div class="teacher-img-content ">
 							<div class="teacher-cntent">
 								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
 									<div class="teacher-name">
-										<span>Kaustav</span>
+										<span>Sunidhi Thakur</span>
 									</div>
+									<ul>
+										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/60b3a636d3e0d.png" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/34"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
+										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										<div class="course-price text-uppercase text-center gradient-bg">
+											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-																																																																																																														<span class="st-name">Violin</span>,
-																																																																																																																																																																																																																												<span class="st-name">Guitar</span>,
-																																																																																																																																																																																																																												<span class="st-name">Keyboard</span>,
-																																																																															</div>
+										<span class="st-name">Content Writter</span>,
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-																				<div class="col-md-3">
-						<div class="teacher-img-content ">
-							<div class="teacher-cntent">
-								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
-									<div class="teacher-name">
-										<span>Aaditya</span>
-									</div>
-								</div>
-								<div class="teacher-img-category">
-									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/60b3b56cd17f1.png" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/40"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
-										</div>
-									</div>
-									<div class="teacher-category float-right">
-																																																																																																																																		<span class="st-name">Guitar</span>,
-																																																																																																																																																																																																																												<span class="st-name">Keyboard</span>,
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											</div>
-								</div>
-							</div>
-						</div>
-					</div>
-																				<div class="col-md-3">
-						<div class="teacher-img-content ">
-							<div class="teacher-cntent">
-								<div class="teacher-social-name ul-li-block">
-									<!-- <ul>
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-
-                                    </ul> -->
-									<div class="teacher-name">
-										<span>Sai Prabhakar</span>
-									</div>
-								</div>
-								<div class="teacher-img-category">
-									<div class="teacher-img">
-																				<img src="{{url('/')}}/public/assets/images/profiles/1623145434_Sai.png" alt="" width="200px">
-																				<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/62"><span>Click</span></a>
-											<!-- <div class="video-play-btn text-center gradient-bg">
-                                                <a class="popup-with-zoom-anim" href="{{url('/')}}/public/assets/front/img/video.mp4"><i class="fas fa-play"></i></a>
-                                            </div> -->
-										</div>
-									</div>
-									<div class="teacher-category float-right">
-																																																																																																																																																						<span class="st-name">Keyboard</span>,
-																																																																																																																																																																																																																												<span class="st-name">Flute</span>,
-																																																																																																																																																																																																																																															</div>
-								</div>
-							</div>
-						</div>
-					</div>
-															<!-- /teacher -->
-
+				<!-- /developer -->
 				</div>
 
 				<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font">
-					<a href="{{url('/')}}/teachers">All Teachers <i class="fas fa-caret-right" id="exam"></i></a>
+					<a href="{{url('/')}}/teachers">All Developers <i class="fas fa-caret-right" id="exam"></i></a>
 				</div>
 			</div>
 		</div>

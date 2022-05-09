@@ -39,17 +39,19 @@
                     <div class="row">
                         <div class="col-md-7">
                             <div class="header-top-text">
-                                <span><a href="{{url('/')}}">Home</a> |
-                                    <a href="{{url('/')}}/blogs">BLOG</a> | <a href="{{url('/')}}/faqs">FAQS</a> |
-                                    <a href="{{url('/')}}/about-us">About Us</a></span>
+                                <span>
+                                    <a href="{{url('/')}}">Home</a> |
+                                    <a href="{{url('/')}}/blogs">Developpers</a> |
+                                    <a href="{{url('/')}}/about-us">About Us</a>
+                                </span>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="header-top-bar ul-li">
                                 <ul style="color:#ffff;">
                                     <li><a href="{{url('/')}}/login">Login</a></li> |
-									<li><a href="{{url('/')}}/contact_us">Book <span class="desktop_view">A Free</span> Demo</a></li> |
-                                    <li><a href="{{url('/')}}/teacher-register">Enroll as Teacher</a></li> |
+                                    <li><a href="{{url('/')}}/teacher-register">Sorting Technique</a></li> |
+                                    <li><a href="{{url('/')}}/faqs">FAQS</a></li> |
                                     <li><a href="{{url('/')}}/contact">Contact</a></li>
                                 </ul>
                             </div>
@@ -63,151 +65,34 @@
                         <div class="navbar-header float-left">
                             <a class="navbar-brand text-uppercase" href="{{url('/')}}"><img src="{{url('/')}}/public/assets/front/img/mus1.png" alt="logo" width="240" /></a>
                         </div>
-                        <!-- /.navbar-header -->
-
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <nav class="navbar navbar-default w3_megamenu desktop_view" role="navigation">
                             <div id="defaultmenu" class="navbar-collapse collapse in" aria-expanded="true" style="">
-                                                                <ul class="nav navbar-nav">
+                                <ul class="nav navbar-nav">
                                     <li><a href="{{url('/')}}">Home</a></li>
                                     <!-- Mega Menu -->
-                                    <li class="dropdown w3_megamenu-fw">
-                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Courses<b class="caret"></b></a>
-                                        <ul class="dropdown-menu half">
-                                            <li class="w3_megamenu-content withoutdesc">
-                                                <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <!-- <h3 class="title">Self Study Courses</h3> -->
-                                                        <ul>
-                                                            															                                                            <li><a data-description="1" href="{{url('/')}}/course-detail/4">Carnatic Vocal</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="2" href="{{url('/')}}/course-detail/6">Hindustani Vocal</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="3" href="{{url('/')}}/course-detail/7">Western Vocal</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="4" href="{{url('/')}}/course-detail/8">Sloka Course</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="5" href="{{url('/')}}/course-detail/9">Bhajans</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="6" href="{{url('/')}}/course-detail/10">Devotional Songs</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="7" href="{{url('/')}}/course-detail/12">Bharatanatyam</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="8" href="{{url('/')}}/course-detail/13">Kuchipudi</a></li>
-                                                                                                                                                                                    															                                                            															                                                            <li><a data-description="10" href="{{url('/')}}/course-detail/28">kathak</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="11" href="{{url('/')}}/course-detail/29">Veena</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="12" href="{{url('/')}}/course-detail/30">Violin</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="13" href="{{url('/')}}/course-detail/31">Guitar</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="14" href="{{url('/')}}/course-detail/32">Keyboard</a></li>
-                                                                                                                    </ul>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <ul>
-															                                                                                                                        															                                                            <li><a data-description="15" href="{{url('/')}}/course-detail/33">Flute</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="16" href="{{url('/')}}/course-detail/34">Ghatam</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="17" href="{{url('/')}}/course-detail/35">Mridangam </a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="18" href="{{url('/')}}/course-detail/36">Ukulele</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="19" href="{{url('/')}}/course-detail/37">Drums</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="20" href="{{url('/')}}/course-detail/38">Saxophone</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="21" href="{{url('/')}}/course-detail/39">Tabla</a></li>
-                                                                                                                                                                                    															                                                            															                                                            <li><a data-description="23" href="{{url('/')}}/course-detail/41">Harmonium</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="24" href="{{url('/')}}/course-detail/42">Sitar</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="25" href="{{url('/')}}/course-detail/43">Santoor</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="26" href="{{url('/')}}/course-detail/44">Harmonica</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="27" href="{{url('/')}}/course-detail/45">Special Need Course</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="28" href="{{url('/')}}/course-detail/46">Piano</a></li>
-                                                                                                                    </ul>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <ul>
-															                                                                                                                        															                                                            <li><a data-description="29" href="{{url('/')}}/course-detail/47">Light Music</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="30" href="{{url('/')}}/course-detail/48">Bollywood Vocal</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="31" href="{{url('/')}}/course-detail/49">Voice Gym / Training</a></li>
-                                                                                                                                                                                    															                                                            															                                                            <li><a data-description="33" href="{{url('/')}}/course-detail/51">Soprano</a></li>
-                                                                                                                                                                                    															                                                            															                                                            <li><a data-description="35" href="{{url('/')}}/course-detail/53">Kalimba</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="36" href="{{url('/')}}/course-detail/54">Shehnai</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="37" href="{{url('/')}}/course-detail/55">Semiclassical / Folk</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="38" href="{{url('/')}}/course-detail/56">Beat Boxing</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="39" href="{{url('/')}}/course-detail/57">Mandolin</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="40" href="{{url('/')}}/course-detail/58">Dholak</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="41" href="{{url('/')}}/course-detail/59">Pakhawaj</a></li>
-                                                                                                                                                                                    															                                                            <li><a data-description="42" href="{{url('/')}}/course-detail/60">Bollywood Dance</a></li>
-                                                                                                                    </ul>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <ul>
-															                                                                                                                        															                                                            <li><a data-description="43" href="{{url('/')}}/course-detail/61">Music Production</a></li>
-                                                                                                                                                                                                                                        </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown w3_megamenu-fw">
-                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Self-Study Courses<b class="caret"></b></a>
-                                        <ul class="dropdown-menu half">
-                                            <li class="w3_megamenu-content withoutdesc">
-                                        <div class="row">
-                                          <div class="col-sm-4">
-                                           <!-- <h3 class="title">Self Study Courses</h3> -->
-                                             <ul>
-                                                												                                                 <li><a data-description="1" href="{{url('/')}}/workshop-details/1">Purandaradasar Compositions</a></li>
-                                                                                                                                                												                                                 <li><a data-description="2" href="{{url('/')}}/workshop-details/2">Muthuswami Dikshitar Notuswaram</a></li>
-                                                                                                                                                												                                                 <li><a data-description="3" href="{{url('/')}}/workshop-details/6">Thyagaraajar Compositions</a></li>
-                                                                                                                                                												                                                 <li><a data-description="4" href="{{url('/')}}/workshop-details/7">Devi Kritis</a></li>
-                                                                                                                                                												                                                 <li><a data-description="5" href="{{url('/')}}/workshop-details/8">Swathi Thirunaal compositions</a></li>
-                                                                                                                                                												                                                 <li><a data-description="6" href="{{url('/')}}/workshop-details/12">Soundarya Lahari</a></li>
-                                                                                                                                                												                                                 <li><a data-description="7" href="{{url('/')}}/workshop-details/14">Bharathiyaar songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="8" href="{{url('/')}}/workshop-details/15">Bhajans</a></li>
-                                                                                                                                                												                                                 <li><a data-description="9" href="{{url('/')}}/workshop-details/16">Ayyappa Songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="10" href="{{url('/')}}/workshop-details/17">Marathi Abhangs</a></li>
-                                                                                             </ul>
-                                           </div>  
-                                           <div class="col-sm-4">
-                                              <ul>
-												                                                                                                  												                                                 <li><a data-description="11" href="{{url('/')}}/workshop-details/18">Kannada Carnatic Songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="12" href="{{url('/')}}/workshop-details/19">Annamacharya Songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="13" href="{{url('/')}}/workshop-details/20">Tamil Carnatic Songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="14" href="{{url('/')}}/workshop-details/21">Telugu Carnatic Songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="15" href="{{url('/')}}/workshop-details/22">Ootakaadu Ramayanam</a></li>
-                                                                                                                                                												                                                 <li><a data-description="16" href="{{url('/')}}/workshop-details/23">Raagamaalika</a></li>
-                                                                                                                                                												                                                 <li><a data-description="17" href="{{url('/')}}/workshop-details/24">Festival God Songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="18" href="{{url('/')}}/workshop-details/25">Thirupugazh</a></li>
-                                                                                                                                                												                                                 <li><a data-description="19" href="{{url('/')}}/workshop-details/26">Thirupaavai</a></li>
-                                                                                                                                                												                                                 <li><a data-description="20" href="{{url('/')}}/workshop-details/27">Carnatic Sanskrit Songs</a></li>
-                                                                                             </ul>
-                                           </div>  
-                                           <div class="col-sm-4">
-                                              <ul>
-												                                                                                                  												                                                 <li><a data-description="21" href="{{url('/')}}/workshop-details/28">Seetha Kalyanam</a></li>
-                                                                                                                                                												                                                 <li><a data-description="22" href="{{url('/')}}/workshop-details/29">Bhadrachala Ramadasu songs</a></li>
-                                                                                                                                                												                                                 <li><a data-description="23" href="{{url('/')}}/workshop-details/31">Narayana Theertar Songs</a></li>
-                                                                                                                                                                                            </div>       
-                                        </div>        
-                                            </li>
-                                        </ul>
-                                    </li>
                                     <li class="dropdown">
-                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Competition Courses<b class="caret"></b></a>
+                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Department<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{url('/')}}/voice-gym">Voice Training/gym</a></li>
-                                            <li><a href="{{url('/')}}/bollywood-wastern">Bollywood with Western Mix</a></li>
-                                            <li><a href="{{url('/')}}/bollywood-mix">Bollywood Mix</a></li>
-                                            <li><a href="{{url('/')}}/dance">Dance</a></li>
-											<li><a href="{{url('/')}}/playback-singing">Playback Singing</a></li>
+                                            <li><a href="{{url('/')}}/technical">Technical</a></li>
+                                            <li><a href="{{url('/')}}/non-technical">Non-Technical</a></li>
+                                            <li><a href="{{url('/')}}/other">Other</a></li>
                                         </ul>
                                         <!-- end dropdown-menu -->
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Production Courses<b class="caret"></b></a>
+                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Membership<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{url('/')}}/sound-engineering">Sound Engineering</a></li>
-                                            <li><a href="{{url('/')}}/audio-engineering">Audio Engineering</a></li>
-                                            <li><a href="{{url('/')}}/sound-production">Sound Production</a></li>
-                                            <li><a href="{{url('/')}}/orchestration">Orchestration</a></li>
-                                            <li><a href="{{url('/')}}/film-scoring">Film scoring</a></li>
-											<li><a href="{{url('/')}}/mixing-master">Mixing Mastering</a></li>
-											<li><a href="{{url('/')}}/video-editing">Video Editing</a></li>
-											<li><a href="{{url('/')}}/audio-editing">Audio Editing</a></li>
-											<li><a href="{{url('/')}}/music-composition">Music Compositions</a></li>
+                                            <li><a href="{{url('/')}}/sound-engineering">Bronze</a></li>
+                                            <li><a href="{{url('/')}}/audio-engineering">Silver</a></li>
+                                            <li><a href="{{url('/')}}/sound-production">Gold</a></li>
+                                            <li><a href="{{url('/')}}/orchestration">Premium</a></li>
                                         </ul>
                                         <!-- end dropdown-menu -->
                                     </li>
                                                                         
 								     <li class="dropdown">
-                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Specially abled courses<b class="caret"></b></a>
+                                        <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Resource<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{url('/')}}/carnatic-vocal">Carnatic Vocal</a></li>
                                             <li><a href="{{url('/')}}/slokas">Slokas</a></li>
@@ -217,17 +102,19 @@
                                         </ul>
                                         <!-- end dropdown-menu -->
                                     </li>
+                                    <li><a href="{{url('/')}}/about-us">About Us</a></li>
+                                    <li><a href="{{url('/')}}/contact">Contact Us</a></li>
                                     <!--<li ><a href="contact.html">Contact Us</a></li>-->
-                                                                    </ul>
+                                </ul>
                                 <!-- end nav navbar-nav -->
                             </div>
                             <!-- end #navbar-collapse-1 -->
 							{{-- <iframe
-    allow="microphone;"
-    width="350"
-    height="430"
-    src="https://console.dialogflow.com/api-client/demo/embedded/421c0947-33b9-4b9b-95d7-d666efab5813">
-</iframe> --}}
+								allow="microphone;"
+								width="350"
+								height="430"
+								src="https://console.dialogflow.com/api-client/demo/embedded/421c0947-33b9-4b9b-95d7-d666efab5813">
+							</iframe> --}}
                         </nav>
                         <div class="mobile-menu">
                             <div class="logo">
@@ -236,115 +123,31 @@
                             <nav>
                                 <ul style="overflow-y: scroll; height: 500px">
                                     <li>
-                                        <a href="#">Courses</a>
+                                        <a href="#">Department</a>
                                         <ul>
-                                            											                                            <li><a data-description="1" href="{{url('/')}}/course-detail/4">Carnatic Vocal</a></li>
-											                                            											                                            <li><a data-description="2" href="{{url('/')}}/course-detail/6">Hindustani Vocal</a></li>
-											                                            											                                            <li><a data-description="3" href="{{url('/')}}/course-detail/7">Western Vocal</a></li>
-											                                            											                                            <li><a data-description="4" href="{{url('/')}}/course-detail/8">Sloka Course</a></li>
-											                                            											                                            <li><a data-description="5" href="{{url('/')}}/course-detail/9">Bhajans</a></li>
-											                                            											                                            <li><a data-description="6" href="{{url('/')}}/course-detail/10">Devotional Songs</a></li>
-											                                            											                                            <li><a data-description="7" href="{{url('/')}}/course-detail/12">Bharatanatyam</a></li>
-											                                            											                                            <li><a data-description="8" href="{{url('/')}}/course-detail/13">Kuchipudi</a></li>
-											                                            											                                            											                                            <li><a data-description="10" href="{{url('/')}}/course-detail/28">kathak</a></li>
-											                                            											                                            <li><a data-description="11" href="{{url('/')}}/course-detail/29">Veena</a></li>
-											                                            											                                            <li><a data-description="12" href="{{url('/')}}/course-detail/30">Violin</a></li>
-											                                            											                                            <li><a data-description="13" href="{{url('/')}}/course-detail/31">Guitar</a></li>
-											                                            											                                            <li><a data-description="14" href="{{url('/')}}/course-detail/32">Keyboard</a></li>
-											                                            											                                            <li><a data-description="15" href="{{url('/')}}/course-detail/33">Flute</a></li>
-											                                            											                                            <li><a data-description="16" href="{{url('/')}}/course-detail/34">Ghatam</a></li>
-											                                            											                                            <li><a data-description="17" href="{{url('/')}}/course-detail/35">Mridangam </a></li>
-											                                            											                                            <li><a data-description="18" href="{{url('/')}}/course-detail/36">Ukulele</a></li>
-											                                            											                                            <li><a data-description="19" href="{{url('/')}}/course-detail/37">Drums</a></li>
-											                                            											                                            <li><a data-description="20" href="{{url('/')}}/course-detail/38">Saxophone</a></li>
-											                                            											                                            <li><a data-description="21" href="{{url('/')}}/course-detail/39">Tabla</a></li>
-											                                            											                                            											                                            <li><a data-description="23" href="{{url('/')}}/course-detail/41">Harmonium</a></li>
-											                                            											                                            <li><a data-description="24" href="{{url('/')}}/course-detail/42">Sitar</a></li>
-											                                            											                                            <li><a data-description="25" href="{{url('/')}}/course-detail/43">Santoor</a></li>
-											                                            											                                            <li><a data-description="26" href="{{url('/')}}/course-detail/44">Harmonica</a></li>
-											                                            											                                            <li><a data-description="27" href="{{url('/')}}/course-detail/45">Special Need Course</a></li>
-											                                            											                                            <li><a data-description="28" href="{{url('/')}}/course-detail/46">Piano</a></li>
-											                                            											                                            <li><a data-description="29" href="{{url('/')}}/course-detail/47">Light Music</a></li>
-											                                            											                                            <li><a data-description="30" href="{{url('/')}}/course-detail/48">Bollywood Vocal</a></li>
-											                                            											                                            <li><a data-description="31" href="{{url('/')}}/course-detail/49">Voice Gym / Training</a></li>
-											                                            											                                            											                                            <li><a data-description="33" href="{{url('/')}}/course-detail/51">Soprano</a></li>
-											                                            											                                            											                                            <li><a data-description="35" href="{{url('/')}}/course-detail/53">Kalimba</a></li>
-											                                            											                                            <li><a data-description="36" href="{{url('/')}}/course-detail/54">Shehnai</a></li>
-											                                            											                                            <li><a data-description="37" href="{{url('/')}}/course-detail/55">Semiclassical / Folk</a></li>
-											                                            											                                            <li><a data-description="38" href="{{url('/')}}/course-detail/56">Beat Boxing</a></li>
-											                                            											                                            <li><a data-description="39" href="{{url('/')}}/course-detail/57">Mandolin</a></li>
-											                                            											                                            <li><a data-description="40" href="{{url('/')}}/course-detail/58">Dholak</a></li>
-											                                            											                                            <li><a data-description="41" href="{{url('/')}}/course-detail/59">Pakhawaj</a></li>
-											                                            											                                            <li><a data-description="42" href="{{url('/')}}/course-detail/60">Bollywood Dance</a></li>
-											                                            											                                            <li><a data-description="43" href="{{url('/')}}/course-detail/61">Music Production</a></li>
-											                                            
-                                        </ul>
-
-                                       
+                                            <li><a href="{{url('/')}}/voice-gym">Technical</a></li>
+                                            <li><a href="{{url('/')}}/bollywood-wastern">Non-Technical</a></li>
+                                            <li><a href="{{url('/')}}/bollywood-mix">Other</a></li>										                                            
+                                        </ul>                                       
                                     </li>
                                     <li>
-                                        <a href="#">Self-Study Courses</a>
+                                        <a href="#">Membership</a>
                                         <ul>
-                                            											                                            <li><a data-description="1" href="{{url('/')}}/workshop-details/1">Purandaradasar Compositions</a></li>
-											                                            											                                            <li><a data-description="2" href="{{url('/')}}/workshop-details/2">Muthuswami Dikshitar Notuswaram</a></li>
-											                                            											                                            <li><a data-description="3" href="{{url('/')}}/workshop-details/6">Thyagaraajar Compositions</a></li>
-											                                            											                                            <li><a data-description="4" href="{{url('/')}}/workshop-details/7">Devi Kritis</a></li>
-											                                            											                                            <li><a data-description="5" href="{{url('/')}}/workshop-details/8">Swathi Thirunaal compositions</a></li>
-											                                            											                                            <li><a data-description="6" href="{{url('/')}}/workshop-details/12">Soundarya Lahari</a></li>
-											                                            											                                            <li><a data-description="7" href="{{url('/')}}/workshop-details/14">Bharathiyaar songs</a></li>
-											                                            											                                            <li><a data-description="8" href="{{url('/')}}/workshop-details/15">Bhajans</a></li>
-											                                            											                                            <li><a data-description="9" href="{{url('/')}}/workshop-details/16">Ayyappa Songs</a></li>
-											                                            											                                            <li><a data-description="10" href="{{url('/')}}/workshop-details/17">Marathi Abhangs</a></li>
-											                                            											                                            <li><a data-description="11" href="{{url('/')}}/workshop-details/18">Kannada Carnatic Songs</a></li>
-											                                            											                                            <li><a data-description="12" href="{{url('/')}}/workshop-details/19">Annamacharya Songs</a></li>
-											                                            											                                            <li><a data-description="13" href="{{url('/')}}/workshop-details/20">Tamil Carnatic Songs</a></li>
-											                                            											                                            <li><a data-description="14" href="{{url('/')}}/workshop-details/21">Telugu Carnatic Songs</a></li>
-											                                            											                                            <li><a data-description="15" href="{{url('/')}}/workshop-details/22">Ootakaadu Ramayanam</a></li>
-											                                            											                                            <li><a data-description="16" href="{{url('/')}}/workshop-details/23">Raagamaalika</a></li>
-											                                            											                                            <li><a data-description="17" href="{{url('/')}}/workshop-details/24">Festival God Songs</a></li>
-											                                            											                                            <li><a data-description="18" href="{{url('/')}}/workshop-details/25">Thirupugazh</a></li>
-											                                            											                                            <li><a data-description="19" href="{{url('/')}}/workshop-details/26">Thirupaavai</a></li>
-											                                            											                                            <li><a data-description="20" href="{{url('/')}}/workshop-details/27">Carnatic Sanskrit Songs</a></li>
-											                                            											                                            <li><a data-description="21" href="{{url('/')}}/workshop-details/28">Seetha Kalyanam</a></li>
-											                                            											                                            <li><a data-description="22" href="{{url('/')}}/workshop-details/29">Bhadrachala Ramadasu songs</a></li>
-											                                            											                                            <li><a data-description="23" href="{{url('/')}}/workshop-details/31">Narayana Theertar Songs</a></li>
-											                                            
+                                            <li><a href="{{url('/')}}/sound-engineering">Bronze</a></li>
+                                            <li><a href="{{url('/')}}/audio-engineering">Silver</a></li>
+                                            <li><a href="{{url('/')}}/sound-production">Gold</a></li>
+                                            <li><a href="{{url('/')}}/orchestration">Premium</a></li>
                                         </ul>
                                     </li>
-                                     <li><a href="#">Competion Courses</a>
-                                            <ul> 
-                                                                                          <li><a href="{{url('/')}}/voice-gym">Voice Training/gym</a></li>
+                                     <li><a href="#">Resource</a>
+                                        <ul> 
+                                            <li><a href="{{url('/')}}/voice-gym">Voice Training/gym</a></li>
                                             <li><a href="{{url('/')}}/bollywood-wastern">Bollywood with Western Mix</a></li>
                                             <li><a href="{{url('/')}}/bollywood-mix">Bollywood Mix</a></li>
                                             <li><a href="{{url('/')}}/dance">Dance</a></li>
                                             <li><a href="{{url('/')}}/playback-singing">Playback Singing</a></li>
-                                            </ul>
-                                        </li>
-                                   
-                                    <li>
-                                        <a href="#">Production Courses</a>
-                                        <ul>
-                                            <li><a href="{{url('/')}}/sound-engineering">Sound Engineering</a></li>
-                                            <li><a href="{{url('/')}}/audio-engineering">Audio Engineering</a></li>
-                                            <li><a href="{{url('/')}}/sound-production">Sound Production</a></li>
-                                            <li><a href="{{url('/')}}/orchestration">Orchestration</a></li>
-                                            <li><a href="{{url('/')}}/film-scoring">Film scoring</a></li>
-                                            <li><a href="{{url('/')}}/mixing-master">Mixing Mastering</a></li>
-                                            <li><a href="{{url('/')}}/video-editing">Video Editing</a></li>
-                                            <li><a href="{{url('/')}}/audio-editing">Audio Editing</a></li>
-                                            <li><a href="{{url('/')}}/music-composition">Music Compositions</a></li>
                                         </ul>
-                                   
-									<li>
-                                           <a href="#">Specially Abled Courses</a>                                                                      <ul>  
-                                             <li><a href="{{url('/')}}/carnatic-vocal">Carnatic Vocal</a></li>
-                                            <li><a href="{{url('/')}}/slokas">Slokas</a></li>
-                                            <li><a href="{{url('/')}}/bhajans">Bhajans</a></li>
-                                            <li><a href="{{url('/')}}/keyboard">Keyboard </a></li>
-                                            
-                                        </ul>
-                                        <!-- end dropdown-menu -->
-                                    </li>
+                                    </li>                                   
                                     <li><a href="{{url('/')}}/about-us">About Us</a></li>
                                     <li><a href="{{url('/')}}/contact">Contact Us</a></li>
                                 </ul>
