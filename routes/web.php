@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\Auth;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [ HomeController::class, 'index']);
-// Route::get('/logout',[ LoginController::class, 'index'])->name('logout');
+Route::get('/', [ HomeController::class, 'index'])->name('home');
+Route::get('/practice', [ HomeController::class, 'practice'])->name('practice');
 Route::get('/login',[ LoginController::class, 'index'])->name('login');
 Route::post('/auth-login',[ LoginController::class, 'login'])->name('auth.login');
 Route::get('/register',[ RegisterController::class, 'index'])->name('register');

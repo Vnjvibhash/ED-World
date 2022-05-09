@@ -2,10 +2,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>::ER-Learn::</title>
+    <title>::ER-World::</title>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="icon" type="image/png" href="{{url('/')}}/public/assets/front/img/faviconnig.png">
+	<link rel="icon" type="image/png" href="{{url('/')}}/public/assets/front/img/faviconnig.jpg">
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="{{url('/')}}/public/assets/front/css/owl.carousel.css">
     <link rel="stylesheet" href="{{url('/')}}/public/assets/front/css/fontawesome-all.css">
@@ -22,6 +22,7 @@
 
     <link href="{{url('/')}}/public/assets/front/css/icofont/icofont.min.css" rel="stylesheet">
     <link href="{{url('/')}}/public/assets/front/css/animate/animate.css/animate.min.css" rel="stylesheet">
+    
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
@@ -74,9 +75,10 @@
                                     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Department<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{url('/')}}/technical">Technical</a></li>
-                                            <li><a href="{{url('/')}}/non-technical">Non-Technical</a></li>
-                                            <li><a href="{{url('/')}}/other">Other</a></li>
+                                            <li><a href="{{url('/')}}/technical">Computer Science</a></li>
+                                            <li><a href="{{url('/')}}/non-technical">Public Health</a></li>
+                                            <li><a href="{{url('/')}}/other">Management and Commerce</a></li>
+                                            <li><a href="{{url('/')}}/other">Arts and Designs</a></li>
                                         </ul>
                                         <!-- end dropdown-menu -->
                                     </li>
@@ -94,7 +96,7 @@
 								     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Resource<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{url('/')}}/carnatic-vocal">Carnatic Vocal</a></li>
+                                            <li><a href="{{url('/')}}/practice">Coding Practice</a></li>
                                             <li><a href="{{url('/')}}/slokas">Slokas</a></li>
                                             <li><a href="{{url('/')}}/bhajans">Bhajans</a></li>
                                             <li><a href="{{url('/')}}/keyboard">Keyboard </a></li>
@@ -155,17 +157,20 @@
     </header>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="login-box">
+    <div class="content-wrapper">
       @yield('content')
     </div>
     <!-- /.content-wrapper -->
-    <iframe
+    @if(Route::currentRouteName()!="practice")         
+       <iframe
         allow="microphone;"
         width="350"
         height="430"
         src="https://console.dialogflow.com/api-client/demo/embedded/421c0947-33b9-4b9b-95d7-d666efab5813">
-    </iframe>
-
+    </iframe>            
+    @else
+        
+    @endif
     <!-- Start Of scound contact section ============================================= -->
     <section id="contact_secound" class="contact_secound_section backgroud-style pt-5">
         <div class="container">
@@ -210,7 +215,7 @@
                                     </div>
                                     <div class="address-details ul-li-block">
                                         <ul>
-                                            <li><span>Primary: </span>support@musicintuit.com</li>
+                                            <li><span>Primary: </span>support@edlearn.com</li>
                                             <!--<li><span>Second: </span>mail@iit.info</li>-->
                                         </ul>
                                     </div>
@@ -308,6 +313,8 @@
 
     <!-- <script src="https://cdn.jsdelivr.net/gh/rehyan21/Mega-Menu/build/js/megamenu.min.js" type="text/javascript"></script> -->
     <script src="{{url('/')}}/public/assets/front/js/scripts.js"></script>
+
+    <script src="https://www.jdoodle.com/assets/jdoodle-pym.min.js" type="text/javascript"></script>
 
     <script>
         $(document).ready(function() {

@@ -286,6 +286,68 @@
 <section id="teacher-2" class="secound-teacher-section py-5">
 	<div class="container">
 		<div class="section-title mb35 headline text-left">
+			<span class="subtitle ml42  text-uppercase">Technical and Non-Technical</span>
+			<h2>Search Our <span>Departments</span></h2>
+		</div>
+		<div class="teacher-third-slide">
+			<a href="{{url('/')}}/public/assets/course-detail/4">
+				<div class="teacher-img-text course-title relative-position text-center">
+					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
+					<div class="teacher-img-social relative-position trending_css">
+						<img src="https://tse2.mm.bing.net/th?id=OIP.aHA8NNqI-K_SAdei5HWIEAHaHd&amp;pid=Api&amp;P=0&amp;w=188&amp;h=190" alt="">
+						{{-- <img src="{{url('/')}}/public/assets/images/logo/logo.png" alt=""> --}}
+					</div>
+					<div class="teacher-name-designation mt15">
+						<span class="teacher-name">Computer Science</span>
+					</div>
+				</div>
+			</a>
+			<a href="{{url('/')}}/public/assets/course-detail/12">
+				<div class="teacher-img-text course-title relative-position text-center">
+					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
+					<div class="teacher-img-social relative-position trending_css">
+						<img src="https://tse2.mm.bing.net/th?id=OIP.Y9E5SX75SwcRSR7MADj2UQHaE7&amp;pid=Api&amp;P=0&amp;w=241&amp;h=161" alt="">
+						{{-- <img src="{{url('/')}}/public/assets/images/logo/logo.png" alt=""> --}}
+					</div>
+					<div class="teacher-name-designation mt15">
+						<span class="teacher-name">Management and Commerce</span>
+					</div>
+				</div>
+			</a>
+			<a href="{{url('/')}}/public/assets/course-detail/29">
+				<div class="teacher-img-text course-title relative-position text-center">
+					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
+					<div class="teacher-img-social relative-position trending_css">
+						<img src="https://tse1.mm.bing.net/th?id=OIP.bjda2IPGn7tvWEXpnKJWIwHaE8&amp;pid=Api&amp;P=0&amp;w=270&amp;h=180" alt="">
+						{{-- <img src="{{url('/')}}/public/assets/images/logo/logo.png" alt=""> --}}
+					</div>
+					<div class="teacher-name-designation mt15">
+						<span class="teacher-name">Public Health</span>
+					</div>
+				</div>
+			</a>
+			<a href="{{url('/')}}/public/assets/course-detail/29">
+				<div class="teacher-img-text course-title relative-position text-center">
+					<h3><span class="trend-badge text-uppercase bold-font"><i class="fas fa-bolt"></i> TRENDING</span></h3>
+					<div class="teacher-img-social relative-position trending_css">
+						<img src="https://tse2.mm.bing.net/th?id=OIP.biDbIlcT30OM0JgO7Ue7HwHaJ9&amp;pid=Api&amp;P=0&amp;w=114&amp;h=154" alt="">
+						{{-- <img src="{{url('/')}}/public/assets/images/logo/logo.png" alt=""> --}}
+					</div>
+					<div class="teacher-name-designation mt15">
+						<span class="teacher-name">Arts and Designs</span>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font mt-3">
+			<a href="{{url('/')}}/public/assets/courses">All Departments<i class="fas fa-caret-right"></i></a>
+		</div>
+	</div>
+</section>
+
+<section id="best-course" class="best-course-section py-3">
+	<div class="container">
+		<div class="section-title mb35 headline text-left">
 			<span class="subtitle ml42  text-uppercase">Vocal, Instrumental and Dance</span>
 			<h2>Search Our Website <span>Features</span></h2>
 		</div>
@@ -628,7 +690,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="app-mock-up">
-						<img src="{{url('/')}}/public/assets/front/img/ab-2.png" alt="">
+						<img src="{{url('/')}}/public/assets/front/img/clip-graphic-designer.png" alt="">
 					</div>
 				</div>
 
@@ -685,7 +747,7 @@
 				</div>
 			 				<div class="student-qoute">
 					
-					<p><p>&quot;<strong>Music Intuit has been till now wonderful for our daughter, she is having online classes through them for vocal, keyboard and dance! We as parents loved the personal care from Vasanthi mam for our daughter in ensuring she really enjoys and learns from the classes. We wish Music Intuit academy and Vasanthi mam reach further heights!&quot;</strong></p></p>
+					<p><p>&quot;<strong>ED-World has been till now wonderful for our daughter, she is having online classes through them for vocal, keyboard and dance! We as parents loved the personal care from Vasanthi mam for our daughter in ensuring she really enjoys and learns from the classes. We wish Music Intuit academy and Vasanthi mam reach further heights!&quot;</strong></p></p>
 					<div class="student-name-designation">
 						<span class="st-name bold-font"></span>
 					</div>

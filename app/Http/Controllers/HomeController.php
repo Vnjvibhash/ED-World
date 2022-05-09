@@ -12,9 +12,9 @@ class HomeController extends Controller
     }
 
     
-    public function login(Request $request)
+    public function practice()
     {
-        //
+        return view('pages.coding');
     }
 
     
