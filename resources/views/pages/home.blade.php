@@ -471,7 +471,7 @@
 					<div class="col-md-3">
 						<div class="teacher-img-content ">
 							<div class="teacher-cntent">
-								<div class="teacher-social-name ul-li-block">
+								<div class="teacher-social-name text-center ul-li-block">
 									<div class="teacher-name">
 										<span>Vivek Kumar</span>
 									</div>

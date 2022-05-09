@@ -109,12 +109,7 @@
                                 <!-- end nav navbar-nav -->
                             </div>
                             <!-- end #navbar-collapse-1 -->
-							{{-- <iframe
-								allow="microphone;"
-								width="350"
-								height="430"
-								src="https://console.dialogflow.com/api-client/demo/embedded/421c0947-33b9-4b9b-95d7-d666efab5813">
-							</iframe> --}}
+							
                         </nav>
                         <div class="mobile-menu">
                             <div class="logo">
@@ -164,6 +159,12 @@
       @yield('content')
     </div>
     <!-- /.content-wrapper -->
+    <iframe
+        allow="microphone;"
+        width="350"
+        height="430"
+        src="https://console.dialogflow.com/api-client/demo/embedded/421c0947-33b9-4b9b-95d7-d666efab5813">
+    </iframe>
 
     <!-- Start Of scound contact section ============================================= -->
     <section id="contact_secound" class="contact_secound_section backgroud-style pt-5">
@@ -185,7 +186,7 @@
                                     </div>
                                     <div class="address-details ul-li-block">
                                         <ul>
-                                            <li><span>Address: </span>R T Nagar, Bengaluru</li>
+                                            <li><span>Address: </span>Garudachar Palya, Bengaluru</li>
                                             <li>India</li>
                                         </ul>
                                     </div>
@@ -222,8 +223,8 @@
                             <h2 class="widget-title">Quick Links</h2>
                             <ul>
                                 <li><a href="{{url('/')}}/about-us"><i class="fas fa-caret-right"></i>About Us</a></li>
-                                <li><a href="{{url('/')}}/teacher-register"><i class="fas fa-caret-right"></i>Become a Tutor</a></li>
-                                <li><a href="{{url('/')}}/workshop"><i class="fas fa-caret-right"></i>Workshop</a></li>
+                                <li><a href="{{url('/')}}/quiz"><i class="fas fa-caret-right"></i>Play with Quiz</a></li>
+                                <li><a href="{{url('/')}}/practice"><i class="fas fa-caret-right"></i>Practice</a></li>
                                 <li><a href="{{url('/')}}/contact"><i class="fas fa-caret-right"></i>Contact Us</a></li>
                             </ul>
                         </div>
@@ -231,7 +232,7 @@
                     <div class="col-md-5">
                         <div class="contact_secound_form" style="background: #000; padding: 30px;">
                             <div class="section-title-2 mb-3 headline text-left">
-                                <h2>Musicintuit for Teachers</h2>
+                                <h2>ED-World for Students</h2>
                             </div>
                             <p> Now, you can have a great start of your musical career by teaching students in this platform. It will enrich you with experience and develop your skills.</p>
 
@@ -240,7 +241,7 @@
 
                             <div class="nws-button text-center  gradient-bg text-capitalize">
                                 <!-- <button type="submit" value="Submit">Become A Teacher</button> -->
-                                <a class="btn" href="{{url('/')}}/teacher-register">Become A Teacher</a>
+                                <a class="btn" href="{{url('/')}}/register">Become A User</a>
                             </div>
                             <!-- </form> -->
                         </div>
@@ -255,20 +256,18 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="copy-right-text">
-                                <p>© 2021 - Design by <a href="https://www.webdigitalmantra.in/">Web Digital Mantra IT Services Pvt Ltd</a>. All rights reserved</p>
+                                <p>© 2022 - Design by <a href="https://www.linkedin.com/in/vivekajee/">Vivek Kumar and Team</a>. All rights reserved</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="footer-social  text-center ul-li">
                                 <ul>
-									<li><a href="https://www.facebook.com/vivekajee" class ="text fab fa-facebook f"></a></li>
-                                    <li><center><a href="https://www.instagram.com/Vivekajee/" class ="text fab fa-instagram "></a></center></li>
-                                    <li><a href="https://in.pinterest.com/musicintuit/_saved/
-" class ="text fab fa-pinterest"></a></li>
-									<li><a href="https://www.youtube.com/channel/UC9IXY6Kbdv6fEC7zaWEVXlQ" class ="text fab fa-youtube"></a></li>
+									<li><a href="https://www.facebook.com/vivekajee" class ="text fab fa-facebook-f"></a></li>
+                                    <li><a href="https://www.instagram.com/Vivekajee/" class ="text fab fa-instagram"></a></li>
+                                    <li><a href="https://in.pinterest.com/vivekkumarcipl/_saved/" class ="text fab fa-pinterest"></a></li>
+									<li><a href="https://www.youtube.com/channel/UCe-PjlLkxdQYBWUioMuZkdg" class ="text fab fa-youtube"></a></li>
 									<li><a href="https://twitter.com/Vnjvibhash" class ="text fab fa-twitter"></a></li>
-									 <li><a href="https://www.linkedin.com/in/vivekajee/
-										 " class ="text fab fa-linkedin"></a></li>
+									 <li><a href="https://www.linkedin.com/in/vivekajee/" class ="text fab fa-linkedin"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -329,8 +328,8 @@
 <script type="text/javascript">
     (function () {
         var options = {
-            whatsapp: "+918951091449", // WhatsApp number
-            call: "+918951091449", // Call phone number
+            whatsapp: "+917762974716", // WhatsApp number
+            call: "+917762974716", // Call phone number
             call_to_action: "Message us", // Call to action
             button_color: "#129BF4", // Color of button
             position: "left", // Position may be 'right' or 'left'
