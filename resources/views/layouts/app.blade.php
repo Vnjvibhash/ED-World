@@ -75,9 +75,9 @@
                                     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Department<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{url('/')}}/technical">Computer Science</a></li>
+                                            <li><a href="{{url('/')}}/engineering">Engineering</a></li>
                                             <li><a href="{{url('/')}}/non-technical">Public Health</a></li>
-                                            <li><a href="{{url('/')}}/other">Management and Commerce</a></li>
+                                            <li><a href="{{url('/')}}/management">Management and Commerce</a></li>
                                             <li><a href="{{url('/')}}/other">Arts and Designs</a></li>
                                         </ul>
                                         <!-- end dropdown-menu -->
@@ -161,7 +161,7 @@
       @yield('content')
     </div>
     <!-- /.content-wrapper -->
-    @if(Route::currentRouteName()!="practice" && Route::currentRouteName()!="login")         
+    <!-- @if(Route::currentRouteName()!="practice" && Route::currentRouteName()!="login")         
        <iframe
         allow="microphone;"
         width="350"
@@ -170,7 +170,7 @@
     </iframe>            
     @else
         
-    @endif
+    @endif -->
     <!-- Start Of scound contact section ============================================= -->
     <section id="contact_secound" class="contact_secound_section backgroud-style pt-5">
         <div class="container">
@@ -261,7 +261,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="copy-right-text">
-                                <p>© 2022 - Design by <a href="https://www.linkedin.com/in/vivekajee/">ED-World and Team</a>. All rights reserved</p>
+                                <p>© 2022 - Design by <a href="https://www.linkedin.com/in/vivekajee/">ED-World </a>. All rights reserved</p>
                             </div>
                         </div>
                         <div class="col-md-3">

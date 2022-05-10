@@ -24,7 +24,7 @@
 
       <form method="post" action="{{route('auth.register')}}">
       @csrf
-        <div class="input-group mb-3">
+        <div class="input-group mb-6">
           <input id="name" type="text" class="form-control" name="name"  autofocus placeholder="Enter name" value="{{ old('name') }}">
           <div class="input-group-append">
             <div class="input-group-text">
@@ -33,7 +33,7 @@
           </div>
         </div>
         <span class="text-danger">@error('name'){{ $message }}@enderror</span>
-        <div class="input-group mb-3">
+        <div class="input-group mb-6">
           <input id="email" type="email" class="form-control" name="email"  placeholder="Enter email" value="{{ old('email') }}">
           <div class="input-group-append">
             <div class="input-group-text">
@@ -42,7 +42,16 @@
           </div>
         </div>
         <span class="text-danger">@error('email'){{ $message }}@enderror</span>
-        <div class="input-group mb-3">
+        <div class="input-group mb-6">
+          <input id="mobile" type="number" class="form-control" name="mobile"  placeholder="Enter mobile" value="{{ old('mobile') }}">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-phone"></span>
+            </div>
+          </div>
+        </div>
+        <span class="text-danger">@error('mobile'){{ $message }}@enderror</span>
+        <div class="input-group mb-6">
           <input id="password" type="password" class="form-control" name="password"  data-eye placeholder="Enter password">
           <div class="input-group-append">
             <div class="input-group-text">
@@ -51,7 +60,7 @@
           </div>
         </div>
         <span class="text-danger">@error('password'){{ $message }}@enderror</span>
-        <div class="input-group mb-3">
+        <div class="input-group mb-6">
           <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required data-eye placeholder="Enter confirm password">
           <div class="input-group-append">
             <div class="input-group-text">

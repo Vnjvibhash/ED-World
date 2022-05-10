@@ -54,16 +54,17 @@ class HomeController extends Controller
         return view('pages.assignment');
     }
 
-    public function assignmentupload()
+    public function assignmentupload(Request $request)
     {
         return view('pages.assignment_upload');
     }
 
     
-    public function edit($id)
+    public function engineering()
     {
-        //
+        return view("pages.engineering.index");
     }
+    
 
     
     public function update(Request $request, $id)

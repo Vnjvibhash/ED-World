@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'avtar',
         'dob',
+        'mobile',
         'password',
         'gender',
         'remember_token'

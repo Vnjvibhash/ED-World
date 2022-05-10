@@ -31,7 +31,16 @@ Route::get('/about-us', [ HomeController::class, 'aboutus'])->name('about-us');
 Route::get('/developer-list', [ HomeController::class, 'developerlist'])->name('developer-list');
 Route::get('/developer', [ HomeController::class, 'developer'])->name('developer');
 Route::get('/assignment', [ HomeController::class, 'assignment'])->name('assignment');
-Route::get('/assignment-upload', [ HomeController::class, 'assignmentupload'])->name('assignment-upload');
+Route::post('/assignment-upload', [ HomeController::class, 'assignmentupload'])->name('assignment-upload');
+// to change the name of stream in desirable stream related to auth.blade(shiv)
+Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
+// Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
+// Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
+// Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
+//
+
+
+
 Route::get('/login',[ LoginController::class, 'index'])->name('login');
 Route::post('/auth-login',[ LoginController::class, 'login'])->name('auth.login');
 Route::get('/register',[ RegisterController::class, 'index'])->name('register');

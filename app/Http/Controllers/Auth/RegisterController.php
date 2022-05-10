@@ -17,6 +17,7 @@ class RegisterController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobile' => ['required', 'string', 'phone', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         
@@ -35,11 +36,12 @@ class RegisterController extends Controller
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->mobile = $request->mobile;
             $user->password = \Hash::make($request->password);
 
             if( $user->save() ){
                 $user->attachRole('user');
-                return redirect()->route('auth.register')->with('success','You are now successfully registerd');
+                return redirect()->back()->with('success','You are now successfully registerd');
             }else{
                 return redirect()->back()->with('error','Failed to register');
             }
