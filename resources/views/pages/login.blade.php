@@ -1,6 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 @section('content')
+
 <!-- .login-box -->
+<div class="login-box">
 @if(Session::has('success'))
 <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -15,7 +17,8 @@
 @endif
 <!-- /.login-logo -->
 <div class="card card-outline card-primary">
-  <div class="card-header text-center">
+  <a href="{{url('/')}}" style="align-self: end; margin:10px;"><i class="fa fa-close" style="font-size:24px;"></i></a>
+  <div class="card-header text-center" style="margin-top:-20px">
     <a href="" class="h1"><b>ED-</b>World</a>
   </div>
   <div class="card-body">
@@ -77,7 +80,6 @@
   </div>
   <!-- /.card-body -->
 </div>
-<!-- /.card -->
 <!-- /.login-box -->
-  
+
 @endsection

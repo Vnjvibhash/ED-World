@@ -16,17 +16,47 @@ class HomeController extends Controller
     {
         return view('pages.coding');
     }
-
     
-    public function store(Request $request)
+    
+    public function faqs()
+    {
+        return view('pages.faq');
+    }
+    
+    
+    public function contact()
+    {
+        return view('pages.contact');
+    }
+
+    public function contactus(Request $request)
     {
         //
     }
 
-   
-    public function show($id)
+    public function aboutus()
     {
-        //
+        return view('pages.aboutus');
+    }
+
+    public function developerlist()
+    {
+        return view('pages.developer-list');
+    }
+
+    public function developer()
+    {
+        return view('pages.developer');
+    }
+
+    public function assignment()
+    {
+        return view('pages.assignment');
+    }
+
+    public function assignmentupload()
+    {
+        return view('pages.assignment_upload');
     }
 
     

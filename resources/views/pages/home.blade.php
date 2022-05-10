@@ -511,7 +511,7 @@
 				<!-- /course -->
 			</div>
 			<div class="genius-btn gradient-bg text-center text-uppercase ul-li-block bold-font" style="margin: 0px auto;">
-				<a href="{{url('/')}}/workshop">All Self-Study Courses<i class="fas fa-caret-right"></i></a>
+				<a href="{{url('/')}}/workshop">All Features<i class="fas fa-caret-right"></i></a>
 			</div>
 		</div>
 	</div>
@@ -538,15 +538,16 @@
 										<span>Vivek Kumar</span>
 									</div>
 									<ul>
-										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+										<li><a href="https://www.linkedin.com/in/vivekajee/"><i class="fab fa-linkedin-in"></i></a></li>
+										<li><a href="https://twitter.com/Vnjvibhash"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="https://www.instagram.com/Vivekajee/"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="https://github.com/Vnjvibhash"><i class="fab fa-github"></i></a></li> --}}
 									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										{{-- <img src="{{url('/')}}/public/assets/front/img/team/transparent-Vivekajee.jpg" alt="" width="200px"> --}}
+										<img src="{{url('/')}}/public/assets/front/img/team/white-Vivekajee.jpg" alt="" width="200px">
 										<div class="course-price text-uppercase text-center gradient-bg">
 											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
@@ -566,15 +567,16 @@
 										<span>ShivKant Kumar</span>
 									</div>
 									<ul>
-										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="https://www.linkedin.com/in/shiv-kant-kumar-a31740217/"><i class="fab fa-linkedin-in"></i></a></li>
 										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+										<li><a href="https://www.instagram.com/real_warrrior_golu/"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="https://github.com/golu098"><i class="fab fa-github"></i></a></li> --}}
 									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										{{-- <img src="{{url('/')}}/public/assets/front/img/team/transparent-Shivkant.jpeg" alt="" width="200px"> --}}
+										<img src="{{url('/')}}/public/assets/front/img/team/white-Shivkant.jpeg" alt="" width="200px">
 										<div class="course-price text-uppercase text-center gradient-bg">
 											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
@@ -594,15 +596,16 @@
 										<span>Sagar Saini</span>
 									</div>
 									<ul>
-										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="https://www.linkedin.com/in/sagar-saini-038979192/"><i class="fab fa-linkedin-in"></i></a></li>
 										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
 										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+										{{-- <li><a href="https://github.com/Sagar-VV"><i class="fab fa-github"></i></a></li> --}}
 									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										{{-- <img src="{{url('/')}}/public/assets/front/img/team/transparent-Sagarsaini.jpeg" alt="" width="200px"> --}}
+										<img src="{{url('/')}}/public/assets/front/img/team/white-Sagarsaini.jpeg" alt="" width="200px">
 										<div class="course-price text-uppercase text-center gradient-bg">
 											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
@@ -622,15 +625,16 @@
 										<span>Versha Kumari</span>
 									</div>
 									<ul>
-										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="https://www.linkedin.com/in/versha-kumari-57a4b4230/"><i class="fab fa-linkedin-in"></i></a></li>
 										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
 										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+										{{-- <li><a href="https://github.com/Verskri"><i class="fab fa-github"></i></a></li> --}}
 									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										{{-- <img src="{{url('/')}}/public/assets/front/img/team/transparent-Versha.jpeg" alt="" width="200px"> --}}
+										<img src="{{url('/')}}/public/assets/front/img/team/white-Versha.jpeg" alt="" width="200px">
 										<div class="course-price text-uppercase text-center gradient-bg">
 											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>
@@ -650,15 +654,16 @@
 										<span>Sunidhi Thakur</span>
 									</div>
 									<ul>
-										<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-										<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-										<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-										{{-- <li><a href="#"><i class="fab fa-whatsapp"></i></a></li> --}}
+										<li><a href="https://www.linkedin.com/mwlite/in/sunidhi-thakur-b73b12190"><i class="fab fa-linkedin-in"></i></a></li>
+										<li><a href="https://mobile.twitter.com/sayhena_"><i class="fab fa-twitter"></i></a></li>
+										<li><a href="https://www.instagram.com/_sunidhi._.thakur/"><i class="fab fa-instagram"></i></a></li>
+										{{-- <li><a href="https://github.com/sunidhi78"><i class="fab fa-github"></i></a></li> --}}
 									</ul>
 								</div>
 								<div class="teacher-img-category">
 									<div class="teacher-img">
-										<img src="{{url('/')}}/public/assets/images/profile/sabmohmayahai.jpg" alt="" width="200px">
+										{{-- <img src="{{url('/')}}/public/assets/front/img/team/transparent-Sunidhi.jpg" alt="" width="200px"> --}}
+										<img src="{{url('/')}}/public/assets/front/img/team/white-Sunidhi.jpg" alt="" width="200px">
 										<div class="course-price text-uppercase text-center gradient-bg">
 											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
 										</div>

@@ -42,7 +42,7 @@
                             <div class="header-top-text">
                                 <span>
                                     <a href="{{url('/')}}">Home</a> |
-                                    <a href="{{url('/')}}/blogs">Developpers</a> |
+                                    <a href="{{url('/')}}/developer-list">Developpers</a> |
                                     <a href="{{url('/')}}/about-us">About Us</a>
                                 </span>
                             </div>
@@ -97,8 +97,8 @@
                                         <a href="#" data-toggle="dropdown5" class="dropdown-toggle" style="cursor: auto">Resource<b class="caret"></b></a>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{url('/')}}/practice">Coding Practice</a></li>
-                                            <li><a href="{{url('/')}}/slokas">Slokas</a></li>
-                                            <li><a href="{{url('/')}}/bhajans">Bhajans</a></li>
+                                            <li><a href="{{url('/')}}/assignment">Assignments</a></li>
+                                            <li><a href="{{url('/')}}/assignment-upload">Assignment Upload</a></li>
                                             <li><a href="{{url('/')}}/keyboard">Keyboard </a></li>
                                             
                                         </ul>
@@ -161,7 +161,7 @@
       @yield('content')
     </div>
     <!-- /.content-wrapper -->
-    @if(Route::currentRouteName()!="practice")         
+    @if(Route::currentRouteName()!="practice" && Route::currentRouteName()!="login")         
        <iframe
         allow="microphone;"
         width="350"
@@ -261,7 +261,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="copy-right-text">
-                                <p>© 2022 - Design by <a href="https://www.linkedin.com/in/vivekajee/">Vivek Kumar and Team</a>. All rights reserved</p>
+                                <p>© 2022 - Design by <a href="https://www.linkedin.com/in/vivekajee/">ED-World and Team</a>. All rights reserved</p>
                             </div>
                         </div>
                         <div class="col-md-3">
