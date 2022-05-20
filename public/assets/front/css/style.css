@@ -12,7 +12,7 @@ body {
   overflow-x: hidden;
   font-size: 16px;
   line-height: 1.4;
-  color: #777777;
+  color: #ff8000;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased; }
 
@@ -1795,7 +1795,9 @@ button.alt-menu-btn.float-left {
     font-size: 50px; }
 
 .service-text {
-  overflow: hidden; }
+  overflow: hidden;
+  margin-bottom :70px;
+}
   .service-text h3 {
     font-size: 22px;
     color: #fff; }
@@ -3359,7 +3361,7 @@ ul.product-tab li.active:after {
   right: inherit; }
 
 .course-advantage {
-  padding-top: 65px; }
+  padding-top: 85px; }
 
 .service-slide_3 {
   margin-top: 35px; }
@@ -3368,7 +3370,7 @@ ul.product-tab li.active:after {
     margin-bottom: 15px; }
   .service-slide_3 .service-text-icon {
     background-color: #f7f7f7;
-    padding: 20px;
+    padding: 70px;
     border-radius: 4px; }
   .service-slide_3 .service-text p {
     font-size: 15px;
@@ -4832,3 +4834,6 @@ ul.product-tab li.active:after {
 }
 
  /* ghgjhghjgh */
+
+
+ 

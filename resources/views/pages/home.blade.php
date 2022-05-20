@@ -13,9 +13,9 @@
 						<div class="container">
 							<div class="row d-flex">
 								<div class="col-lg-6 col-md-6" style="text-align: left;">
-									<h2 class="animate__animated animate__fadeInDown">Want to Learn Music Online?</h2>
-									<h4 class="animate__animated animate__fadeInUp text-white py-3">Full time Online Music Courses conducted by highly Renowned AIR Senior Artists</h4><p class="animate__animated animate__fadeInUp">Vocal | Veena | Violin | Mridangam | Ghatam | Flute | Guitar | Keyboard and More</p>
-									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+									<h2 class="animate__animated animate__fadeInDown">ED-World is a platform to make us feel your education easiest.</h2>
+									<h4 class="animate__animated animate__fadeInUp text-white py-3">We are for Students ,to the students and by the students.</p>
+									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Contact Us</a>
 								</div>
 								<div class="col-lg-6 col-md-6 center">
 									<img src="{{url('/')}}/public/assets/front/img/banner/banner-1.jpg" alt="Video" class="animate__animated animate__fadeInDown">
@@ -32,16 +32,16 @@
 							<div class="row d-flex">
 								<div class="col-lg-6 col-md-6" style="text-align: left;">
 									<h2 class="animate__animated animate__fadeInDown"><br>
-										Learn Dance online at the comfort from your home from highly talented senior artists</h2>
+										Learn Education online at the comfort from your home from highly arranged resources</h2>
 									<ul class="animate__animated animate__fadeInUp text-white">
-										<li>Bharathnatyam</li>
-										<li>Kuchipudi</li>
-										<li>Kathak</li>
-										<li>Mohiniattam</li>
-										<li>Bollywood Dance</li>
+										<li>Discipline</li>
+										<li>Punctuality</li>
+										<li>Honesty</li>
+										<li>Hard Working</li>
+										<li>Time Management</li>
 										<li>Others</li>
 									</ul>
-									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+									<a href="{{url('/')}}/login	" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">More</a>
 								</div>
 								<div class="col-lg-6 col-md-6 center">
 									<img src="{{url('/')}}/public/assets/front/img/banner/banner-2.jpg" alt="Video" class="animate__animated animate__fadeInDown">
@@ -57,8 +57,8 @@
 						<div class="container">
 							<div class="row d-flex">
 								<div class="col-lg-6 col-md-6" style="text-align: left;">
-									<h2 class="animate__animated animate__fadeInDown">* Rare Vocal Carnatic Self-Study Courses conducted</h2>
-									<h2 class="animate__animated animate__fadeInUp">* Special Coaching provided to take all levels of Carnatic Music Exams - Government/ Private</h2>
+									<h2 class="animate__animated animate__fadeInDown">* Coding is heart of technical study</h2>
+									<h2 class="animate__animated animate__fadeInUp">* Special Courses provided to take all levels of Coding  Exams - Government/ Private</h2>
 									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
 								</div>
 								<div class="col-lg-6 col-md-6 center">
@@ -76,14 +76,14 @@
 							<div class="row d-flex">
 								<div class="col-lg-6 col-md-6" style="text-align: left;">
 									<h2 class="animate__animated animate__fadeInDown">Turn Your Dream into Career.<br>
-										Get trained by Highly experienced and certified professionals for</h2>
-									<ul class="animate__animated animate__fadeInUp text-white"><li>Sound Engineering</li>
-										<li>Audio Engineering</li>
-										<li>Sound Production</li>
-										<li>Orchestration</li>
-										<li>Film scoring</li>
+										Get trained by Highly experienced resources for </h2>
+									<ul class="animate__animated animate__fadeInUp text-white"><li>Computer Science Engineering</li>
+										<li>MechnicalEngineering</li>
+										<li>Civil Engineering</li>
+										<li>Electronics Engineering</li>
+										<li>And many more streams</li>
 									</ul>
-									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
+									<a href="{{url('/')}}/login" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
 								</div>
 								<div class="col-lg-6 col-md-6 center">
 									<img src="{{url('/')}}/public/assets/front/img/banner/banner-4.jpg" alt="Video" class="animate__animated animate__fadeInDown">
@@ -100,7 +100,7 @@
 							<div class="row d-flex">
 								<div class="col-lg-6 col-md-6" style="text-align: left;">
 									<h2 class="animate__animated animate__fadeInDown">"DISABILITY IS NOT INABILITY":</h2>
-									<p class="animate__animated animate__fadeInUp">Breaking down stigma and help children and Adults to sing and play music from specially trained certified Teachers</p>
+									<p class="animate__animated animate__fadeInUp">Breaking down stigma and help children and Adults to enhance thier carrer</p>
 									<a href="{{url('/')}}/contact" class="btn-get-started animate__animated animate__fadeInUp scrollto mb-3">Enroll Now</a>
 								</div>
 								<div class="col-lg-6 col-md-6 center">
@@ -153,7 +153,7 @@
 					</div>
 					<div class="service-text">
 						<h3 class="bold-font">Practice your coading skills</h3>
-						<p>The next step is to schedule a class with your selected teacher. Get your routine dedicated to music class.</p>
+						<p>The next step is to schedule a class with your selected resources. Get your routine dedicated to music class.</p>
 					</div>
 				</div>
 				<div class="service-text-icon">
@@ -162,7 +162,7 @@
 					</div>
 					<div class="service-text">
 						<h3 class="bold-font">Join The Community.</h3>
-						<p>Meet your teacher in those scheduled hours and enjoy learning music.</p>
+						<p>Meet your teacher in those scheduled hours and enjoy learning scholars</p>
 					</div>
 				</div>
 				<div class="service-text-icon">
@@ -170,7 +170,7 @@
 						<i class="text-gradiant flaticon-technology-1"></i>
 					</div>
 					<div class="service-text">
-						<h3 class="bold-font">Generate you QR</h3>
+						<h3 class="bold-font">Generate your QR</h3>
 						<p>After completing the course, we provide a certificate that holds value in the market.</p>
 					</div>
 				</div>
@@ -216,7 +216,7 @@
 													<i class="text-gradiant flaticon-technology-1"></i>
 												</div>
 												<div class="category-title pb-4">
-													<h4 style="font-size: 15px;">Introduction to Music and Saptaswaras</h4>
+													<h4 style="font-size: 15px;">Introduction to coding and practical world</h4>
 												</div>
 											</div>
 										</div>
@@ -228,7 +228,7 @@
 													<i class="text-gradiant flaticon-app-store"></i>
 												</div>
 												<div class="category-title pb-4">
-													<h4 style="font-size: 15px;">Proficiency in 8 keertanai / Songs</h4>
+													<h4 style="font-size: 15px;">Proficiency in non tech fields</h4>
 												</div>
 											</div>
 										</div>
@@ -240,7 +240,7 @@
 													<i class="text-gradiant flaticon-book"></i>
 												</div>
 												<div class="category-title pb-4">
-													<h4 style="font-size: 15px;">Master in five different Slokas</h4>
+													<h4 style="font-size: 15px;">Master in five different Programs</h4>
 												</div>
 											</div>
 										</div>
@@ -348,7 +348,7 @@
 <section id="best-course" class="best-course-section py-3">
 	<div class="container">
 		<div class="section-title mb35 headline text-left">
-			<span class="subtitle ml42  text-uppercase">Vocal, Instrumental and Dance</span>
+			<span class="subtitle ml42  text-uppercase">Technical and Non Technical </span>
 			<h2>Search Our Website <span>Features</span></h2>
 		</div>
 		<div class="best-course-area mb45">
@@ -373,7 +373,7 @@
 						</div>
 						<div class="best-course-text">
 							<div class="course-title mb20 headline relative-position">
-								<h3><a href="{{url('/')}}/workshop-details/1">Purandaradasar Compositions</a></h3>
+								<h3><a href="{{url('/')}}/workshop-details/1">Technical Compositions</a></h3>
 							</div>
 						</div>
 					</div>
@@ -399,7 +399,7 @@
 						</div>
 						<div class="best-course-text">
 							<div class="course-title mb20 headline relative-position">
-								<h3><a href="{{url('/')}}/workshop-details/2">Muthuswami Dikshitar Notuswaram</a></h3>
+								<h3><a href="{{url('/')}}/workshop-details/2">Non technical </a></h3>
 							</div>
 						</div>
 					</div>
@@ -425,7 +425,7 @@
 						</div>
 						<div class="best-course-text">
 							<div class="course-title mb20 headline relative-position">
-								<h3><a href="{{url('/')}}/workshop-details/6">Thyagaraajar Compositions</a></h3>
+								<h3><a href="{{url('/')}}/workshop-details/6">Others</a></h3>
 							</div>
 						</div>
 					</div>
@@ -451,7 +451,7 @@
 						</div>
 						<div class="best-course-text">
 							<div class="course-title mb20 headline relative-position">
-								<h3><a href="{{url('/')}}/workshop-details/7">Devi Kritis</a></h3>
+								<h3><a href="{{url('/')}}/workshop-details/7">Best Courses</a></h3>
 							</div>
 						</div>
 					</div>
@@ -477,7 +477,7 @@
 						</div>
 						<div class="best-course-text">
 							<div class="course-title mb20 headline relative-position">
-								<h3><a href="{{url('/')}}/workshop-details/14">Bharathiyaar songs</a></h3>
+								<h3><a href="{{url('/')}}/workshop-details/14">High Rated Courses</a></h3>
 							</div>
 						</div>
 					</div>
@@ -503,7 +503,7 @@
 						</div>
 						<div class="best-course-text">
 							<div class="course-title mb20 headline relative-position">
-								<h3><a href="{{url('/')}}/workshop-details/25">Thirupugazh</a></h3>
+								<h3><a href="{{url('/')}}/workshop-details/25">Most Watched Courses</a></h3>
 							</div>
 						</div>
 					</div>
@@ -549,11 +549,11 @@
 										{{-- <img src="{{url('/')}}/public/assets/front/img/team/transparent-Vivekajee.jpg" alt="" width="200px"> --}}
 										<img src="{{url('/')}}/public/assets/front/img/team/white-Vivekajee.jpg" alt="" width="200px">
 										<div class="course-price text-uppercase text-center gradient-bg">
-											<a href="{{url('/')}}/teacher-details/3"><span>Click</span></a>
+											<a href="{{url('/')}}/contact"><span>Click</span></a>
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-										<span class="st-name">Full-Sack Developper</span>,
+										<span class="st-name">Full-Sack Developer(CTO)</span>,
 									</div>
 								</div>
 							</div>
@@ -564,7 +564,7 @@
 							<div class="teacher-cntent">
 								<div class="teacher-social-name ul-li-block">
 									<div class="teacher-name">
-										<span>ShivKant Kumar</span>
+										<span>Shiv Kant Kumar</span>
 									</div>
 									<ul>
 										<li><a href="https://www.linkedin.com/in/shiv-kant-kumar-a31740217/"><i class="fab fa-linkedin-in"></i></a></li>
@@ -582,7 +582,7 @@
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-										<span class="st-name">Front-End Developper</span>,
+										<span class="st-name">Full Stack Developer(COO)</span>,
 									</div>
 								</div>
 							</div>
@@ -611,7 +611,7 @@
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-										<span class="st-name">AI Developper</span>,
+										<span class="st-name">AI Developper(CEO)</span>,
 									</div>
 								</div>
 							</div>
@@ -640,7 +640,7 @@
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-										<span class="st-name">Content Writter</span>,
+										<span class="st-name">Report Analyst</span>,
 									</div>
 								</div>
 							</div>
@@ -669,7 +669,7 @@
 										</div>
 									</div>
 									<div class="teacher-category float-right">
-										<span class="st-name">Content Writter</span>,
+										<span class="st-name">Documentation Manager</span>,
 									</div>
 								</div>
 							</div>
@@ -706,18 +706,18 @@
 						</div>
 
 						<div class="app-details-content">
-							<p>Graded exams serve as 'the prescribed criteria' for providing a basic understanding to anlayze the progress of a music learner. It helps to test your abilities and scrutinize your skills systematically.</p>
+							<p>Graded exams serve as 'the prescribed criteria' for providing a basic understanding to anlayze the progress of a course. It helps to test your abilities and scrutinize your skills systematically.</p>
 
 							<div class="about-list mb30 ul-li-block">
 								<ul>
-									<li>Akhila Bharathiya Gandharva University</li>
-									<li>Indian statewise Government Music Exams</li>
-									<li>Trinity College of London</li>
-									<li>London College of Music (LCM)</li>
-									<li>MedhaKshetra </li>
-									<li>Bridge Academy</li>
-									<li>Rock School</li>
-									<li>ABRSM, London</li>
+									<li>Computer Science and Engg.</li>
+									<li>Information Technology</li>
+									<li>Mechnical Engineering</li>
+									<li>Chemical Engineering</li>
+									<li>Electronics Engineering </li>
+									<li>Electrical Engineering</li>
+									<li>Civil Engineering</li>
+									<li>Aerospace Engineering</li>
 								</ul>
 							</div>
 							<div class="about-btn">
@@ -744,7 +744,7 @@
 			<div id="testimonial-slide-item" class="testimonial-slide-area">
 				 				<div class="student-qoute">
 					
-					<p><p>A big thanks to <strong>Shrimati </strong>ma&rsquo;am for being our son&rsquo;s first music teacher, firsts are always special. She has gone out of her way to get to know our son so that when he is learning music from her, he enjoys it completely. &nbsp;She is a gifted singer but also highly skilled at teaching. The best part about her is she is open to suggestions and is so positive in her approach. Although the sessions are happening online, she has never made that a shortcoming. She has used the technology to stay connected all the times by sending recorded music pieces so that they can be a guide and reference to our son every time he practices. As a family, we are a big fan of her!!! <strong>The same goes for Musicintuit Academy, they are committed, highly receptive and deliver whatever promised on time. So a big thanks and I highly recommend Shrimati ma&rsquo;am and Musicintuit Academy!</strong></p></p>
+					<p><p>A big thanks to <strong>Shiv Kant </strong>sir for being our son&rsquo;s first , firsts are always special.He has gone out of his way to get to know our son so that when he is learning coding from him, he enjoys it completely. &nbsp;he is a gifted singer but also highly skilled at teaching. The best part about her is he is open to suggestions and is so positive in his approach. Although the sessions are happening online, he has never made that a shortcoming. he has used the technology to stay connected all the times by sending recorded videos pieces so that they can be a guide and reference to our son every time he practices. As a family, we are a big fan of him!!! <strong>The same goes for ED-World, they are committed, highly receptive and deliver whatever promised on time. So a big thanks and I highly recommend Shiv kant sir &rsquo; and ED-World</strong></p></p>
 					<div class="student-name-designation">
 						<span class="st-name bold-font"></span>
 					</div>
@@ -752,7 +752,7 @@
 				</div>
 			 				<div class="student-qoute">
 					
-					<p><p>&quot;<strong>ED-World has been till now wonderful for our daughter, she is having online classes through them for vocal, keyboard and dance! We as parents loved the personal care from Vasanthi mam for our daughter in ensuring she really enjoys and learns from the classes. We wish Music Intuit academy and Vasanthi mam reach further heights!&quot;</strong></p></p>
+					<p><p>&quot;<strong>ED-World has been till now wonderful for our daughter, she is having online classes through them for assignment, guessand ! We as parents loved the personal care from for our daughter in ensuring she really enjoys and learns from the classes. We wish to reach further heights!&quot;</strong></p></p>
 					<div class="student-name-designation">
 						<span class="st-name bold-font"></span>
 					</div>

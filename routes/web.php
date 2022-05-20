@@ -34,6 +34,9 @@ Route::get('/assignment', [ HomeController::class, 'assignment'])->name('assignm
 Route::post('/assignment-upload', [ HomeController::class, 'assignmentupload'])->name('assignment-upload');
 // to change the name of stream in desirable stream related to auth.blade(shiv)
 Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
+Route::get('/quiz', [ HomeController::class, 'quiz'])->name('quiz');
+Route::get('/sorting-algorithm', [ HomeController::class, 'sorting_algorithm'])->name('sorting-algorithm');
+
 // Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
 // Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');
 // Route::get('/engineering', [ HomeController::class, 'engineering'])->name('engineering');

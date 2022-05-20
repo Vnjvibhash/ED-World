@@ -28,6 +28,15 @@ class HomeController extends Controller
     {
         return view('pages.contact');
     }
+    public function quiz()
+    {
+        return view('pages.quiz');
+    }
+    public function sorting_algorithm()
+    {
+        return view('pages.sortingalgo.index');
+    }
+
 
     public function contactus(Request $request)
     {

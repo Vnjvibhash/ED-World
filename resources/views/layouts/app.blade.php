@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="{{url('/')}}/public/assets/front/css/style.css">
     <link rel="stylesheet" href="{{url('/')}}/public/assets/front/css/responsive.css">
     <link rel="stylesheet" href="{{url('/')}}/public/assets/front/css/megmenu.css">
+     @if(Route::currentRouteName()!="quiz")         
+      <link rel="stylesheet" href="{{url('/')}}/public/assets/front/golu/quiz.css">
+    @else
+        
+    @endif 
+    
 
     <link href="{{url('/')}}/public/assets/front/css/icofont/icofont.min.css" rel="stylesheet">
     <link href="{{url('/')}}/public/assets/front/css/animate/animate.css/animate.min.css" rel="stylesheet">
@@ -27,8 +33,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
 
-    <!--<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>-->
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap'>
     <link rel="stylesheet" href="{{url('/')}}/public/assets/css/responsive.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 </head>
 
@@ -51,7 +58,7 @@
                             <div class="header-top-bar ul-li">
                                 <ul style="color:#ffff;">
                                     <li><a href="{{url('/')}}/login">Login</a></li> |
-                                    <li><a href="{{url('/')}}/teacher-register">Sorting Technique</a></li> |
+                                    <li><a href="{{url('/')}}/sorting-algorithm">Sorting Technique</a></li> |
                                     <li><a href="{{url('/')}}/faqs">FAQS</a></li> |
                                     <li><a href="{{url('/')}}/contact">Contact</a></li>
                                 </ul>
@@ -99,7 +106,7 @@
                                             <li><a href="{{url('/')}}/practice">Coding Practice</a></li>
                                             <li><a href="{{url('/')}}/assignment">Assignments</a></li>
                                             <li><a href="{{url('/')}}/assignment-upload">Assignment Upload</a></li>
-                                            <li><a href="{{url('/')}}/keyboard">Keyboard </a></li>
+                                            <li><a href="{{url('/')}}/quiz">Quiz</a></li>
                                             
                                         </ul>
                                         <!-- end dropdown-menu -->
@@ -161,7 +168,7 @@
       @yield('content')
     </div>
     <!-- /.content-wrapper -->
-    <!-- @if(Route::currentRouteName()!="practice" && Route::currentRouteName()!="login")         
+     @if(Route::currentRouteName()!="practice" && Route::currentRouteName()!="login")         
        <iframe
         allow="microphone;"
         width="350"
@@ -170,7 +177,7 @@
     </iframe>            
     @else
         
-    @endif -->
+    @endif 
     <!-- Start Of scound contact section ============================================= -->
     <section id="contact_secound" class="contact_secound_section backgroud-style pt-5">
         <div class="container">
@@ -191,7 +198,7 @@
                                     </div>
                                     <div class="address-details ul-li-block">
                                         <ul>
-                                            <li><span>Address: </span>Garudachar Palya, Bengaluru</li>
+                                            <li><span>Address: </span>Kharar ,Mohali(Punjab)</li>
                                             <li>India</li>
                                         </ul>
                                     </div>
@@ -204,7 +211,7 @@
                                     <div class="address-details ul-li-block">
                                         <ul>
                                             <li><span>Primary: </span>8951091449</li>
-                                            <li><span>Second: </span>080-23532163</li>
+                                            <li><span>Second: </span>6202055728</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -291,6 +298,13 @@
     </section>
     <!-- ENd Of scound contact section ============================================= -->
 
+    @if(Route::currentRouteName()!="quiz")         
+      <link rel="stylesheet" href="{{url('/')}}/public/assets/front/golu/quiz.js">
+      <link rel="stylesheet" href="{{url('/')}}/public/assets/front/golu/quizQuestion.js">
+    @else
+        
+    @endif
+
     <script src="{{url('/')}}/public/assets/front/js/jquery-2.1.4.min.js"></script>
     <script src="{{url('/')}}/public/assets/front/js/bootstrap.min.js"></script>
     <script src="{{url('/')}}/public/assets/front/js/popper.min.js"></script>
@@ -347,7 +361,14 @@
         s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
         var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
     })();
+
 </script>
+<script>
+
+
+// i can write JS here
+</script>
+
 <!-- /WhatsHelp.io widget -->
 </body>
 
