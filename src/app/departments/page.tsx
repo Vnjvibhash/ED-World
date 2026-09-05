@@ -126,7 +126,7 @@ export default function DepartmentsPage() {
                   Every department is maintained by verified mentors and academic contributors with up-to-date semester curriculums.
                 </p>
                 <Link
-                  href="/engineering"
+                  href="/departments/engineering"
                   className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md shadow-accent-500/20 transition-all"
                 >
                   <span>View Engineering Syllabus</span>
@@ -221,8 +221,7 @@ export default function DepartmentsPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredDepartments.map((dept) => {
-                const targetLink =
-                  dept.slug === "engineering" ? "/engineering" : `/departments/${dept.slug}`;
+                const targetLink = `/departments/${dept.slug}`;
                 const highlights = deptHighlights[dept.id] || [
                   "Comprehensive Syllabus",
                   "Structured Modules",
@@ -319,7 +318,7 @@ export default function DepartmentsPage() {
                         </Link>
                         {dept.slug === "engineering" ? (
                           <Link
-                            href="/engineering"
+                            href="/departments/engineering"
                             className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors"
                           >
                             <span>Semester Syllabus</span>

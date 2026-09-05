@@ -60,7 +60,7 @@ const heroSlides = [
     subtitle: "Get trained by experienced resources across core engineering streams.",
     image: "/assets/banners/banner-4.jpg",
     ctaText: "Explore Departments",
-    ctaLink: "/engineering",
+    ctaLink: "/departments/engineering",
     bulletPoints: ["Computer Science & IT", "Electronics & Electrical", "Mechanical & Civil"]
   },
   {
@@ -272,7 +272,7 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold text-slate-900 mt-1">Search Our <span className="text-accent-500">Departments</span></h2>
             </div>
             <Link
-              href="/engineering"
+              href="/departments/engineering"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-500 hover:text-accent-500 transition-colors"
             >
               <span>Explore All Syllabus</span>
@@ -284,7 +284,7 @@ export default function HomePage() {
             {departments.map((dept) => (
               <Link
                 key={dept.id}
-                href={dept.slug === "engineering" ? "/engineering" : `/departments/${dept.slug}`}
+                href={`/departments/${dept.slug}`}
                 className="group relative rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-accent-500/50 transition-all glow-hover flex flex-col shadow-sm hover:shadow-md"
               >
                 <div className="relative h-48 w-full overflow-hidden">

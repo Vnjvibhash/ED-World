@@ -116,7 +116,7 @@ export function Header() {
               <div className="absolute top-full left-0 w-64 pt-2 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
                 <div className="bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden p-2 text-slate-900">
                   <Link
-                    href="/engineering"
+                    href="/departments/engineering"
                     className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 hover:text-accent-500 transition-colors"
                   >
                     <GraduationCap className="w-4 h-4 text-brand-500" />
@@ -304,7 +304,7 @@ export function Header() {
               Departments
             </div>
             <div className="pl-4 space-y-1">
-              <Link href="/engineering" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Engineering (CSE/ECE/Civil)</Link>
+              <Link href="/departments/engineering" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Engineering (CSE/ECE/Civil)</Link>
               <Link href="/departments/non-technical" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Public Health</Link>
               <Link href="/departments/management" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Management & Commerce</Link>
               <Link href="/departments/other" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Arts & Designs</Link>

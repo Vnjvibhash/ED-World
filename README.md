@@ -79,13 +79,13 @@ The footer features a light aesthetic (`#f8fafc` background with `#ffffff` botto
 - **Instant Visual Feedback**: Selected options transition immediately to green (correct) or red (incorrect) with explanation tooltips.
 - **Celebration & Scorecard**: Dynamic score tabulation with celebratory particle confetti (`canvas-confetti`) upon quiz completion.
 
-### 5. 📚 Academic Curricula & Syllabus Explorer (`/departments` & `/engineering`)
+### 5. 📚 Academic Curricula & Syllabus Explorer (`/departments` & `/departments/engineering`)
 - **Faculty Portals**: Comprehensive program directory for:
   - Department of Engineering & Technology
   - Department of Public Health & Applied Sciences
   - Department of Management & Commerce
   - Department of Arts, Humanities & Creative Designs
-- **Engineering Semester Breakdown (`/engineering`)**: Interactive tabbed navigation across 8 undergraduate semesters with subject codes, credits, lecture hours, and syllabus downloads.
+- **Engineering Semester Breakdown (`/departments/engineering`)**: Interactive tabbed navigation across 8 undergraduate semesters with subject codes, credits, lecture hours, and syllabus downloads.
 
 ### 6. 📁 Assignment Submission Portal (`/assignment` & `/assignment-upload`)
 - **Active Assignments Ledger**: Filterable list of department coursework, due dates, maximum marks, and assignment briefs.

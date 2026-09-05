@@ -141,14 +141,28 @@ export default function DepartmentDetailPage() {
                   </div>
                   <div className="space-y-2.5">
                     {sem.subjects.map((sub) => (
-                      <div key={sub.code} className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-sm">
+                      <div key={sub.code} className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-100 text-sm gap-3">
                         <div className="space-y-0.5">
                           <span className="font-semibold text-slate-900">{sub.title}</span>
                           <div className="text-xs text-slate-500">{sub.code} • {sub.credits} Credits</div>
                         </div>
-                        <span className="text-xs font-semibold px-2 py-1 rounded-md bg-accent-50 text-accent-600 border border-accent-100">
-                          Notes Ready
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href="/practice"
+                            className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-brand-50 text-brand-600 border border-brand-200 hover:bg-brand-500 hover:text-white transition-colors"
+                          >
+                            Practice
+                          </Link>
+                          <Link
+                            href="/assignment"
+                            className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors"
+                          >
+                            Assignment
+                          </Link>
+                          <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-accent-50 text-accent-600 border border-accent-100">
+                            Notes
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -157,6 +171,41 @@ export default function DepartmentDetailPage() {
             </div>
           </div>
         )}
+
+        {/* Explore Other Departments */}
+        <div className="p-8 rounded-3xl bg-white border border-slate-200 space-y-6 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-slate-900">Explore Other Departments</h3>
+              <p className="text-xs text-slate-500 mt-1">Discover other academic streams and specialized curriculums</p>
+            </div>
+            <Link
+              href="/departments"
+              className="text-xs font-bold text-brand-500 hover:text-accent-500 transition-colors flex items-center gap-1"
+            >
+              <span>View All</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {departments.filter((d) => d.slug !== slug).map((otherDept) => (
+              <Link
+                key={otherDept.id}
+                href={`/departments/${otherDept.slug}`}
+                className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-accent-500/50 hover:bg-white transition-all glow-hover flex items-center justify-between group shadow-sm hover:shadow-md"
+              >
+                <div>
+                  <h4 className="font-bold text-slate-900 group-hover:text-accent-500 transition-colors text-sm">
+                    {otherDept.name}
+                  </h4>
+                  <span className="text-xs text-slate-500">{otherDept.category}</span>
+                </div>
+                <ArrowRight className="w-4 h-4 text-accent-500 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            ))}
+          </div>
+        </div>
 
         {/* CTA Box */}
         <div className="p-8 rounded-3xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-700 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-lg">
