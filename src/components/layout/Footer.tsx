@@ -73,6 +73,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/membership" className="flex items-center gap-2 text-slate-600 hover:text-accent-600 font-medium transition-colors group footer-link-item">
+                  <ChevronRight className="w-4 h-4 text-accent-500 group-hover:translate-x-1 transition-transform" />
+                  Membership Plans
+                </Link>
+              </li>
+              <li>
                 <Link href="/quiz" className="flex items-center gap-2 text-slate-600 hover:text-accent-600 font-medium transition-colors group footer-link-item">
                   <ChevronRight className="w-4 h-4 text-accent-500 group-hover:translate-x-1 transition-transform" />
                   Play with Quiz

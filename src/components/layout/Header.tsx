@@ -172,13 +172,19 @@ export function Header() {
                 <ChevronDown className="w-4 h-4 text-slate-700 transition-transform group-hover:rotate-180" />
               </button>
 
-              <div className="absolute top-full left-0 w-56 pt-2 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
+              <div className="absolute top-full left-0 w-60 pt-2 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
                 <div className="bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden p-2 text-slate-900">
-                  <div className="px-3 py-1.5 text-xs uppercase tracking-wider text-slate-400 font-bold">Plans</div>
-                  <Link href="/contact" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-amber-600 transition-colors text-sm">🥉 Bronze Tier</Link>
-                  <Link href="/contact" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-slate-500 transition-colors text-sm">🥈 Silver Tier</Link>
-                  <Link href="/contact" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-yellow-600 transition-colors text-sm">🥇 Gold Tier</Link>
-                  <Link href="/contact" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-accent-500 font-semibold transition-colors text-sm">💎 Premium VIP</Link>
+                  <div className="flex items-center justify-between px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <span>Membership</span>
+                    <Link href="/membership" className="text-brand-600 hover:text-accent-500 font-bold lowercase">view all</Link>
+                  </div>
+                  <Link href="/membership#bronze" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-amber-600 transition-colors text-sm">🥉 Bronze Tier (Free)</Link>
+                  <Link href="/membership#silver" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-slate-600 transition-colors text-sm">🥈 Silver Tier (Scholar)</Link>
+                  <Link href="/membership#gold" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-brand-600 transition-colors text-sm">🥇 Gold Tier (Popular)</Link>
+                  <Link href="/membership#premium" className="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-accent-500 font-semibold transition-colors text-sm">💎 Premium VIP</Link>
+                  <div className="border-t border-slate-100 mt-1 pt-1">
+                    <Link href="/membership" className="block px-3 py-2 rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-100 transition-colors text-xs font-bold text-center">Compare All Plans</Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -308,6 +314,17 @@ export function Header() {
               <Link href="/departments/non-technical" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Public Health</Link>
               <Link href="/departments/management" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Management & Commerce</Link>
               <Link href="/departments/other" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Arts & Designs</Link>
+            </div>
+
+            <div className="px-3 py-1 font-bold text-xs text-brand-500 uppercase tracking-wider">
+              Membership
+            </div>
+            <div className="pl-4 space-y-1">
+              <Link href="/membership" onClick={closeMenu} className="block py-1.5 text-sm font-semibold text-brand-600 hover:text-accent-500">View All Plans</Link>
+              <Link href="/membership#bronze" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Bronze Tier (Free)</Link>
+              <Link href="/membership#silver" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Silver Tier (Scholar)</Link>
+              <Link href="/membership#gold" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Gold Tier (Popular)</Link>
+              <Link href="/membership#premium" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Premium VIP</Link>
             </div>
 
             <div className="px-3 py-1 font-bold text-xs text-brand-500 uppercase tracking-wider">

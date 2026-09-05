@@ -95,17 +95,28 @@ The footer features a light aesthetic (`#f8fafc` background with `#ffffff` botto
 - Detailed executive and technical profiles for Vivek Kumar (CTO), Shivkant Kumar (COO), Sagar Saini (CEO), and faculty mentors.
 - Lists academic qualifications, industry certifications, direct contact details, and technical domains.
 
-### 8. 🔐 Authentication & Access Control (`/login`, `/register`, `/forgot-password`)
+### 8. 💎 Membership & Tiered Subscriptions (`/membership`)
+- **4-Tier Academic & Placement Pricing**:
+  - **🥉 Bronze Tier (Free Forever)**: Community access to university syllabus, browser coding IDE, sorting visualizer, and public forums.
+  - **🥈 Silver Tier (Scholar - ₹499/mo)**: Full semester lecture notes & PDFs, official assignment solutions, and automated test-case evaluation.
+  - **🥇 Gold Tier (Most Popular - ₹999/mo)**: Highlighted dark card with pure white text, 1-on-1 monthly technical mentorship with CTO/leads, live mock technical interviews, AI Assistant unlimited hints, and verifiable course certificates.
+  - **💎 Premium VIP (Elite Fellow - ₹1,999/mo)**: Direct WhatsApp line with mentors, resume audit, and startup placement referral pipelines.
+- **Interactive Billing Switcher**: Seamless toggle between Monthly and Annual billing (with a 25% discount incentive).
+- **Side-by-Side Comparison Matrix**: Comprehensive breakdown covering Academic & Curriculum, Coding Labs, and Mentorship.
+- **Campus & Institutional Cohorts Banner**: Group discount inquiries for college engineering departments.
+- **Interactive Enrollment Modal**: Instant plan preview, summary calculation, and student checkout.
+
+### 9. 🔐 Authentication & Access Control (`/login`, `/register`, `/forgot-password`)
 - **Role Selector**: Instant toggle between Student, Teacher, and Administrator roles with one-click demo credentials.
 - **Smart Registration Form**: Auto-calculates exact student age from Date of Birth input and provides stream selection.
 - **Password Reset**: Automated step-by-step recovery workflow.
 
-### 9. ⚙️ Administrative Command Suite (`/admin/dashboard`, `/admin/users`, `/admin/settings`)
+### 10. ⚙️ Administrative Command Suite (`/admin/dashboard`, `/admin/users`, `/admin/settings`)
 - **KPI Metrics Dashboard**: Real-time summary tiles tracking active students, course completions, platform revenue, and server health.
 - **User Management Portal**: Searchable and filterable data grid with role change actions, modal profile editor, and user removal.
 - **System Settings**: Academic calendar management, assignment submission deadlines, and email notifications.
 
-### 10. 💬 Floating Assistive Services
+### 11. 💬 Floating Assistive Services
 - **Direct WhatsApp Chat**: One-click floating trigger initiating instant chat with academic counselors.
 - **Floating AI Assistant**: Expandable slide-out assistant interface providing 24/7 automated platform navigation and guidance.
 

@@ -1,0 +1,100 @@
+/* ============================================================
+   Membership Page Stylesheet
+   ============================================================ */
+
+.membership-page {
+  background-color: #f8fafc;
+  color: #334155;
+  min-height: 100vh;
+}
+
+.membership-hero {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.membership-tier-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.membership-tier-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.membership-tier-popular {
+  background: linear-gradient(135deg, #173E67 0%, #0f2844 100%);
+  border: 2px solid #173E67;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ffffff !important;
+  box-shadow: 0 20px 35px -10px rgba(23, 62, 103, 0.3);
+}
+
+.membership-tier-popular:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 45px -10px rgba(23, 62, 103, 0.45);
+}
+
+.membership-tier-popular h1,
+.membership-tier-popular h2,
+.membership-tier-popular h3,
+.membership-tier-popular h4,
+.membership-tier-popular span:not([class*="bg-"]):not([class*="text-amber-"]):not([class*="text-accent-"]) {
+  color: #ffffff !important;
+}
+
+.membership-tier-popular p {
+  color: #f1f5f9 !important;
+}
+
+.membership-badge-popular {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #FF8000, #ff9933);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(255, 128, 0, 0.35);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.comparison-table-wrapper {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.04);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
