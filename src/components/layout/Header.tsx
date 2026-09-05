@@ -352,36 +352,17 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Interactive Search & CTA Button & Mobile Toggle */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 text-slate-500 hover:text-slate-800 text-xs font-semibold transition-all shadow-xs"
-              title="Quick Search (⌘K)"
-            >
-              <Search className="w-3.5 h-3.5 text-slate-400" />
-              <span className="hidden md:inline">Quick Search</span>
-              <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-200 rounded text-slate-500 shadow-xs">
-                ⌘K
-              </kbd>
-            </button>
-
+          {/* Profile Icon & Mobile Toggle */}
+          <div className="flex items-center gap-3">
             {/* Interactive Profile Icon & Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-2 p-1 pl-2 pr-2.5 rounded-full border border-slate-200 bg-white hover:border-slate-300 hover:shadow-xs transition-all focus:outline-none focus:ring-2 focus:ring-accent-500 cursor-pointer"
+                className="w-10 h-10 rounded-full border-2 border-slate-200 hover:border-accent-500 bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white shadow-sm transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent-500 cursor-pointer"
                 aria-label="User Profile"
                 title="Account & Profile"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white shadow-xs">
-                  <User className="w-4 h-4" />
-                </div>
-                <div className="hidden xl:flex flex-col items-start pr-1 text-left">
-                  <span className="text-xs font-bold text-slate-800 leading-tight">Vivek Kumar</span>
-                  <span className="text-[10px] text-slate-400 font-medium">Student</span>
-                </div>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 hidden sm:block ${isProfileOpen ? "rotate-180" : ""}`} />
+                <User className="w-5 h-5 text-white" />
               </button>
 
               {/* Profile Dropdown Menu */}
