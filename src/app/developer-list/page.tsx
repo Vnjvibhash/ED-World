@@ -397,7 +397,7 @@ export default function DeveloperListPage() {
                   value={terminalCommand}
                   onChange={(e) => setTerminalCommand(e.target.value)}
                   placeholder="Type a command (e.g. 'team', 'stack vivek', 'help') and press Enter..."
-                  className="flex-1 bg-transparent border-none text-white text-xs font-mono focus:outline-none placeholder:text-slate-600"
+                  className="dev-terminal-input flex-1 bg-transparent border-none text-emerald-300 text-xs font-mono focus:outline-none placeholder:text-slate-500"
                 />
               </form>
             </div>
@@ -891,17 +891,17 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {bookingMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate">
-          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5 text-slate-900">
             <button
               onClick={() => setBookingMember(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="relative w-14 h-14 rounded-2xl overflow-hidden border-2 border-accent-500 shrink-0">
+              <div className="relative w-14 h-14 rounded-2xl overflow-hidden border-2 border-accent-500 shrink-0 shadow">
                 <Image
                   src={bookingMember.image}
                   alt={bookingMember.name}
@@ -910,26 +910,26 @@ export default function DeveloperListPage() {
                 />
               </div>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-accent-600 bg-accent-50 px-2 py-0.5 rounded-full border border-accent-200">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-accent-600 bg-accent-50 px-2.5 py-0.5 rounded-full border border-accent-200">
                   1:1 Mentorship Session
                 </span>
-                <h3 className="text-xl font-bold text-slate-900">
+                <h3 className="text-xl font-extrabold text-slate-900 mt-0.5">
                   Book Session with <span className="text-accent-500">{bookingMember.name}</span>
                 </h3>
-                <p className="text-xs text-slate-500">{bookingMember.officeHours}</p>
+                <p className="text-xs text-slate-600 font-medium">{bookingMember.officeHours}</p>
               </div>
             </div>
 
             {bookingConfirmed ? (
-              <div className="py-8 text-center space-y-3">
-                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+              <div className="py-8 text-center space-y-3 bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
                   <Check className="w-7 h-7" />
                 </div>
-                <h4 className="text-lg font-bold text-slate-900">Session Confirmed!</h4>
-                <p className="text-xs text-slate-600">
-                  Your mentorship appointment has been booked. Meeting link has been dispatched to {bookingData.studentEmail}.
+                <h4 className="text-lg font-bold text-emerald-900">Session Confirmed!</h4>
+                <p className="text-xs text-emerald-800">
+                  Your mentorship appointment has been booked. Meeting link has been dispatched to <strong className="text-emerald-950">{bookingData.studentEmail}</strong>.
                 </p>
-                <div className="inline-block px-3 py-1 bg-slate-100 rounded-lg text-xs font-mono font-bold text-slate-800">
+                <div className="inline-block px-4 py-1.5 bg-white border border-emerald-300 rounded-lg text-xs font-mono font-bold text-emerald-900 shadow-sm">
                   Confirmation Code: {bookingRefId}
                 </div>
               </div>
@@ -937,83 +937,83 @@ export default function DeveloperListPage() {
               <form onSubmit={handleBookingSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Your Name</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Your Full Name</label>
                     <input
                       required
                       type="text"
                       value={bookingData.studentName}
                       onChange={(e) => setBookingData({ ...bookingData, studentName: e.target.value })}
                       placeholder="e.g. Ananya Sharma"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Student Email</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Student Email Address</label>
                     <input
                       required
                       type="email"
                       value={bookingData.studentEmail}
                       onChange={(e) => setBookingData({ ...bookingData, studentEmail: e.target.value })}
                       placeholder="ananya@student.ac.in"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Guidance Topic</label>
+                  <label className="block text-xs font-bold text-slate-800 mb-1.5">Guidance Topic</label>
                   <select
                     value={bookingData.topic}
                     onChange={(e) => setBookingData({ ...bookingData, topic: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
                   >
                     {bookingMember.mentorshipTopics.map((topic, i) => (
-                      <option key={i} value={topic}>
+                      <option key={i} value={topic} className="bg-white text-slate-900 py-1.5">
                         {topic}
                       </option>
                     ))}
-                    <option value="General Architecture Q&A">General Architecture &amp; Project Review</option>
+                    <option value="General Architecture Q&A" className="bg-white text-slate-900 py-1.5">General Architecture &amp; Project Review</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Select Available Slot</label>
+                  <label className="block text-xs font-bold text-slate-800 mb-1.5">Select Available Slot</label>
                   <select
                     value={bookingData.date}
                     onChange={(e) => setBookingData({ ...bookingData, date: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
                   >
-                    <option value="Tomorrow, 4:30 PM">Tomorrow • 4:30 PM - 5:00 PM IST</option>
-                    <option value="This Thursday, 5:15 PM">This Thursday • 5:15 PM - 5:45 PM IST</option>
-                    <option value="This Saturday, 11:00 AM">This Saturday • 11:00 AM - 11:30 AM IST</option>
-                    <option value="Next Monday, 4:00 PM">Next Monday • 4:00 PM - 4:30 PM IST</option>
+                    <option value="Tomorrow, 4:30 PM" className="bg-white text-slate-900 py-1.5">Tomorrow • 4:30 PM - 5:00 PM IST</option>
+                    <option value="This Thursday, 5:15 PM" className="bg-white text-slate-900 py-1.5">This Thursday • 5:15 PM - 5:45 PM IST</option>
+                    <option value="This Saturday, 11:00 AM" className="bg-white text-slate-900 py-1.5">This Saturday • 11:00 AM - 11:30 AM IST</option>
+                    <option value="Next Monday, 4:00 PM" className="bg-white text-slate-900 py-1.5">Next Monday • 4:00 PM - 4:30 PM IST</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Specific Questions or GitHub Repo (Optional)</label>
+                  <label className="block text-xs font-bold text-slate-800 mb-1.5">Specific Questions or GitHub Repo (Optional)</label>
                   <textarea
                     rows={2}
                     value={bookingData.notes}
                     onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
                     placeholder="Briefly state what you need help with (e.g. review my Next.js routing code)..."
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all resize-none"
                   />
                 </div>
 
-                <div className="flex items-center justify-end gap-2 pt-2">
+                <div className="flex items-center justify-end gap-2.5 pt-2">
                   <button
                     type="button"
                     onClick={() => setBookingMember(null)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-sm flex items-center gap-1.5"
+                    className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all flex items-center gap-2"
                   >
-                    <Calendar className="w-3.5 h-3.5" />
+                    <Calendar className="w-4 h-4" />
                     <span>Confirm Free Booking</span>
                   </button>
                 </div>
@@ -1028,10 +1028,10 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {digitalIdMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate">
-          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-6">
+          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-6 text-slate-900">
             <button
               onClick={() => setDigitalIdMember(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -1041,13 +1041,13 @@ export default function DeveloperListPage() {
               <span className="text-xs font-bold uppercase tracking-wider text-accent-600">
                 Official Credential
               </span>
-              <h3 className="text-xl font-bold text-slate-900 mt-0.5">
+              <h3 className="text-xl font-extrabold text-slate-900 mt-0.5">
                 Verified Digital ID Card
               </h3>
             </div>
 
             {/* Futuristic Hologram ID Card */}
-            <div className="digital-id-card p-6 text-white space-y-5">
+            <div className="digital-id-card p-6 text-white space-y-5 shadow-lg">
               <div className="flex items-center justify-between border-b border-white/15 pb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-accent-500 flex items-center justify-center font-bold text-white shadow">
@@ -1058,7 +1058,7 @@ export default function DeveloperListPage() {
                     <p className="text-[10px] text-accent-300">Technical Leadership Council</p>
                   </div>
                 </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                   VERIFIED
                 </span>
               </div>
@@ -1075,8 +1075,8 @@ export default function DeveloperListPage() {
                 <div className="space-y-1">
                   <h5 className="text-lg font-bold text-white leading-tight">{digitalIdMember.name}</h5>
                   <p className="text-xs font-semibold text-accent-400">{digitalIdMember.title}</p>
-                  <p className="text-[11px] text-slate-300">{digitalIdMember.role}</p>
-                  <span className="inline-block px-2 py-0.5 rounded font-mono text-[10px] bg-white/10 text-slate-200">
+                  <p className="text-[11px] text-slate-200">{digitalIdMember.role}</p>
+                  <span className="inline-block px-2 py-0.5 rounded font-mono text-[10px] bg-white/15 text-white font-bold border border-white/20">
                     ID: {digitalIdMember.idNumber}
                   </span>
                 </div>
@@ -1085,7 +1085,7 @@ export default function DeveloperListPage() {
               <div className="pt-2 border-t border-white/15 grid grid-cols-2 gap-2 text-[11px]">
                 <div>
                   <span className="text-slate-400 block text-[10px]">Accreditation:</span>
-                  <span className="text-slate-200 font-medium">Karnataka Board Certified</span>
+                  <span className="text-slate-100 font-medium">Karnataka Board Certified</span>
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">Security Status:</span>
@@ -1099,7 +1099,7 @@ export default function DeveloperListPage() {
             <div className="flex items-center justify-between gap-3 pt-2">
               <button
                 onClick={() => handleCopy(digitalIdMember.idNumber, "ID Number")}
-                className="flex-1 py-2.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition-all flex items-center justify-center gap-1.5"
+                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 transition-all flex items-center justify-center gap-1.5"
               >
                 <Copy className="w-3.5 h-3.5" />
                 <span>Copy ID Number</span>
@@ -1109,7 +1109,7 @@ export default function DeveloperListPage() {
                   showToast("Digital credential verified against ED-World ledger!");
                   setDigitalIdMember(null);
                 }}
-                className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-sm transition-all"
+                className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all"
               >
                 Verify Status
               </button>
@@ -1123,13 +1123,13 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {activeModalMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden modal-content-animate my-8">
+          <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden modal-content-animate my-8 text-slate-900">
             {/* Modal Header with Background Image & Gradient */}
-            <div className="relative h-44 sm:h-52 bg-gradient-to-r from-brand-700 to-brand-500 overflow-hidden">
+            <div className="relative h-44 sm:h-52 bg-gradient-to-r from-[#173E67] to-[#1e4d7e] overflow-hidden">
               <div className="absolute inset-0 bg-slate-900/40 mix-blend-multiply" />
               <button
                 onClick={() => setActiveModalMember(null)}
-                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 transition-all shadow"
+                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-black transition-all shadow-md"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -1149,17 +1149,17 @@ export default function DeveloperListPage() {
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-accent-500 text-white shadow">
                       {activeModalMember.role}
                     </span>
-                    <h3 className="text-2xl font-bold mt-1 leading-tight">{activeModalMember.name}</h3>
-                    <p className="text-xs text-accent-200 font-medium">{activeModalMember.title}</p>
+                    <h3 className="text-2xl font-extrabold mt-1 leading-tight text-white">{activeModalMember.name}</h3>
+                    <p className="text-xs text-accent-300 font-medium">{activeModalMember.title}</p>
                   </div>
                 </div>
 
                 <button
                   onClick={() => handleEndorse(activeModalMember.id)}
-                  className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow ${
+                  className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-md ${
                     endorsedMembers[activeModalMember.id]
                       ? "bg-rose-500 text-white"
-                      : "bg-white text-slate-700 hover:text-rose-500"
+                      : "bg-white text-slate-800 hover:text-rose-500"
                   }`}
                 >
                   <Heart className={`w-4 h-4 ${endorsedMembers[activeModalMember.id] ? "fill-current" : ""}`} />
@@ -1169,7 +1169,7 @@ export default function DeveloperListPage() {
             </div>
 
             {/* Modal Navigation Tabs */}
-            <div className="flex items-center border-b border-slate-200 px-6 bg-slate-50 overflow-x-auto">
+            <div className="flex items-center border-b border-slate-200 px-6 bg-slate-100 overflow-x-auto">
               {[
                 { id: "overview", label: "Overview", icon: Users },
                 { id: "proficiency", label: "Tech Stack", icon: Code2 },
@@ -1183,8 +1183,8 @@ export default function DeveloperListPage() {
                     onClick={() => setModalTab(tab.id as any)}
                     className={`py-3 px-4 text-xs font-bold flex items-center gap-1.5 border-b-2 whitespace-nowrap transition-all ${
                       modalTab === tab.id
-                        ? "border-accent-500 text-accent-600 bg-white"
-                        : "border-transparent text-slate-500 hover:text-slate-800"
+                        ? "border-accent-500 text-accent-600 bg-white shadow-sm"
+                        : "border-transparent text-slate-600 hover:text-slate-900"
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -1195,43 +1195,43 @@ export default function DeveloperListPage() {
             </div>
 
             {/* Modal Tab Content */}
-            <div className="p-6 max-h-[60vh] overflow-y-auto space-y-5">
+            <div className="p-6 max-h-[60vh] overflow-y-auto space-y-5 bg-white">
               {modalTab === "overview" && (
                 <div className="space-y-4">
                   <div>
-                    <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                    <h4 className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1.5">
                       Professional Background
                     </h4>
-                    <p className="text-sm text-slate-700 leading-relaxed">
+                    <p className="text-sm text-slate-700 leading-relaxed font-normal">
                       {activeModalMember.bio}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-1">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 mb-1">
                         <GraduationCap className="w-4 h-4 text-brand-500" />
                         <span>Academic Degree</span>
                       </div>
-                      <p className="text-xs text-slate-600">{activeModalMember.degree}</p>
+                      <p className="text-xs text-slate-600 font-medium">{activeModalMember.degree}</p>
                     </div>
 
                     <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-1">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 mb-1">
                         <Award className="w-4 h-4 text-amber-500" />
                         <span>Board Accreditation</span>
                       </div>
-                      <p className="text-xs text-slate-600">{activeModalMember.designation}</p>
+                      <p className="text-xs text-slate-600 font-medium">{activeModalMember.designation}</p>
                     </div>
                   </div>
 
                   <div className="pt-2">
-                    <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                    <h4 className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-2">
                       Core Skills &amp; Competencies
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {activeModalMember.skills.map((skill, i) => (
-                        <span key={i} className="dev-skill-chip font-medium">
+                        <span key={i} className="dev-skill-chip font-bold">
                           {skill}
                         </span>
                       ))}
@@ -1242,15 +1242,15 @@ export default function DeveloperListPage() {
 
               {modalTab === "proficiency" && (
                 <div className="space-y-4">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <h4 className="text-xs font-bold text-brand-600 uppercase tracking-wider">
                     Assessed Technical Proficiency
                   </h4>
                   <div className="space-y-3.5">
                     {activeModalMember.skillProficiency.map((item, i) => (
                       <div key={i} className="space-y-1">
-                        <div className="flex justify-between text-xs font-semibold text-slate-700">
+                        <div className="flex justify-between text-xs font-bold text-slate-800">
                           <span>{item.skill}</span>
-                          <span className="text-accent-600">{item.level}%</span>
+                          <span className="text-accent-600 font-extrabold">{item.level}%</span>
                         </div>
                         <div className="proficiency-track">
                           <div
@@ -1266,7 +1266,7 @@ export default function DeveloperListPage() {
 
               {modalTab === "projects" && (
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  <h4 className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1">
                     Featured Systems &amp; Contributions
                   </h4>
                   {activeModalMember.featuredProjects.map((proj, i) => (
@@ -1280,7 +1280,7 @@ export default function DeveloperListPage() {
                           {proj.tag}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed">{proj.description}</p>
+                      <p className="text-xs text-slate-600 leading-relaxed font-medium">{proj.description}</p>
                     </div>
                   ))}
                 </div>
@@ -1288,14 +1288,14 @@ export default function DeveloperListPage() {
 
               {modalTab === "milestones" && (
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  <h4 className="text-xs font-bold text-brand-600 uppercase tracking-wider mb-1">
                     Key Leadership Milestones
                   </h4>
                   <div className="space-y-2.5">
                     {activeModalMember.keyMilestones.map((milestone, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-slate-700">
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-slate-800">
                         <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="leading-relaxed">{milestone}</span>
+                        <span className="leading-relaxed font-medium">{milestone}</span>
                       </div>
                     ))}
                   </div>
@@ -1308,14 +1308,14 @@ export default function DeveloperListPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleCopy(window.location.href, "Profile URL")}
-                  className="px-3 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5"
+                  className="px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5"
                 >
                   <Share2 className="w-3.5 h-3.5 text-slate-500" />
                   <span>Share Profile</span>
                 </button>
                 <button
                   onClick={() => handleCopy(activeModalMember.email, "Email Address")}
-                  className="px-3 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5"
+                  className="px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5"
                 >
                   <Copy className="w-3.5 h-3.5 text-slate-500" />
                   <span>Copy Email</span>
@@ -1329,7 +1329,7 @@ export default function DeveloperListPage() {
                     setActiveModalMember(null);
                     setBookingMember(target);
                   }}
-                  className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-sm transition-all flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all flex items-center gap-1.5"
                 >
                   <Calendar className="w-3.5 h-3.5" />
                   <span>Book Mentorship</span>
@@ -1345,10 +1345,10 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {isJoinModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate">
-          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5 text-slate-900">
             <button
               onClick={() => setIsJoinModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -1359,21 +1359,21 @@ export default function DeveloperListPage() {
                 <Rocket className="w-3.5 h-3.5" />
                 <span>Join Developer Network</span>
               </div>
-              <h3 className="text-xl font-bold text-slate-900">
+              <h3 className="text-xl font-extrabold text-slate-900">
                 Apply as a <span className="text-accent-500">Developer or Mentor</span>
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-600 font-medium">
                 Collaborate with our core team on open-source educational modules and algorithms.
               </p>
             </div>
 
             {joinSubmitted ? (
-              <div className="py-8 text-center space-y-3">
-                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+              <div className="py-8 text-center space-y-3 bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
                   <Check className="w-7 h-7" />
                 </div>
-                <h4 className="text-lg font-bold text-slate-900">Application Received!</h4>
-                <p className="text-xs text-slate-600">
+                <h4 className="text-lg font-bold text-emerald-900">Application Received!</h4>
+                <p className="text-xs text-emerald-800">
                   Thank you for applying. Vivek Kumar and the leadership team will review your portfolio.
                 </p>
               </div>
@@ -1381,81 +1381,81 @@ export default function DeveloperListPage() {
               <form onSubmit={handleJoinSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Full Name</label>
                     <input
                       required
                       type="text"
                       value={joinForm.name}
                       onChange={(e) => setJoinForm({ ...joinForm, name: e.target.value })}
                       placeholder="e.g. Amit Verma"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Email Address</label>
                     <input
                       required
                       type="email"
                       value={joinForm.email}
                       onChange={(e) => setJoinForm({ ...joinForm, email: e.target.value })}
                       placeholder="amit@example.com"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Role of Interest</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Role of Interest</label>
                     <select
                       value={joinForm.role}
                       onChange={(e) => setJoinForm({ ...joinForm, role: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
                     >
-                      <option value="Full-Stack Web">Full-Stack Web (Next.js/Node)</option>
-                      <option value="AI & ML Engineer">AI &amp; Machine Learning</option>
-                      <option value="Data & Research">Data &amp; Research Analyst</option>
-                      <option value="Content & Curriculum">Content &amp; Curriculum Specialist</option>
-                      <option value="Technical Mentor">Student Technical Mentor</option>
+                      <option value="Full-Stack Web" className="bg-white text-slate-900 py-1.5">Full-Stack Web (Next.js/Node)</option>
+                      <option value="AI & ML Engineer" className="bg-white text-slate-900 py-1.5">AI &amp; Machine Learning</option>
+                      <option value="Data & Research" className="bg-white text-slate-900 py-1.5">Data &amp; Research Analyst</option>
+                      <option value="Content & Curriculum" className="bg-white text-slate-900 py-1.5">Content &amp; Curriculum Specialist</option>
+                      <option value="Technical Mentor" className="bg-white text-slate-900 py-1.5">Student Technical Mentor</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">GitHub / Portfolio URL</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">GitHub / Portfolio URL</label>
                     <input
                       type="url"
                       value={joinForm.portfolio}
                       onChange={(e) => setJoinForm({ ...joinForm, portfolio: e.target.value })}
                       placeholder="https://github.com/username"
-                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Brief Introduction &amp; Skills</label>
+                  <label className="block text-xs font-bold text-slate-800 mb-1.5">Brief Introduction &amp; Skills</label>
                   <textarea
                     required
                     rows={3}
                     value={joinForm.note}
                     onChange={(e) => setJoinForm({ ...joinForm, note: e.target.value })}
                     placeholder="Tell us about projects you have built and which modules you would like to contribute to..."
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-accent-500 focus:bg-white resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all resize-none"
                   />
                 </div>
 
-                <div className="flex items-center justify-end gap-2 pt-2">
+                <div className="flex items-center justify-end gap-2.5 pt-2">
                   <button
                     type="button"
                     onClick={() => setIsJoinModalOpen(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-sm flex items-center gap-1.5"
+                    className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md flex items-center gap-2 transition-all"
                   >
-                    <Rocket className="w-3.5 h-3.5" />
+                    <Rocket className="w-4 h-4" />
                     <span>Submit Application</span>
                   </button>
                 </div>

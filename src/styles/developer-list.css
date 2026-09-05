@@ -190,6 +190,18 @@
   line-height: 1.6;
 }
 
+.dev-terminal-input {
+  background-color: transparent !important;
+  color: #34d399 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dev-terminal-input::placeholder {
+  color: #64748b !important;
+}
+
 /* Digital ID Card Styling */
 .digital-id-card {
   background: linear-gradient(135deg, #0d1b2a 0%, #173e67 50%, #1b263b 100%);

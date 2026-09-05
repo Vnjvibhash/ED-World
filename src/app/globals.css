@@ -422,7 +422,7 @@ a[aria-disabled="true"] {
 }
 
 /* Form controls */
-input,
+input:not(.dev-terminal-input),
 select,
 textarea {
   background-color: #ffffff !important;
@@ -430,9 +430,40 @@ textarea {
   border-color: #cbd5e1 !important;
 }
 
-input::placeholder,
+select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+input:not(.dev-terminal-input)::placeholder,
 textarea::placeholder {
   color: #94a3b8 !important;
+}
+
+/* Modal and Popup Form General Contrast Rules */
+.modal-content-animate,
+[class*="modal"] {
+  color: #0f172a;
+}
+
+.modal-content-animate label {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+.modal-content-animate input:not(.dev-terminal-input),
+.modal-content-animate select,
+.modal-content-animate textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+.modal-content-animate input:not(.dev-terminal-input):focus,
+.modal-content-animate select:focus,
+.modal-content-animate textarea:focus {
+  border-color: #FF8000 !important;
+  box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.15) !important;
 }
 
 /* Elevated Light Shadows */
