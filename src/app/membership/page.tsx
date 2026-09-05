@@ -703,44 +703,44 @@ export default function MembershipPage() {
                   </p>
                 </div>
 
-                <form onSubmit={handleModalSubmit} className="space-y-4">
+                <form onSubmit={handleModalSubmit} className="space-y-4 text-slate-900">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Full Name</label>
                     <input
                       type="text"
                       required
                       value={studentName}
                       onChange={(e) => setStudentName(e.target.value)}
                       placeholder="e.g. Rahul Sharma"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none text-sm text-slate-900"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none text-sm text-slate-900 font-medium placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">Email Address</label>
                     <input
                       type="email"
                       required
                       value={studentEmail}
                       onChange={(e) => setStudentEmail(e.target.value)}
                       placeholder="e.g. rahul@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none text-sm text-slate-900"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none text-sm text-slate-900 font-medium placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">University / College (Optional)</label>
+                    <label className="block text-xs font-bold text-slate-800 mb-1.5">University / College (Optional)</label>
                     <input
                       type="text"
                       value={studentCollege}
                       onChange={(e) => setStudentCollege(e.target.value)}
                       placeholder="e.g. Chandigarh University / NIT"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none text-sm text-slate-900"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none text-sm text-slate-900 font-medium placeholder:text-slate-400 shadow-sm transition-all"
                     />
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs">
-                    <span className="text-slate-600 font-medium">Total Payable Today:</span>
+                  <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                    <span className="text-slate-700 font-semibold">Total Payable Today:</span>
                     <span className="font-extrabold text-slate-900 text-sm">
                       ₹{billingCycle === "annual" && selectedModalPlan.monthlyPrice > 0
                         ? selectedModalPlan.annualPrice.toLocaleString("en-IN")
@@ -750,13 +750,13 @@ export default function MembershipPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl font-bold text-sm text-white bg-brand-500 hover:bg-brand-600 shadow-md transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all flex items-center justify-center gap-2"
                   >
                     <Lock className="w-4 h-4" />
                     <span>Proceed to Access Setup</span>
                   </button>
 
-                  <p className="text-center text-[11px] text-slate-400">
+                  <p className="text-center text-[11px] text-slate-500 font-medium">
                     🔒 256-bit encrypted checkout. 7-day unconditional money back guarantee.
                   </p>
                 </form>

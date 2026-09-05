@@ -466,6 +466,25 @@ textarea::placeholder {
   box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.15) !important;
 }
 
+/* Dark Admin Modal Overrides */
+.admin-modal,
+.admin-modal * {
+  color: #f8fafc;
+}
+
+.admin-modal input,
+.admin-modal select {
+  background-color: #020617 !important;
+  color: #ffffff !important;
+  border-color: #334155 !important;
+}
+
+.admin-modal select option {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+
 /* Elevated Light Shadows */
 .shadow-2xl,
 .shadow-xl {

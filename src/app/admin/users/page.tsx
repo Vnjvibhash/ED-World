@@ -206,50 +206,50 @@ export default function AdminUsersPage() {
         {/* Edit User Modal */}
         {editingUser && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4">
+            <div className="admin-modal bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4">
               <h3 className="text-lg font-bold text-white">Edit User Profile</h3>
               <form onSubmit={handleSaveEdit} className="space-y-3 text-xs sm:text-sm">
                 <div className="space-y-1">
-                  <label className="text-slate-400">Name</label>
+                  <label className="text-slate-300 font-bold">Full Name</label>
                   <input
                     type="text"
                     value={editingUser.name}
                     onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white outline-none focus:border-brand-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-slate-400">Email</label>
+                  <label className="text-slate-300 font-bold">Email Address</label>
                   <input
                     type="email"
                     value={editingUser.email}
                     onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white outline-none focus:border-brand-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-slate-400">Role</label>
+                  <label className="text-slate-300 font-bold">Assigned Role</label>
                   <select
                     value={editingUser.role}
                     onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value as AdminUser["role"] })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white outline-none focus:border-brand-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500"
                   >
-                    <option value="Administrator">Administrator</option>
-                    <option value="Instructor">Instructor</option>
-                    <option value="Student">Student</option>
+                    <option value="Administrator" className="bg-slate-900 text-white">Administrator</option>
+                    <option value="Instructor" className="bg-slate-900 text-white">Instructor</option>
+                    <option value="Student" className="bg-slate-900 text-white">Student</option>
                   </select>
                 </div>
                 <div className="flex justify-end gap-2 pt-4">
                   <button
                     type="button"
                     onClick={() => setEditingUser(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold"
+                    className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-xl bg-brand-500 text-white hover:bg-brand-400 text-xs font-semibold"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-white text-xs font-bold shadow-md transition-all"
                   >
                     Save Changes
                   </button>
