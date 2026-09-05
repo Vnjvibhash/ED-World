@@ -35,7 +35,7 @@
 .dev-profile-card:hover {
   border-color: #FF8000;
   transform: translateY(-4px);
-  box-shadow: 0 14px 30px -5px rgba(255, 128, 0, 0.2);
+  box-shadow: 0 14px 30px -5px rgba(255, 128, 0, 0.18);
 }
 
 .dev-photo-header {
@@ -71,12 +71,143 @@
 }
 
 .dev-skill-chip {
-  padding: 0.25rem 0.625rem;
+  padding: 0.3rem 0.65rem;
   border-radius: 8px;
   background-color: #f0f4f9;
   border: 1px solid #dce6f2;
-  font-size: 0.6875rem;
+  font-size: 0.72rem;
   font-family: var(--font-family-mono, monospace);
   color: #173E67;
   font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
+
+.dev-skill-chip:hover {
+  background-color: #fff7ed;
+  border-color: #FF8000;
+  color: #c25e00;
+  transform: translateY(-1px);
+}
+
+.dev-skill-chip.active {
+  background-color: #FF8000;
+  border-color: #ea6c00;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(255, 128, 0, 0.25);
+}
+
+/* Modal Animations */
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-backdrop-animate {
+  animation: fadeInBackdrop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-content-animate {
+  animation: slideUpModal 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Endorsement Button Pulse Animation */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.animate-heart-pop {
+  animation: heartPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Proficiency Meter */
+.proficiency-track {
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.proficiency-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #173E67 0%, #FF8000 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Pulsing Status Dot */
+@keyframes pulseDot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.status-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #22c55e;
+  animation: pulseDot 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Terminal Console Styling */
+.dev-terminal-window {
+  background-color: #0d1520;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  overflow: hidden;
+}
+
+.dev-terminal-header {
+  background-color: #090e17;
+  border-bottom: 1px solid #1e293b;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dev-terminal-body {
+  padding: 1.25rem;
+  color: #cbd5e1;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+/* Digital ID Card Styling */
+.digital-id-card {
+  background: linear-gradient(135deg, #0d1b2a 0%, #173e67 50%, #1b263b 100%);
+  border: 2px solid rgba(255, 128, 0, 0.35);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(23, 62, 103, 0.45);
+}
+
+.digital-id-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 128, 0, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
