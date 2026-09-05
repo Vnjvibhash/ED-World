@@ -19,21 +19,60 @@ import {
   Sparkles,
   BookOpen,
   Laptop,
-  Layers
+  Layers,
+  Search,
+  Command
 } from "lucide-react";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
+
+  const SEARCH_ITEMS = [
+    { title: "Stack Visualizer", desc: "LIFO stack operations, push/pop/peek", href: "/data-structures/stack", cat: "Data Structures" },
+    { title: "Queue Visualizer", desc: "FIFO, Circular buffer & Priority queue", href: "/data-structures/queue", cat: "Data Structures" },
+    { title: "Linked List Visualizer", desc: "Singly & Doubly pointer chaining", href: "/data-structures/linked-list", cat: "Data Structures" },
+    { title: "Binary Search Tree", desc: "Hierarchical BST traversals (Inorder/Pre/Post/BFS)", href: "/data-structures/binary-tree", cat: "Data Structures" },
+    { title: "Binary Heap Visualizer", desc: "Min/Max heaps with dual tree & array view", href: "/data-structures/heap", cat: "Data Structures" },
+    { title: "Graph Visualizer", desc: "BFS, DFS & Dijkstra shortest pathfinding", href: "/data-structures/graph", cat: "Data Structures" },
+    { title: "Hash Table Visualizer", desc: "Separate chaining & linear probing", href: "/data-structures/hash-table", cat: "Data Structures" },
+    { title: "Sorting Algorithm Visualizer", desc: "Interactive Bubble, Quick, Merge, Heap sort", href: "/sorting-algorithm", cat: "Algorithms" },
+    { title: "Coding Practice Web IDE", desc: "Multi-language in-browser coding playground", href: "/practice", cat: "Tools" },
+    { title: "15s Live Challenge Quiz", desc: "Interactive time-bound skill test", href: "/quiz", cat: "Challenges" },
+    { title: "Assignments Portal", desc: "Academic homework and lab tasks", href: "/assignment", cat: "Academics" },
+    { title: "All Learning Resources", desc: "Curated student guides and tools", href: "/resources", cat: "Resources" },
+  ];
+
+  const filteredItems = SEARCH_ITEMS.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.cat.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      } else if (e.key === "Escape") {
+        setIsSearchOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const closeMenu = () => {
@@ -311,21 +350,19 @@ export function Header() {
             </Link>
           </div>
 
-          {/* CTA Button & Mobile Toggle */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/register"
-              className="hidden sm:inline-flex items-center justify-center px-6 py-2.5 rounded-full font-bold text-sm shadow-md transition-all hover:scale-105 active:scale-95 btn-get-started"
-              style={{
-                backgroundColor: "#FF8000",
-                backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
-                color: "#ffffff",
-                border: "1px solid #ea6c00",
-                boxShadow: "0 4px 14px rgba(255, 128, 0, 0.4)"
-              }}
+          {/* Interactive Search & CTA Button & Mobile Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 text-slate-500 hover:text-slate-800 text-xs font-semibold transition-all shadow-xs"
+              title="Quick Search (⌘K)"
             >
-              <span style={{ color: "#ffffff", fontWeight: 700 }}>Get Started</span>
-            </Link>
+              <Search className="w-3.5 h-3.5 text-slate-400" />
+              <span className="hidden md:inline">Quick Search</span>
+              <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono bg-white border border-slate-200 rounded text-slate-500 shadow-xs">
+                ⌘K
+              </kbd>
+            </button>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -410,25 +447,78 @@ export function Header() {
             >
               Login / Account
             </Link>
-            <div className="pt-2">
-              <Link
-                href="/register"
-                onClick={closeMenu}
-                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl font-bold text-sm shadow-md btn-get-started"
-                style={{
-                  backgroundColor: "#FF8000",
-                  backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
-                  color: "#ffffff",
-                  border: "1px solid #ea6c00",
-                  boxShadow: "0 4px 14px rgba(255, 128, 0, 0.35)"
-                }}
-              >
-                <span style={{ color: "#ffffff", fontWeight: 700 }}>Get Started</span>
-              </Link>
-            </div>
           </div>
         )}
       </nav>
+
+      {/* Interactive Quick Command Search Modal (⌘K) */}
+      {isSearchOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-start justify-center pt-20 px-4 animate-in fade-in duration-150"
+          onClick={() => setIsSearchOpen(false)}
+        >
+          <div
+            className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Search Input Bar */}
+            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 bg-slate-50/50">
+              <Search className="w-5 h-5 text-slate-400 shrink-0" />
+              <input
+                type="text"
+                autoFocus
+                placeholder="Search data structures, visualizers, quiz, tools... (Esc to close)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-transparent text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none"
+              />
+              <button
+                onClick={() => setIsSearchOpen(false)}
+                className="p-1 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-200/60"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Filtered Search Results */}
+            <div className="max-h-80 overflow-y-auto p-2 divide-y divide-slate-100">
+              {filteredItems.length === 0 ? (
+                <div className="py-8 text-center text-xs text-slate-400">
+                  No visualizer or resource matching &ldquo;{searchQuery}&rdquo;
+                </div>
+              ) : (
+                filteredItems.map((item, idx) => (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    onClick={() => {
+                      setIsSearchOpen(false);
+                      setSearchQuery("");
+                    }}
+                    className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 transition-colors group"
+                  >
+                    <div>
+                      <div className="font-semibold text-sm text-slate-900 group-hover:text-violet-600 transition-colors">
+                        {item.title}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-0.5">{item.desc}</div>
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 shrink-0">
+                      {item.cat}
+                    </span>
+                  </Link>
+                ))
+              )}
+            </div>
+
+            {/* Keyboard Hint Footer */}
+            <div className="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+              <span>Press <kbd className="px-1.5 py-0.5 bg-white border border-slate-200 rounded font-mono">Esc</kbd> to close</span>
+              <span>Navigate with click or enter</span>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
