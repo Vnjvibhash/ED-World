@@ -1,0 +1,34 @@
+/* ============================================================
+   Privacy Policy Stylesheet (/privacy-policy) - Pure Light Theme
+   ============================================================ */
+
+.privacy-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 4rem 1rem;
+}
+
+.privacy-card {
+  max-width: 56rem;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 2.5rem;
+  color: #334155;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.privacy-card h1, .privacy-card h2, .privacy-card h3, .privacy-card h4 {
+  color: #0f172a;
+}
+
+.privacy-card p {
+  color: #475569;
+}
+
+@media (min-width: 640px) {
+  .privacy-card {
+    padding: 3.5rem;
+  }
+}

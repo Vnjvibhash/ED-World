@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+@import "../styles/index.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+html, body {
+  font-family: var(--font-family-base, 'Poppins', sans-serif);
+  color: #0f172a;
+  background-color: #f8fafc;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbar - Light Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #173E67;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF8000;
+}
+
+/* Utilities & Glow based on Logo Colors */
+.gradient-bg {
+  background: linear-gradient(135deg, #173E67 0%, #133355 100%);
+}
+
+.gradient-orange {
+  background: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #173E67 0%, #FF8000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-hover {
+  transition: all 0.3s ease;
+}
+.glow-hover:hover {
+  box-shadow: 0 10px 25px -5px rgba(255, 128, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Pure Light Theme Styling
+   ============================================================ */
+
+body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Base Light Theme Text for Default Body and Neutral Elements */
+body, main {
+  color: #0f172a;
+}
+
+/* ============================================================
+   Typography & Contrast Rules
+   CORE RULE: If Card / Container BG is Dark, Text Color MUST be White
+   ============================================================ */
+
+/* 1. Global text-white enforcement: Any element marked text-white is always pure white */
+.text-white,
+[class*="text-white"] {
+  color: #ffffff !important;
+}
+
+/* 2. BASELINE LIGHT THEME CARDS:
+   All standard light theme cards have dark headings and readable slate body text */
+.site-card,
+.pillar-card,
+.department-card,
+.team-member-card,
+.engineering-banner-card,
+.subject-course-card,
+.assignment-task-card,
+.dev-profile-card,
+.contact-info-card,
+.contact-form-card,
+.quiz-card,
+.sorting-visualizer-card,
+.sorting-complexity-card,
+.about-hero-card,
+.about-facts-card,
+.privacy-card,
+.terms-card,
+.faqs-accordion-card,
+.upload-form-card,
+.upload-success-card,
+.login-auth-card,
+.register-card,
+.forgot-card {
+  color: #334155;
+}
+
+.site-card h1, .site-card h2, .site-card h3, .site-card h4,
+.pillar-card h1, .pillar-card h2, .pillar-card h3, .pillar-card h4,
+.department-card h1, .department-card h2, .department-card h3, .department-card h4,
+.team-member-card h1, .team-member-card h2, .team-member-card h3, .team-member-card h4,
+.engineering-banner-card h1, .engineering-banner-card h2, .engineering-banner-card h3, .engineering-banner-card h4,
+.subject-course-card h1, .subject-course-card h2, .subject-course-card h3, .subject-course-card h4,
+.assignment-task-card h1, .assignment-task-card h2, .assignment-task-card h3, .assignment-task-card h4,
+.dev-profile-card h1, .dev-profile-card h2, .dev-profile-card h3, .dev-profile-card h4,
+.contact-info-card h1, .contact-info-card h2, .contact-info-card h3, .contact-info-card h4,
+.contact-form-card h1, .contact-form-card h2, .contact-form-card h3, .contact-form-card h4,
+.quiz-card h1, .quiz-card h2, .quiz-card h3, .quiz-card h4,
+.sorting-visualizer-card h1, .sorting-visualizer-card h2, .sorting-visualizer-card h3, .sorting-visualizer-card h4,
+.sorting-complexity-card h1, .sorting-complexity-card h2, .sorting-complexity-card h3, .sorting-complexity-card h4,
+.about-hero-card h1, .about-hero-card h2, .about-hero-card h3, .about-hero-card h4,
+.about-facts-card h1, .about-facts-card h2, .about-facts-card h3, .about-facts-card h4,
+.privacy-card h1, .privacy-card h2, .privacy-card h3, .privacy-card h4,
+.terms-card h1, .terms-card h2, .terms-card h3, .terms-card h4,
+.faqs-accordion-card h1, .faqs-accordion-card h2, .faqs-accordion-card h3, .faqs-accordion-card h4,
+.upload-form-card h1, .upload-form-card h2, .upload-form-card h3, .upload-form-card h4,
+.upload-success-card h1, .upload-success-card h2, .upload-success-card h3, .upload-success-card h4,
+.login-auth-card h1, .login-auth-card h2, .login-auth-card h3, .login-auth-card h4,
+.register-card h1, .register-card h2, .register-card h3, .register-card h4,
+.forgot-card h1, .forgot-card h2, .forgot-card h3, .forgot-card h4 {
+  color: #0f172a;
+}
+
+.site-card p,
+.pillar-card p,
+.department-card p,
+.team-member-card p,
+.engineering-banner-card p,
+.subject-course-card p,
+.assignment-task-card p,
+.dev-profile-card p,
+.contact-info-card p,
+.contact-form-card p,
+.quiz-card p,
+.sorting-visualizer-card p,
+.sorting-complexity-card p,
+.about-hero-card p,
+.about-facts-card p,
+.privacy-card p,
+.terms-card p,
+.faqs-accordion-card p,
+.upload-form-card p,
+.upload-success-card p,
+.login-auth-card p,
+.register-card p,
+.forgot-card p {
+  color: #475569;
+}
+
+/* 3. RULE: IF CARD BG IS DARK THEN TEXT COLOR SHOULD BE WHITE
+   Applied strictly to containers/cards that have a dark background */
+.dark-card,
+.card-dark,
+.department-cta-box,
+.footer-card-cta,
+.ide-window,
+.terminal-window,
+[class*="bg-slate-900"],
+[class*="bg-slate-950"],
+[class*="bg-slate-800"],
+[class*="bg-brand-900"],
+[class*="bg-brand-950"],
+[class*="bg-[#173E67]"],
+[class*="bg-[#0f172a]"],
+[class*="bg-[#020617]"],
+[class*="from-brand-900"],
+[class*="from-brand-950"],
+[class*="from-slate-900"],
+[class*="from-slate-950"] {
+  color: #ffffff !important;
+}
+
+/* Headings inside ANY dark card or dark container MUST BE WHITE */
+.dark-card h1, .dark-card h2, .dark-card h3, .dark-card h4, .dark-card h5, .dark-card h6,
+.card-dark h1, .card-dark h2, .card-dark h3, .card-dark h4, .card-dark h5, .card-dark h6,
+.department-cta-box h1, .department-cta-box h2, .department-cta-box h3, .department-cta-box h4, .department-cta-box h5, .department-cta-box h6,
+.footer-card-cta h1, .footer-card-cta h2, .footer-card-cta h3, .footer-card-cta h4,
+.ide-window h1, .ide-window h2, .ide-window h3, .ide-window h4,
+.terminal-window h1, .terminal-window h2, .terminal-window h3,
+[class*="bg-slate-900"] h1, [class*="bg-slate-900"] h2, [class*="bg-slate-900"] h3, [class*="bg-slate-900"] h4,
+[class*="bg-slate-950"] h1, [class*="bg-slate-950"] h2, [class*="bg-slate-950"] h3, [class*="bg-slate-950"] h4,
+[class*="bg-slate-800"] h1, [class*="bg-slate-800"] h2, [class*="bg-slate-800"] h3, [class*="bg-slate-800"] h4,
+[class*="bg-brand-900"] h1, [class*="bg-brand-900"] h2, [class*="bg-brand-900"] h3, [class*="bg-brand-900"] h4,
+[class*="bg-brand-950"] h1, [class*="bg-brand-950"] h2, [class*="bg-brand-950"] h3, [class*="bg-brand-950"] h4,
+[class*="bg-[#173E67]"] h1, [class*="bg-[#173E67]"] h2, [class*="bg-[#173E67]"] h3, [class*="bg-[#173E67]"] h4,
+[class*="bg-[#0f172a]"] h1, [class*="bg-[#0f172a]"] h2, [class*="bg-[#0f172a]"] h3, [class*="bg-[#0f172a]"] h4,
+[class*="bg-[#020617]"] h1, [class*="bg-[#020617]"] h2, [class*="bg-[#020617]"] h3, [class*="bg-[#020617]"] h4,
+[class*="from-brand-900"] h1, [class*="from-brand-900"] h2, [class*="from-brand-900"] h3, [class*="from-brand-900"] h4,
+[class*="from-slate-900"] h1, [class*="from-slate-900"] h2, [class*="from-slate-900"] h3, [class*="from-slate-900"] h4,
+[class*="from-slate-950"] h1, [class*="from-slate-950"] h2, [class*="from-slate-950"] h3, [class*="from-slate-950"] h4 {
+  color: #ffffff !important;
+}
+
+/* Secondary & paragraph text inside dark cards/containers MUST be light and readable */
+.dark-card p,
+.card-dark p,
+.department-cta-box p,
+.footer-card-cta p,
+.department-cta-box span:not([class*="text-"]):not([class*="bg-"]),
+.department-cta-box .text-slate-200,
+.department-cta-box .text-slate-300,
+.department-cta-box .text-slate-400,
+.footer-card-cta .text-slate-300,
+.footer-card-cta .text-slate-400,
+[class*="bg-slate-900"] p,
+[class*="bg-slate-950"] p,
+[class*="bg-slate-800"] p,
+[class*="bg-brand-900"] p,
+[class*="bg-brand-950"] p,
+[class*="bg-[#173E67]"] p,
+[class*="bg-[#0f172a]"] p,
+[class*="bg-[#020617]"] p,
+[class*="from-brand-900"] p,
+[class*="from-slate-900"] p,
+[class*="from-slate-950"] p {
+  color: #f1f5f9 !important;
+}
+
+[class*="bg-slate-900"] .text-slate-300,
+[class*="bg-slate-900"] .text-slate-400,
+[class*="bg-slate-950"] .text-slate-300,
+[class*="bg-slate-950"] .text-slate-400,
+[class*="bg-slate-800"] .text-slate-300,
+[class*="bg-slate-800"] .text-slate-400,
+[class*="from-slate-900"] .text-slate-300,
+[class*="from-slate-900"] .text-slate-400,
+[class*="from-brand-900"] .text-slate-300,
+[class*="from-brand-900"] .text-slate-400 {
+  color: #cbd5e1 !important;
+}
+
+/* Explicit .text-white inside dark cards or containers */
+.dark-card .text-white,
+.card-dark .text-white,
+.department-cta-box .text-white,
+.footer-card-cta .text-white,
+[class*="bg-slate-900"] .text-white,
+[class*="bg-slate-950"] .text-white,
+[class*="bg-slate-800"] .text-white,
+[class*="bg-brand-900"] .text-white,
+[class*="bg-brand-950"] .text-white,
+[class*="bg-[#173E67]"] .text-white,
+[class*="from-brand-900"] .text-white,
+[class*="from-slate-900"] .text-white,
+[class*="from-slate-950"] .text-white {
+  color: #ffffff !important;
+}
+
+/* Maintain crisp white text on solid buttons & badges */
+.btn-brand,
+.btn-primary,
+.bg-brand-500,
+.bg-brand-600,
+.bg-brand-700,
+.bg-brand-800,
+.bg-brand-900,
+.bg-accent-500,
+.bg-accent-600,
+.bg-emerald-600,
+.bg-rose-600 {
+  color: #ffffff !important;
+}
+
+.btn-brand *,
+.btn-primary *,
+.bg-brand-500 *,
+.bg-brand-600 *,
+.bg-accent-500 *,
+.bg-accent-600 * {
+  color: #ffffff !important;
+}
+
+/* Form controls */
+input,
+select,
+textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Elevated Light Shadows */
+.shadow-2xl,
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.04), 0 4px 6px -4px rgba(15, 23, 42, 0.02) !important;
+}

@@ -1,0 +1,37 @@
+/* ============================================================
+   Register Page Stylesheet (/register)
+   ============================================================ */
+
+.register-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  position: relative;
+}
+
+.register-card {
+  max-width: 36rem;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.register-age-display {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+  color: #173E67;
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 600;
+}

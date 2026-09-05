@@ -1,0 +1,78 @@
+/* ============================================================
+   Coding Practice Playground Styles
+   ============================================================ */
+
+.ide-window {
+  background-color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.4);
+}
+
+.ide-header {
+  background-color: #020617;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+}
+
+.ide-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+}
+
+.ide-textarea {
+  width: 100%;
+  background-color: #020617;
+  color: #ffffff;
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 1.25rem;
+  border: none;
+  outline: none;
+  resize: vertical;
+  min-height: 280px;
+}
+
+/* Console Terminal - Dark background with pure crisp white & emerald text */
+.terminal-window {
+  background-color: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.8125rem;
+  color: #34d399;
+  min-height: 110px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.challenge-item-btn {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: #1e293b;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.challenge-item-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.challenge-item-btn.active {
+  background-color: #eff6ff;
+  border-color: #173E67;
+  color: #173E67;
+  font-weight: 700;
+}

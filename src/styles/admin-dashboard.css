@@ -1,0 +1,46 @@
+/* ============================================================
+   Admin Dashboard Stylesheet (/admin/dashboard) - Pure Light Theme
+   ============================================================ */
+
+.admin-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 2.5rem 1rem;
+}
+
+.admin-stat-card {
+  padding: 1.5rem;
+  border-radius: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.admin-stat-card:hover {
+  border-color: #173E67;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(23, 62, 103, 0.15);
+}
+
+.admin-stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.admin-stream-item {
+  padding: 0.875rem 1rem;
+  border-radius: 16px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #0f172a;
+}

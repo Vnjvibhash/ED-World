@@ -1,0 +1,82 @@
+/* ============================================================
+   Developer List Stylesheet (/developer-list)
+   ============================================================ */
+
+.dev-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 3rem 1rem;
+}
+
+.dev-profile-card {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.dev-profile-card h1,
+.dev-profile-card h2,
+.dev-profile-card h3,
+.dev-profile-card h4 {
+  color: #0f172a;
+}
+
+.dev-profile-card p {
+  color: #475569;
+}
+
+.dev-profile-card:hover {
+  border-color: #FF8000;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -5px rgba(255, 128, 0, 0.2);
+}
+
+.dev-photo-header {
+  position: relative;
+  height: 16rem;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.dev-photo-img {
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.5s ease;
+}
+
+.dev-profile-card:hover .dev-photo-img {
+  transform: scale(1.06);
+}
+
+.dev-role-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: #FF8000;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dev-skill-chip {
+  padding: 0.25rem 0.625rem;
+  border-radius: 8px;
+  background-color: #f0f4f9;
+  border: 1px solid #dce6f2;
+  font-size: 0.6875rem;
+  font-family: var(--font-family-mono, monospace);
+  color: #173E67;
+  font-weight: 600;
+}

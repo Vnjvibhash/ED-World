@@ -1,0 +1,54 @@
+/* ============================================================
+   Login Page Stylesheet (/login)
+   ============================================================ */
+
+.login-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  position: relative;
+}
+
+.login-auth-card {
+  max-width: 28rem;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.role-switcher-box {
+  display: flex;
+  padding: 0.25rem;
+  background-color: #f1f5f9;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.role-switcher-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: capitalize;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.role-switcher-btn.active {
+  background-color: #173E67;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(23, 62, 103, 0.25);
+}

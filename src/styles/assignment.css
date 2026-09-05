@@ -1,0 +1,58 @@
+/* ============================================================
+   Assignments Overview Stylesheet (/assignment)
+   ============================================================ */
+
+.assignment-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 3rem 1rem;
+}
+
+.assignment-task-card {
+  padding: 1.75rem;
+  border-radius: 24px;
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.assignment-task-card h1,
+.assignment-task-card h2,
+.assignment-task-card h3,
+.assignment-task-card h4 {
+  color: #0f172a;
+}
+
+.assignment-task-card p {
+  color: #475569;
+}
+
+.assignment-task-card:hover {
+  border-color: rgba(255, 128, 0, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px -5px rgba(255, 128, 0, 0.15);
+}
+
+.assignment-semester-badge {
+  padding: 0.25rem 0.625rem;
+  border-radius: 8px;
+  background-color: #f0f4f9;
+  color: #173E67;
+  border: 1px solid #dce6f2;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.assignment-due-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #059669;
+  font-weight: 500;
+}

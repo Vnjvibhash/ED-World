@@ -1,0 +1,167 @@
+/* ============================================================
+   All Pages Stylesheet: Light Theme Core Component Tokens
+   ============================================================ */
+
+/* Common Card - Light Theme */
+.site-card {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-normal);
+}
+
+.site-card h1, .site-card h2, .site-card h3, .site-card h4 {
+  color: #0f172a;
+}
+
+.site-card p {
+  color: #475569;
+}
+
+.site-card:hover {
+  border-color: #FF8000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(255, 128, 0, 0.15);
+}
+
+/* Forms & Inputs - Light Theme */
+.form-input-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input-control:focus {
+  border-color: #173E67;
+  box-shadow: 0 0 0 3px rgba(23, 62, 103, 0.15);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.375rem;
+}
+
+/* Button variants based on Brand Navy & Accent Orange */
+.btn-primary-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%);
+  box-shadow: 0 4px 14px rgba(255, 128, 0, 0.25);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary-gradient:hover:not(:disabled) {
+  background: linear-gradient(135deg, #fb923c 0%, #FF8000 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 128, 0, 0.35);
+}
+
+.btn-primary-gradient:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Drag and Drop Uploader */
+.uploader-dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background-color: #f8fafc;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.uploader-dropzone:hover,
+.uploader-dropzone.active {
+  border-color: #FF8000;
+  background-color: rgba(255, 128, 0, 0.05);
+}
+
+/* Admin Table - Light Theme */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.admin-table th {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+}
+
+.admin-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Status Pill */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-pill.active {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-pill.pending {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Accordion FAQ - Light Theme */
+.faq-accordion-item {
+  border-radius: var(--radius-lg);
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.faq-accordion-item.open {
+  border-color: #FF8000;
+  box-shadow: 0 4px 12px rgba(255, 128, 0, 0.12);
+}

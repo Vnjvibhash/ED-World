@@ -1,0 +1,22 @@
+/* ============================================================
+   Admin Settings Stylesheet (/admin/settings) - Light Theme
+   ============================================================ */
+
+.admin-settings-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.admin-setting-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+}

@@ -1,0 +1,48 @@
+/* ============================================================
+   Assignment Upload Stylesheet (/assignment-upload)
+   ============================================================ */
+
+.upload-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 3rem 1rem;
+}
+
+.upload-form-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 640px) {
+  .upload-form-card {
+    padding: 2.5rem;
+  }
+}
+
+.upload-dragzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background-color: #f8fafc;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.upload-dragzone:hover,
+.upload-dragzone.active {
+  border-color: #FF8000;
+  background-color: rgba(255, 128, 0, 0.04);
+}
+
+.upload-success-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}

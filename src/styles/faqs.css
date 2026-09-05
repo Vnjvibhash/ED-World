@@ -1,0 +1,50 @@
+/* ============================================================
+   FAQs Stylesheet (/faqs) - Pure Light Theme
+   ============================================================ */
+
+.faqs-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 3rem 1rem;
+}
+
+.faqs-search-input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem;
+  border-radius: 16px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  font-size: 0.875rem;
+  color: #0f172a;
+  outline: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.15s ease;
+}
+
+.faqs-search-input:focus {
+  border-color: #FF8000;
+  box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.15);
+}
+
+.faqs-cat-pill {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.faqs-accordion-card {
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.faqs-accordion-card.open {
+  border-color: #FF8000;
+  box-shadow: 0 4px 15px rgba(255, 128, 0, 0.12);
+}

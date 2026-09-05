@@ -1,0 +1,109 @@
+/* ============================================================
+   Engineering Department Stylesheet (/engineering)
+   ============================================================ */
+
+.engineering-page-wrapper {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 3rem 1rem;
+}
+
+.engineering-banner-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+}
+
+.engineering-banner-card h1,
+.engineering-banner-card h2,
+.engineering-banner-card h3 {
+  color: #0f172a;
+}
+
+.engineering-banner-card p {
+  color: #475569;
+}
+
+@media (min-width: 640px) {
+  .engineering-banner-card {
+    padding: 3.5rem;
+  }
+}
+
+.semester-nav-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background-color: #f1f5f9;
+  padding: 0.375rem;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.semester-pill-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #64748b;
+}
+
+.semester-pill-btn:hover {
+  color: #0f172a;
+  background-color: #e2e8f0;
+}
+
+.semester-pill-btn.active {
+  background-color: #FF8000;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(255, 128, 0, 0.35);
+}
+
+.subject-course-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.subject-course-card:hover {
+  border-color: rgba(255, 128, 0, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(23, 62, 103, 0.1);
+}
+
+.subject-course-card h1,
+.subject-course-card h2,
+.subject-course-card h3,
+.subject-course-card h4 {
+  color: #0f172a;
+}
+
+.subject-course-card p {
+  color: #64748b;
+}
+
+.subject-code-tag {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 8px;
+  background-color: #f0f4f9;
+  color: #173E67;
+  border: 1px solid #dce6f2;
+  font-weight: 700;
+}

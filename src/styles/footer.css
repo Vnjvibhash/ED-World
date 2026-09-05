@@ -1,0 +1,85 @@
+/* ============================================================
+   Footer Stylesheet - Light Theme
+   ============================================================ */
+
+.footer-wrapper {
+  background-color: #f8fafc;
+  color: #475569;
+  border-top: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.footer-section-title {
+  color: #0f172a;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.footer-link-item {
+  color: #475569;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.15s ease, transform 0.15s ease;
+  padding: 0.25rem 0;
+}
+
+.footer-link-item:hover {
+  color: #FF8000;
+  transform: translateX(4px);
+}
+
+/* Call-to-action Card: Dark Navy card with strict pure white text rule */
+.footer-card-cta {
+  background: linear-gradient(135deg, #173E67 0%, #0f2844 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1.75rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(23, 62, 103, 0.25);
+  position: relative;
+  overflow: hidden;
+  color: #ffffff !important;
+}
+
+.footer-card-cta h1,
+.footer-card-cta h2,
+.footer-card-cta h3,
+.footer-card-cta h4 {
+  color: #ffffff !important;
+}
+
+.footer-card-cta p {
+  color: #f1f5f9 !important;
+}
+
+.footer-bottom-bar {
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  padding: 1.5rem 0;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  transition: all 0.15s ease;
+}
+
+.footer-social-btn:hover {
+  color: #FF8000;
+  background-color: #e2e8f0;
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}

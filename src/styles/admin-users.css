@@ -1,0 +1,40 @@
+/* ============================================================
+   Admin User Management Stylesheet (/admin/users) - Light Theme
+   ============================================================ */
+
+.admin-users-table-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.admin-user-row {
+  transition: background-color 0.15s ease;
+}
+
+.admin-user-row:hover {
+  background-color: #f8fafc;
+}
+
+.admin-action-btn {
+  padding: 0.375rem;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-action-btn:hover {
+  background-color: #e2e8f0;
+  color: #173E67;
+}
+
+.admin-action-btn.delete:hover {
+  color: #ef4444;
+  background-color: #fee2e2;
+  border-color: #fecaca;
+}

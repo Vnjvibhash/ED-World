@@ -1,0 +1,29 @@
+/* ============================================================
+   Master Stylesheet Index: Aggregating all page stylesheets
+   ============================================================ */
+
+@import "./variables.css";
+@import "./layout.css";
+@import "./header.css";
+@import "./footer.css";
+@import "./home.css";
+@import "./quiz.css";
+@import "./sorting-algorithm.css";
+@import "./practice.css";
+@import "./engineering.css";
+@import "./departments.css";
+@import "./developer-list.css";
+@import "./assignment.css";
+@import "./assignment-upload.css";
+@import "./about-us.css";
+@import "./faqs.css";
+@import "./contact.css";
+@import "./login.css";
+@import "./register.css";
+@import "./forgot-password.css";
+@import "./admin-dashboard.css";
+@import "./admin-users.css";
+@import "./admin-settings.css";
+@import "./privacy-policy.css";
+@import "./terms-conditions.css";
+@import "./components.css";
