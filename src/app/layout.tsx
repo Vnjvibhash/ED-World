@@ -5,9 +5,9 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingWidgets } from "@/components/common/FloatingWidgets";
 
 export const metadata: Metadata = {
-  title: "ED-World | Best Education & Coding Platform for Students",
-  description: "ED-World is an all-in-one educational platform engineered for students, to the students, and by the students. Learn coding, take quizzes, explore sorting algorithms, and access engineering course materials.",
-  keywords: ["ED-World", "Engineering", "Coding Practice", "Quiz", "Sorting Algorithms", "Computer Science", "Vivek Kumar"],
+  title: "Student World | Best Education & Coding Platform for Students",
+  description: "Student World is an all-in-one educational platform engineered for students, to the students, and by the students. Learn coding, take quizzes, explore sorting algorithms, and access engineering course materials.",
+  keywords: ["Student World", "Engineering", "Coding Practice", "Quiz", "Sorting Algorithms", "Computer Science", "Vivek Kumar"],
   authors: [{ name: "Vivek Kumar", url: "https://www.linkedin.com/in/vivekajee/" }],
   icons: {
     icon: "/favicon.ico",

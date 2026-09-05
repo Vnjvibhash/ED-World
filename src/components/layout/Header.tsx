@@ -87,7 +87,7 @@ export function Header() {
             <div className="relative w-40 sm:w-48 h-10 transition-transform group-hover:scale-105">
               <Image
                 src="/assets/brand/logo.png"
-                alt="ED-World Logo"
+                alt="Student World Logo"
                 fill
                 className="object-contain"
                 priority

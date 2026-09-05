@@ -413,7 +413,7 @@ export default function DepartmentsPage() {
                 Ready to Master Your Semester Syllabus?
               </h2>
               <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-                Join thousands of students accessing free study materials, online compilers, and interactive quizzes on ED-World.
+                Join thousands of students accessing free study materials, online compilers, and interactive quizzes on Student World.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <Link

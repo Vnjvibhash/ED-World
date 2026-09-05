@@ -20,14 +20,14 @@ export default function TermsConditionsPage() {
             <span>Legal Documentation</span>
           </div>
           <h1 className="text-3xl font-extrabold text-slate-900">Terms of Service</h1>
-          <p className="text-xs text-slate-500">Effective: December 31, 2021 • ED-World Academy India Pvt Ltd</p>
+          <p className="text-xs text-slate-500">Effective: December 31, 2021 • Student World Academy India Pvt Ltd</p>
         </div>
 
         <div className="space-y-6 text-sm text-slate-700 leading-relaxed">
           <section className="space-y-2">
             <h2 className="text-lg font-bold text-slate-900">1. Acceptance of Terms</h2>
             <p>
-              By accessing or using the ED-World web application, quizzes, sorting algorithm visualizers, coding practice IDE, or course repositories, you agree to comply with and be bound by these Terms of Service.
+              By accessing or using the Student World web application, quizzes, sorting algorithm visualizers, coding practice IDE, or course repositories, you agree to comply with and be bound by these Terms of Service.
             </p>
           </section>
 
@@ -41,7 +41,7 @@ export default function TermsConditionsPage() {
           <section className="space-y-2">
             <h2 className="text-lg font-bold text-slate-900">3. Intellectual Property</h2>
             <p>
-              All proprietary algorithms, curated course materials, logos, and software architecture are the intellectual property of ED-World Academy India Pvt Ltd.
+              All proprietary algorithms, curated course materials, logos, and software architecture are the intellectual property of Student World Academy India Pvt Ltd.
             </p>
           </section>
         </div>

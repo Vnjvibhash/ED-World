@@ -32,16 +32,16 @@ export interface TeamMember {
 export const teamMembers: TeamMember[] = [
   {
     id: "vivek-kumar",
-    idNumber: "EDW-ENG-001",
+    idNumber: "SW-ENG-001",
     name: "Vivek Kumar",
     role: "Full-Stack Developer",
     title: "CTO & Founder",
     designation: "Certificate from Karnataka Board",
     image: "/assets/team/white-Vivekajee.jpg",
-    bio: "Vivek Kumar, as Founder & Chief Technology Officer, sets and evolves the strategic direction for ED-World and its platform architecture. Holds Bachelor of Engineering in Computer Science and Engineering with specialization in full-stack web and cloud architectures.",
+    bio: "Vivek Kumar, as Founder & Chief Technology Officer, sets and evolves the strategic direction for Student World and its platform architecture. Holds Bachelor of Engineering in Computer Science and Engineering with specialization in full-stack web and cloud architectures.",
     degree: "Bachelor of Engineering - Computer Science and Engineering",
     category: "leadership",
-    email: "vivek@edworld.com",
+    email: "vivek@studentworld.com",
     status: "Available for Architecture Reviews",
     officeHours: "Tue & Thu • 4:00 PM - 6:00 PM IST",
     mentorshipTopics: ["Next.js App Router", "Full-Stack System Design", "Cloud Infrastructure", "Database Scaling"],
@@ -57,7 +57,7 @@ export const teamMembers: TeamMember[] = [
       { skill: "Laravel & PHP", level: 94 }
     ],
     keyMilestones: [
-      "Architected ED-World Next.js & Serverless Microservices ecosystem",
+      "Architected Student World Next.js & Serverless Microservices ecosystem",
       "Built interactive Code Practice IDE & Sorting Algorithm Visualizer",
       "Designed secure Role-Based Access Control and Exam Module engine",
       "Engineered automated high-concurrency Quiz & Evaluation system"

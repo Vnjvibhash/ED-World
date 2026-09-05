@@ -29,7 +29,7 @@ const initialUsers: AdminUser[] = [
   {
     id: "usr-1",
     name: "Vivek Kumar",
-    email: "vivek@edworld.edu",
+    email: "vivek@studentworld.edu",
     role: "Administrator",
     department: "Computer Science & Engineering",
     status: "Active",
@@ -39,7 +39,7 @@ const initialUsers: AdminUser[] = [
   {
     id: "usr-4",
     name: "Aarav Sharma",
-    email: "aarav@student.edworld.edu",
+    email: "aarav@student.studentworld.edu",
     role: "Student",
     department: "Computer Science & Engineering",
     status: "Active",

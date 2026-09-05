@@ -198,7 +198,7 @@ const resourcesData: ResourceCardData[] = [
     title: "Mentorship & Developer Directory",
     category: "curriculum",
     categoryLabel: "Peer Network",
-    description: "Connect with certified student engineers, senior alumni mentors, and open-source project leads across the ED-World academic community.",
+    description: "Connect with certified student engineers, senior alumni mentors, and open-source project leads across the Student World academic community.",
     icon: <Users className="w-6 h-6 text-brand-500" />,
     iconBg: "bg-slate-100 border-slate-200",
     link: "/developer-list",

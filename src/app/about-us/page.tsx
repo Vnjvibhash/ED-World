@@ -27,7 +27,7 @@ export default function AboutUsPage() {
               <span>Who We Are</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-              About <span className="text-accent-500">ED-World Academy</span>
+              About <span className="text-accent-500">Student World Academy</span>
             </h1>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               We are engineered for students, to the students, and by the students. Empowering learners globally through interactive engineering curriculum and practical code mastery.
@@ -49,7 +49,7 @@ export default function AboutUsPage() {
             </p>
 
             <p className="text-slate-600 text-sm leading-relaxed">
-              ED-World has brought this opportunity for eager learners to master technical programming, engineering subjects, algorithms, and management skills. You have access to interactive classes, curated online curriculum for beginners, senior engineering grades, and open coding tools.
+              Student World has brought this opportunity for eager learners to master technical programming, engineering subjects, algorithms, and management skills. You have access to interactive classes, curated online curriculum for beginners, senior engineering grades, and open coding tools.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -76,7 +76,7 @@ export default function AboutUsPage() {
           <div className="lg:col-span-5 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-5">
             <div className="flex items-center gap-2 text-accent-600">
               <Award className="w-5 h-5" />
-              <h3 className="text-lg font-bold text-slate-900">Fast Facts of ED-World</h3>
+              <h3 className="text-lg font-bold text-slate-900">Fast Facts of Student World</h3>
             </div>
 
             <div className="space-y-4 text-xs sm:text-sm">
@@ -88,7 +88,7 @@ export default function AboutUsPage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
                 <span className="text-slate-500 text-[11px] uppercase tracking-wider font-bold">Official Registration</span>
                 <p className="text-slate-900 font-semibold leading-relaxed">
-                  ED-World Academy India Pvt Ltd was registered under the Government of India on 31st December 2021.
+                  Student World Academy India Pvt Ltd was registered under the Government of India on 31st December 2021.
                 </p>
               </div>
 

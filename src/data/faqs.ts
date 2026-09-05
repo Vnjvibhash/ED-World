@@ -9,14 +9,14 @@ export const faqsData: FAQItem[] = [
   {
     id: "faq-1",
     category: "General",
-    question: "What is ED-World and how does it benefit students?",
-    answer: "ED-World is an all-in-one educational platform engineered for students, to the students, and by the students. We provide structured learning resources, online coding environments, interactive quizzes, sorting algorithm visualizers, and mentorship from top developers."
+    question: "What is Student World and how does it benefit students?",
+    answer: "Student World is an all-in-one educational platform engineered for students, to the students, and by the students. We provide structured learning resources, online coding environments, interactive quizzes, sorting algorithm visualizers, and mentorship from top developers."
   },
   {
     id: "faq-2",
     category: "General",
-    question: "When was ED-World founded and is it registered?",
-    answer: "ED-World was founded in December 2021. ED-World Academy India Pvt. Ltd. was officially registered under the Government of India on 31st December 2021."
+    question: "When was Student World founded and is it registered?",
+    answer: "Student World was founded in December 2021. Student World Academy India Pvt. Ltd. was officially registered under the Government of India on 31st December 2021."
   },
   {
     id: "faq-3",
@@ -28,7 +28,7 @@ export const faqsData: FAQItem[] = [
     id: "faq-4",
     category: "Certifications",
     question: "Are course completion certificates provided upon finishing exams?",
-    answer: "Yes! Every student who successfully finishes their course curriculum, passes the chapter assessments, and completes required assignments will receive an official verifiable ED-World Course Completion Certificate."
+    answer: "Yes! Every student who successfully finishes their course curriculum, passes the chapter assessments, and completes required assignments will receive an official verifiable Student World Course Completion Certificate."
   },
   {
     id: "faq-5",

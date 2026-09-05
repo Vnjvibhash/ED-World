@@ -1,12 +1,12 @@
-# ED-World — Next-Generation Learning & Coding Ecosystem
+# Student World — Next-Generation Learning & Coding Ecosystem
 
 <div align="center">
 
-![ED-World Banner](/assets/brand/logo.png)
+![Student World Banner](/assets/brand/logo.png)
 
 **An intelligent, modern, and interactive educational platform combining academic syllabus mastery, real-time code execution, algorithm visualizers, and verified mentorship.**
 
-Designed & Developed by **Innovateria** for **ED-World Academy**.
+Designed & Developed by **Innovateria** for **Student World Academy**.
 
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.0-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.0-blue?style=flat&logo=react)](https://react.dev/)
@@ -20,7 +20,7 @@ Designed & Developed by **Innovateria** for **ED-World Academy**.
 
 ## 📖 Executive Description
 
-**ED-World** is an enterprise-grade, comprehensive web application re-engineered from a traditional Laravel MVC architecture into a cutting-edge **Next.js 15 App Router** single-page architecture. 
+**Student World** is an enterprise-grade, comprehensive web application re-engineered from a traditional Laravel MVC architecture into a cutting-edge **Next.js 15 App Router** single-page architecture. 
 
 The platform bridges foundational university coursework with hands-on software engineering. Students and aspiring developers can study semester-by-semester engineering syllabi, practice live algorithmic coding directly in the browser, visualize sorting complexities in real-time, test their domain knowledge through gamified quizzes, submit coursework assignments, and interact directly with industry engineers and curriculum leaders.
 
@@ -34,7 +34,7 @@ The platform bridges foundational university coursework with hands-on software e
 
 ## 🎨 Design System & Visual Identity
 
-ED-World adopts a clean, contemporary **Light Theme** aesthetic that maximizes reading comfort, focus, and visual elegance.
+Student World adopts a clean, contemporary **Light Theme** aesthetic that maximizes reading comfort, focus, and visual elegance.
 
 ### 1. Brand Color Palette
 - **Primary Navy (`#173E67`)**: Architectural foundation, representing academic stability, trust, and executive leadership.
@@ -139,7 +139,7 @@ The footer features a light aesthetic (`#f8fafc` background with `#ffffff` botto
 ## 📂 Project Directory Structure
 
 ```plaintext
-ED-World/
+Student World/
 ├── public/
 │   └── assets/
 │       ├── brand/           # High-resolution logos & vector emblems
@@ -196,8 +196,8 @@ ED-World/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/vivekajee/ED-World.git
-cd ED-World
+git clone https://github.com/vivekajee/Student World.git
+cd Student World
 ```
 
 ### 2. Install Dependencies
@@ -237,11 +237,11 @@ npm run lint
 ## 👥 Authors & Attribution
 
 - **Developed By**: [Innovateria](https://innovateria.com)
-- **Client & Organization**: ED-World Academy India Pvt Ltd
+- **Client & Organization**: Student World Academy India Pvt Ltd
 - **Technical Lead**: Vivek Kumar (CTO)
 
 ---
 
 ## 📄 License
 
-This software and its custom educational modules are proprietary. All rights reserved by **Innovateria** and **ED-World Academy**. Unauthorized duplication, distribution, or commercial reuse without explicit written consent is prohibited.
+This software and its custom educational modules are proprietary. All rights reserved by **Innovateria** and **Student World Academy**. Unauthorized duplication, distribution, or commercial reuse without explicit written consent is prohibited.

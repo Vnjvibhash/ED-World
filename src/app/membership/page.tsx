@@ -104,7 +104,7 @@ export default function MembershipPage() {
 
           <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Invest in Your Career with{" "}
-            <span className="text-brand-500">ED-World</span> Membership
+            <span className="text-brand-500">Student World</span> Membership
           </h1>
 
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">

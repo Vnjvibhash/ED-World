@@ -112,7 +112,7 @@ export default function QuizPage() {
             <span>Interactive Assessment</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            ED-World <span className="text-accent-500">Interactive Quiz</span>
+            Student World <span className="text-accent-500">Interactive Quiz</span>
           </h1>
           <p className="text-slate-600 mt-2 text-sm sm:text-base">
             Test your computer science, web technologies, and programming knowledge with live countdowns.

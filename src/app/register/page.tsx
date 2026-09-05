@@ -60,13 +60,13 @@ export default function RegisterPage() {
           <Link href="/" className="inline-block relative w-40 h-10 mb-2">
             <Image
               src="/assets/brand/logo.png"
-              alt="ED-World Logo"
+              alt="Student World Logo"
               fill
               className="object-contain"
             />
           </Link>
           <h2 className="text-2xl font-extrabold text-slate-900">Create Student Account</h2>
-          <p className="text-xs text-slate-500">Join the thousands of learners advancing with ED-World</p>
+          <p className="text-xs text-slate-500">Join the thousands of learners advancing with Student World</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

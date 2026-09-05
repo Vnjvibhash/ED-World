@@ -84,7 +84,7 @@ export default function ContactPage() {
             <div>
               <h3 className="font-bold text-slate-900 text-base">Email Us</h3>
               <p className="text-xs text-slate-600 mt-1">support@edlearn.com</p>
-              <p className="text-xs text-slate-600">admissions@edworld.edu</p>
+              <p className="text-xs text-slate-600">admissions@studentworld.edu</p>
             </div>
           </div>
         </div>

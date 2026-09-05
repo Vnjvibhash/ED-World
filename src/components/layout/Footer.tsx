@@ -115,7 +115,7 @@ export function Footer() {
           <div className="md:col-span-5">
             <div className="bg-gradient-to-br from-[#173E67] to-[#0f2844] border border-[#173E67]/60 p-6 sm:p-8 rounded-2xl shadow-xl relative overflow-hidden dark-card footer-card-cta text-white">
               <div className="absolute top-0 right-0 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl pointer-events-none" />
-              <h4 className="text-xl font-bold text-white mb-2">ED-World for Students</h4>
+              <h4 className="text-xl font-bold text-white mb-2">Student World for Students</h4>
               <p className="text-slate-100 text-sm leading-relaxed mb-6">
                 Now you can accelerate your technical &amp; career journey with curated engineering resources, live mentorship, and interactive coding challenges.
               </p>
@@ -136,7 +136,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-slate-600">
-              © {new Date().getFullYear()} ED-World — Designed &amp; Developed by{" "}
+              © {new Date().getFullYear()} Student World — Designed &amp; Developed by{" "}
               <span className="text-brand-600 font-bold">Innovateria</span>. All rights reserved.
             </p>
           </div>

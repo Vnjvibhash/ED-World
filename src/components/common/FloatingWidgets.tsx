@@ -7,7 +7,7 @@ export function FloatingWidgets() {
   const [showBot, setShowBot] = useState(false);
 
   const openWhatsApp = () => {
-    window.open("https://wa.me/917762974716?text=Hello%20ED-World%20Team", "_blank");
+    window.open("https://wa.me/917762974716?text=Hello%20Student World%20Team", "_blank");
   };
 
   return (
@@ -41,7 +41,7 @@ export function FloatingWidgets() {
           <div className="flex items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800 text-white">
             <div className="flex items-center gap-2">
               <Bot className="w-5 h-5 text-brand-400" />
-              <span className="font-semibold text-sm">ED-World AI Assistant</span>
+              <span className="font-semibold text-sm">Student World AI Assistant</span>
             </div>
             <button
               onClick={() => setShowBot(false)}

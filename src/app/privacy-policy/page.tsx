@@ -20,14 +20,14 @@ export default function PrivacyPolicyPage() {
             <span>Legal Documentation</span>
           </div>
           <h1 className="text-3xl font-extrabold text-slate-900">Privacy &amp; Policy</h1>
-          <p className="text-xs text-slate-500">Last updated: September 2026 • ED-World Academy India Pvt Ltd</p>
+          <p className="text-xs text-slate-500">Last updated: September 2026 • Student World Academy India Pvt Ltd</p>
         </div>
 
         <div className="space-y-6 text-sm text-slate-700 leading-relaxed">
           <section className="space-y-2">
             <h2 className="text-lg font-bold text-slate-900">1. Information We Collect</h2>
             <p>
-              ED-World collects basic student information including name, email address, date of birth, chosen engineering or academic department, and assignment submissions for educational and certification verification purposes.
+              Student World collects basic student information including name, email address, date of birth, chosen engineering or academic department, and assignment submissions for educational and certification verification purposes.
             </p>
           </section>
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Settings, Save, ArrowLeft, CheckCircle2, Bell, Shield, Database, Globe } from "lucide-react";
 
 export default function AdminSettingsPage() {
-  const [siteName, setSiteName] = useState("ED-World Academy");
+  const [siteName, setSiteName] = useState("Student World Academy");
   const [supportEmail, setSupportEmail] = useState("support@edlearn.com");
   const [allowRegistration, setAllowRegistration] = useState(true);
   const [autoApproveStudents, setAutoApproveStudents] = useState(true);

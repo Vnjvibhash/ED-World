@@ -27,7 +27,7 @@ import { featureCourses } from "@/data/courses";
 const heroSlides = [
   {
     id: 1,
-    title: "ED-World makes education easiest and accessible.",
+    title: "Student World makes education easiest and accessible.",
     subtitle: "We are for Students, to the Students, and by the Students.",
     image: "/assets/banners/banner-1.jpg",
     ctaText: "Contact Us",
@@ -74,12 +74,12 @@ const heroSlides = [
 
 const testimonials = [
   {
-    quote: "A big thanks to the ED-World mentors for guiding our son! They have gone out of their way to make coding engaging and easy to understand. The ED-World team is committed, highly receptive, and delivers whatever is promised on time.",
+    quote: "A big thanks to the Student World mentors for guiding our son! They have gone out of their way to make coding engaging and easy to understand. The Student World team is committed, highly receptive, and delivers whatever is promised on time.",
     author: "Parent of B.Tech CSE Student",
     role: "Engineering Aspirant Guardian"
   },
   {
-    quote: "ED-World has been wonderful for our daughter. Having structured practice, interactive quizzes, and assignment tracking helped her achieve a top university rank.",
+    quote: "Student World has been wonderful for our daughter. Having structured practice, interactive quizzes, and assignment tracking helped her achieve a top university rank.",
     author: "Verified Student Feedback",
     role: "Electronics & Comm Student"
   },
@@ -126,7 +126,7 @@ export default function HomePage() {
                 <div className="lg:col-span-7 space-y-6 text-left">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-50 border border-accent-200 text-accent-600 text-xs font-bold uppercase tracking-wider">
                     <Sparkles className="w-3.5 h-3.5 text-accent-500" />
-                    <span>Welcome to ED-World Academy</span>
+                    <span>Welcome to Student World Academy</span>
                   </div>
 
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
@@ -218,7 +218,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-accent-600">STUDENT CENTRIC ECOSYSTEM</span>
-            <h2 className="text-3xl font-bold text-slate-900 mt-1">How ED-World <span className="text-accent-500">Works</span></h2>
+            <h2 className="text-3xl font-bold text-slate-900 mt-1">How Student World <span className="text-accent-500">Works</span></h2>
             <p className="text-slate-600 mt-2 text-sm sm:text-base">
               Engineered to take students from foundational theory to real-world code execution and verified credentials.
             </p>

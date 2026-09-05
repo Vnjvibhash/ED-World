@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
           <Link href="/" className="inline-block relative w-40 h-10 mb-2">
             <Image
               src="/assets/brand/logo.png"
-              alt="ED-World Logo"
+              alt="Student World Logo"
               fill
               className="object-contain"
             />

@@ -38,7 +38,7 @@ export default function LoginPage() {
 
   const fillDemoAdmin = () => {
     setRole("admin");
-    setEmail("admin@edworld.edu");
+    setEmail("admin@studentworld.edu");
     setPassword("admin12345");
   };
 
@@ -51,7 +51,7 @@ export default function LoginPage() {
           <Link href="/" className="inline-block relative w-40 h-10 mb-2">
             <Image
               src="/assets/brand/logo.png"
-              alt="ED-World Logo"
+              alt="Student World Logo"
               fill
               className="object-contain"
             />
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@edworld.edu"
+                placeholder="name@studentworld.edu"
                 className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-brand-500 focus:bg-white outline-none"
               />
             </div>

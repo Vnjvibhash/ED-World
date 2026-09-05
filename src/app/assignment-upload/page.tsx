@@ -138,7 +138,7 @@ export default function AssignmentUploadPage() {
                   required
                   value={studentEmail}
                   onChange={(e) => setStudentEmail(e.target.value)}
-                  placeholder="e.g. student@edworld.edu"
+                  placeholder="e.g. student@studentworld.edu"
                   className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:border-brand-500 focus:bg-white outline-none"
                 />
               </div>
