@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Check,
@@ -20,7 +20,8 @@ import {
   PhoneCall,
   CheckCircle2,
   Lock,
-  Percent
+  Percent,
+  CheckCheck
 } from "lucide-react";
 import {
   membershipTiers,
@@ -31,12 +32,23 @@ import {
 
 export default function MembershipPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  const [selectedPlanId, setSelectedPlanId] = useState<string>("gold");
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [selectedModalPlan, setSelectedModalPlan] = useState<MembershipTier | null>(null);
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
   const [studentCollege, setStudentCollege] = useState("");
   const [modalSuccess, setModalSuccess] = useState(false);
+
+  // Read URL hash on load (e.g. #bronze, #silver, #gold, #premium)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.replace("#", "");
+      if (["bronze", "silver", "gold", "premium"].includes(hash)) {
+        setSelectedPlanId(hash);
+      }
+    }
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -45,13 +57,23 @@ export default function MembershipPage() {
   const getPrice = (tier: MembershipTier) => {
     if (tier.monthlyPrice === 0) return 0;
     if (billingCycle === "annual") {
-      // Show monthly effective price when annual
       return Math.round(tier.annualPrice / 12);
     }
     return tier.monthlyPrice;
   };
 
+  const activeSelectedTier =
+    membershipTiers.find((t) => t.id === selectedPlanId) || membershipTiers[2];
+
+  const handleSelectPlan = (tierId: string) => {
+    setSelectedPlanId(tierId);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${tierId}`);
+    }
+  };
+
   const handleEnrollClick = (tier: MembershipTier) => {
+    setSelectedPlanId(tier.id);
     setSelectedModalPlan(tier);
     setModalSuccess(false);
   };
@@ -69,7 +91,7 @@ export default function MembershipPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-700 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 text-slate-700 py-12 px-4 sm:px-6 lg:px-8 pb-32">
       <div className="max-w-7xl mx-auto space-y-16">
         {/* ============================================================
             HERO SECTION
@@ -86,7 +108,7 @@ export default function MembershipPage() {
           </h1>
 
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-            Flexible academic and coding tiers designed for university students, competitive programmers, and placement aspirants. Level up with verified CTO code reviews, live mock interviews, and verifiable credentials.
+            Select the plan tailored for your engineering milestones. Click any plan below to activate your selection with dynamic plan features and instant checkout.
           </p>
 
           {/* Billing Toggle */}
@@ -120,40 +142,89 @@ export default function MembershipPage() {
         </div>
 
         {/* ============================================================
-            TIER CARDS GRID
+            TIER CARDS GRID WITH DYNAMIC SELECTION & LOGO COLOR CHANGES
             ============================================================ */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch pt-4">
           {membershipTiers.map((tier) => {
             const price = getPrice(tier);
             const isPopular = tier.popular;
+            const isSelected = selectedPlanId === tier.id;
 
-            // Render Icon
-            const renderIcon = () => {
-              switch (tier.icon) {
-                case "Shield":
-                  return <Shield className="w-6 h-6 text-amber-500" />;
-                case "Award":
-                  return <Award className="w-6 h-6 text-slate-500" />;
-                case "Zap":
-                  return <Zap className="w-6 h-6 text-accent-400" />;
-                case "Crown":
-                  return <Crown className="w-6 h-6 text-accent-500" />;
-                default:
-                  return <Sparkles className="w-6 h-6 text-brand-500" />;
+            // Render Dynamic Logo / Icon with state-dependent color
+            const renderTierLogo = () => {
+              if (tier.id === "bronze") {
+                return (
+                  <div
+                    className={`p-3 rounded-2xl transition-all duration-300 shrink-0 ${
+                      isSelected
+                        ? "bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/40 ring-4 ring-amber-400/20 scale-110"
+                        : "bg-amber-50 text-amber-600 border border-amber-200"
+                    }`}
+                  >
+                    <Shield className="w-6 h-6" />
+                  </div>
+                );
               }
+              if (tier.id === "silver") {
+                return (
+                  <div
+                    className={`p-3 rounded-2xl transition-all duration-300 shrink-0 ${
+                      isSelected
+                        ? "bg-gradient-to-br from-slate-700 to-slate-900 text-white shadow-lg shadow-slate-600/40 ring-4 ring-slate-400/25 scale-110"
+                        : "bg-slate-100 text-slate-600 border border-slate-200"
+                    }`}
+                  >
+                    <Award className="w-6 h-6" />
+                  </div>
+                );
+              }
+              if (tier.id === "gold") {
+                return (
+                  <div
+                    className={`p-3 rounded-2xl transition-all duration-300 shrink-0 ${
+                      isSelected
+                        ? "bg-gradient-to-br from-[#FF8000] to-[#ff9933] text-white shadow-xl shadow-orange-500/50 ring-4 ring-orange-400/35 scale-110"
+                        : "bg-white/15 text-accent-300 border border-white/20"
+                    }`}
+                  >
+                    <Zap className="w-6 h-6" />
+                  </div>
+                );
+              }
+              // Premium VIP
+              return (
+                <div
+                  className={`p-3 rounded-2xl transition-all duration-300 shrink-0 ${
+                    isSelected
+                      ? "bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-xl shadow-cyan-500/40 ring-4 ring-cyan-400/25 scale-110"
+                      : "bg-cyan-50 text-cyan-700 border border-cyan-200"
+                  }`}
+                >
+                  <Crown className="w-6 h-6" />
+                </div>
+              );
             };
 
             return (
               <div
                 key={tier.id}
                 id={tier.id}
+                onClick={() => handleSelectPlan(tier.id)}
                 className={
                   isPopular
-                    ? "relative rounded-3xl p-7 bg-gradient-to-br from-[#173E67] to-[#0e2742] border-2 border-brand-500 shadow-2xl flex flex-col justify-between dark-card text-white scale-105 z-10"
-                    : "relative rounded-3xl p-7 bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all flex flex-col justify-between"
+                    ? `relative rounded-3xl p-7 bg-gradient-to-br from-[#173E67] to-[#0e2742] shadow-2xl flex flex-col justify-between dark-card text-white cursor-pointer transition-all duration-300 ${
+                        isSelected
+                          ? "border-2 border-accent-400 ring-4 ring-accent-400/40 scale-105 z-20"
+                          : "border border-slate-700/80 hover:border-slate-500 hover:scale-[1.02] z-10"
+                      }`
+                    : `relative rounded-3xl p-7 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+                        isSelected
+                          ? "border-2 border-accent-500 ring-4 ring-accent-500/25 scale-105 z-20 shadow-xl"
+                          : "border border-slate-200 hover:border-slate-300 hover:scale-[1.02]"
+                      }`
                 }
               >
-                {/* Popular Badge */}
+                {/* Popular Tag */}
                 {isPopular && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-accent-500 to-accent-600 text-white text-[11px] font-extrabold uppercase tracking-wider shadow-lg shadow-accent-500/30">
                     ⭐ Most Popular
@@ -161,20 +232,41 @@ export default function MembershipPage() {
                 )}
 
                 <div className="space-y-6">
-                  {/* Card Header */}
-                  <div className="flex items-center justify-between">
-                    <div className={`p-2.5 rounded-2xl ${isPopular ? "bg-white/10" : "bg-slate-100"} shrink-0`}>
-                      {renderIcon()}
+                  {/* Card Header with Dynamic Logo & Selection Status */}
+                  <div className="flex items-start justify-between gap-3">
+                    {renderTierLogo()}
+
+                    <div className="flex flex-col items-end gap-1.5">
+                      {isSelected ? (
+                        <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-accent-500 text-white shadow-md shadow-accent-500/30 animate-fade-in">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>SELECTED</span>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectPlan(tier.id);
+                          }}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold transition-all ${
+                            isPopular
+                              ? "bg-white/10 hover:bg-white/20 text-slate-200 border border-white/20"
+                              : "bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200"
+                          }`}
+                        >
+                          <div className="w-2.5 h-2.5 rounded-full border border-current" />
+                          <span>Select Plan</span>
+                        </button>
+                      )}
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
+                          isPopular ? "text-slate-300" : "text-slate-500"
+                        }`}
+                      >
+                        {tier.badge}
+                      </span>
                     </div>
-                    <span
-                      className={`text-xs font-bold px-2.5 py-1 rounded-full ${
-                        isPopular
-                          ? "bg-white/10 text-white border border-white/20"
-                          : "bg-slate-100 text-slate-700 border border-slate-200"
-                      }`}
-                    >
-                      {tier.badge}
-                    </span>
                   </div>
 
                   <div>
@@ -186,7 +278,7 @@ export default function MembershipPage() {
                     </p>
                   </div>
 
-                  {/* Price */}
+                  {/* Price Block */}
                   <div className="pt-2 pb-1 border-y border-slate-100 dark:border-slate-700/50">
                     <div className="flex items-baseline gap-1">
                       <span className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${isPopular ? "text-white" : "text-slate-900"}`}>
@@ -236,19 +328,37 @@ export default function MembershipPage() {
                   </div>
                 </div>
 
-                {/* CTA Button */}
+                {/* CTA Action Button */}
                 <div className="pt-8">
-                  <button
-                    onClick={() => handleEnrollClick(tier)}
-                    className={`w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md ${
-                      isPopular
-                        ? "bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-white shadow-accent-500/30 glow-hover"
-                        : "bg-brand-500 hover:bg-brand-600 text-white shadow-brand-500/20"
-                    }`}
-                  >
-                    <span>{tier.ctaText}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                  {isSelected ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEnrollClick(tier);
+                      }}
+                      className="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-white shadow-accent-500/35 glow-hover"
+                    >
+                      <CheckCheck className="w-4 h-4" />
+                      <span>Proceed with {tier.name}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectPlan(tier.id);
+                      }}
+                      className={`w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
+                        isPopular
+                          ? "bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                          : "bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200"
+                      }`}
+                    >
+                      <span>Select {tier.name}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -256,7 +366,7 @@ export default function MembershipPage() {
         </div>
 
         {/* ============================================================
-            FEATURE COMPARISON MATRIX
+            FEATURE COMPARISON MATRIX - DYNAMICALLY HIGHLIGHTS SELECTED
             ============================================================ */}
         <div className="space-y-8 pt-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -264,7 +374,9 @@ export default function MembershipPage() {
               Detailed Plan Comparison
             </h2>
             <p className="text-slate-500 text-sm">
-              See what makes each tier unique and choose the right level of support for your goals.
+              Currently viewing comparison for{" "}
+              <strong className="text-brand-600 font-bold">{activeSelectedTier.name}</strong>{" "}
+              (Selected).
             </p>
           </div>
 
@@ -274,10 +386,46 @@ export default function MembershipPage() {
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200">
                     <th className="py-4 px-6 font-bold text-slate-900 w-2/5">Features &amp; Modules</th>
-                    <th className="py-4 px-4 font-bold text-amber-600 text-center w-3/20">🥉 Bronze</th>
-                    <th className="py-4 px-4 font-bold text-slate-600 text-center w-3/20">🥈 Silver</th>
-                    <th className="py-4 px-4 font-bold text-brand-600 text-center w-3/20 bg-brand-50/50">🥇 Gold</th>
-                    <th className="py-4 px-4 font-bold text-accent-600 text-center w-3/20">💎 VIP</th>
+                    <th
+                      onClick={() => handleSelectPlan("bronze")}
+                      className={`py-4 px-4 font-bold text-center cursor-pointer transition-colors w-3/20 ${
+                        selectedPlanId === "bronze"
+                          ? "bg-amber-50 text-amber-700 border-x-2 border-amber-400"
+                          : "text-amber-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      🥉 Bronze {selectedPlanId === "bronze" && "✓"}
+                    </th>
+                    <th
+                      onClick={() => handleSelectPlan("silver")}
+                      className={`py-4 px-4 font-bold text-center cursor-pointer transition-colors w-3/20 ${
+                        selectedPlanId === "silver"
+                          ? "bg-slate-100 text-slate-900 border-x-2 border-slate-400"
+                          : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      🥈 Silver {selectedPlanId === "silver" && "✓"}
+                    </th>
+                    <th
+                      onClick={() => handleSelectPlan("gold")}
+                      className={`py-4 px-4 font-bold text-center cursor-pointer transition-colors w-3/20 ${
+                        selectedPlanId === "gold"
+                          ? "bg-brand-50 text-brand-700 border-x-2 border-brand-500"
+                          : "text-brand-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      🥇 Gold {selectedPlanId === "gold" && "✓"}
+                    </th>
+                    <th
+                      onClick={() => handleSelectPlan("premium")}
+                      className={`py-4 px-4 font-bold text-center cursor-pointer transition-colors w-3/20 ${
+                        selectedPlanId === "premium"
+                          ? "bg-accent-50 text-accent-700 border-x-2 border-accent-400"
+                          : "text-accent-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      💎 VIP {selectedPlanId === "premium" && "✓"}
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -293,28 +441,52 @@ export default function MembershipPage() {
                           <td className="py-3.5 px-6 font-medium text-slate-900">
                             {item.name}
                           </td>
-                          <td className="py-3.5 px-4 text-center text-xs text-slate-600">
+                          <td
+                            className={`py-3.5 px-4 text-center text-xs ${
+                              selectedPlanId === "bronze"
+                                ? "bg-amber-50/40 font-semibold text-slate-900 border-x-2 border-amber-300"
+                                : "text-slate-600"
+                            }`}
+                          >
                             {item.bronze === "Included" ? (
                               <Check className="w-4 h-4 text-brand-500 mx-auto" />
                             ) : (
                               item.bronze
                             )}
                           </td>
-                          <td className="py-3.5 px-4 text-center text-xs text-slate-600">
+                          <td
+                            className={`py-3.5 px-4 text-center text-xs ${
+                              selectedPlanId === "silver"
+                                ? "bg-slate-100/60 font-semibold text-slate-900 border-x-2 border-slate-300"
+                                : "text-slate-600"
+                            }`}
+                          >
                             {item.silver === "Included" ? (
                               <Check className="w-4 h-4 text-brand-500 mx-auto" />
                             ) : (
                               item.silver
                             )}
                           </td>
-                          <td className="py-3.5 px-4 text-center text-xs font-semibold text-slate-900 bg-brand-50/30">
+                          <td
+                            className={`py-3.5 px-4 text-center text-xs ${
+                              selectedPlanId === "gold"
+                                ? "bg-brand-50/50 font-bold text-slate-900 border-x-2 border-brand-400"
+                                : "text-slate-700"
+                            }`}
+                          >
                             {item.gold === "Included" ? (
                               <Check className="w-4 h-4 text-brand-600 mx-auto" />
                             ) : (
                               item.gold
                             )}
                           </td>
-                          <td className="py-3.5 px-4 text-center text-xs font-semibold text-accent-600">
+                          <td
+                            className={`py-3.5 px-4 text-center text-xs ${
+                              selectedPlanId === "premium"
+                                ? "bg-accent-50/50 font-bold text-accent-700 border-x-2 border-accent-400"
+                                : "text-slate-700"
+                            }`}
+                          >
                             {item.premium === "Included" ? (
                               <Check className="w-4 h-4 text-accent-500 mx-auto" />
                             ) : (
@@ -412,13 +584,13 @@ export default function MembershipPage() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link
-              href="/register"
+            <button
+              onClick={() => handleEnrollClick(activeSelectedTier)}
               className="px-8 py-3.5 rounded-full font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-lg shadow-accent-500/30 transition-all text-sm flex items-center gap-2"
             >
-              <span>Create Free Account</span>
+              <span>Proceed with {activeSelectedTier.name}</span>
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
             <Link
               href="/practice"
               className="px-6 py-3.5 rounded-full font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-colors text-sm"
@@ -427,6 +599,37 @@ export default function MembershipPage() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* ============================================================
+          FLOATING BOTTOM BAR - ACTIVE SELECTION CONFIRMATION
+          ============================================================ */}
+      <div className="selected-plan-floating-bar animate-slide-up">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-xl bg-accent-50 text-accent-600 shrink-0 hidden sm:block">
+            <Sparkles className="w-5 h-5 text-accent-500" />
+          </div>
+          <div>
+            <div className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+              <span>Active Plan Selection:</span>
+              <span className="font-extrabold text-slate-900">{activeSelectedTier.name}</span>
+            </div>
+            <div className="text-sm font-extrabold text-slate-900">
+              ₹{getPrice(activeSelectedTier).toLocaleString("en-IN")}{" "}
+              <span className="text-xs font-normal text-slate-500">
+                {activeSelectedTier.monthlyPrice === 0 ? "/ forever free" : `/ month (${billingCycle})`}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => handleEnrollClick(activeSelectedTier)}
+          className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md shadow-accent-500/25 flex items-center gap-2 shrink-0 glow-hover transition-all"
+        >
+          <span>Continue with {activeSelectedTier.name}</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
 
       {/* ============================================================

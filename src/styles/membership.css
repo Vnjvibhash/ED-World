@@ -1,5 +1,5 @@
 /* ============================================================
-   Membership Page Stylesheet
+   Membership Page Stylesheet - With Interactive Selection
    ============================================================ */
 
 .membership-page {
@@ -33,6 +33,13 @@
   border-color: #cbd5e1;
 }
 
+/* Active Selected Light Card */
+.membership-tier-card.is-selected {
+  border: 2px solid #FF8000 !important;
+  box-shadow: 0 0 0 4px rgba(255, 128, 0, 0.25), 0 20px 35px -10px rgba(255, 128, 0, 0.15) !important;
+  transform: translateY(-4px) scale(1.02);
+}
+
 .membership-tier-popular {
   background: linear-gradient(135deg, #173E67 0%, #0f2844 100%);
   border: 2px solid #173E67;
@@ -52,11 +59,18 @@
   box-shadow: 0 25px 45px -10px rgba(23, 62, 103, 0.45);
 }
 
+/* Active Selected Dark Card (Gold Tier) */
+.membership-tier-popular.is-selected {
+  border: 2px solid #FF8000 !important;
+  box-shadow: 0 0 0 4px rgba(255, 128, 0, 0.4), 0 25px 45px -10px rgba(23, 62, 103, 0.5) !important;
+  transform: translateY(-4px) scale(1.04);
+}
+
 .membership-tier-popular h1,
 .membership-tier-popular h2,
 .membership-tier-popular h3,
 .membership-tier-popular h4,
-.membership-tier-popular span:not([class*="bg-"]):not([class*="text-amber-"]):not([class*="text-accent-"]) {
+.membership-tier-popular span:not([class*="bg-"]):not([class*="text-amber-"]):not([class*="text-accent-"]):not([class*="text-emerald-"]) {
   color: #ffffff !important;
 }
 
@@ -97,4 +111,37 @@
 
 .comparison-table tr:last-child td {
   border-bottom: none;
+}
+
+/* Floating Bottom Summary Bar */
+.selected-plan-floating-bar {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  width: calc(100% - 2rem);
+  max-width: 48rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 0.875rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  backdrop-filter: blur(12px);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
