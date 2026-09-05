@@ -331,11 +331,23 @@ export default function ResourcesPage() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all ${
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   selectedCategory === cat.id
-                    ? "bg-brand-500 text-white shadow-md shadow-brand-500/20"
-                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                    ? "text-white shadow-md"
+                    : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 hover:border-slate-300"
                 }`}
+                style={
+                  selectedCategory === cat.id
+                    ? {
+                        backgroundColor: "#173E67",
+                        color: "#ffffff",
+                        border: "1px solid #133355",
+                        boxShadow: "0 4px 12px rgba(23, 62, 103, 0.25)"
+                      }
+                    : {
+                        color: "#334155"
+                      }
+                }
               >
                 {cat.label}
               </button>
@@ -387,14 +399,21 @@ export default function ResourcesPage() {
                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Action Button - Theme Color */}
               <div className="pt-6 space-y-2">
                 <Link
                   href={res.link}
-                  className="w-full py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all bg-slate-100 hover:bg-brand-500 text-slate-800 hover:text-white border border-slate-200 hover:border-brand-500 shadow-sm group-hover:shadow-md"
+                  className="w-full py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:scale-[1.02] active:scale-[0.98] resource-action-btn cursor-pointer"
+                  style={{
+                    backgroundColor: "#FF8000",
+                    backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
+                    color: "#ffffff",
+                    border: "1px solid #ea6c00",
+                    boxShadow: "0 4px 14px rgba(255, 128, 0, 0.35)"
+                  }}
                 >
-                  <span>{res.ctaText}</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <span style={{ color: "#ffffff", fontWeight: 700 }}>{res.ctaText}</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
                 </Link>
                 <div className="text-center text-[10px] text-slate-400 font-medium">
                   {res.stats}

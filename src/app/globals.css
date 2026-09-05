@@ -265,29 +265,136 @@ body, main {
   color: #ffffff !important;
 }
 
-/* Maintain crisp white text on solid buttons & badges */
+/* ============================================================
+   UNIVERSAL BUTTON COLORS & GRADIENTS ACROSS EVERY PAGE
+   Guarantees solid background, vivid gradient, and razor-sharp white text
+   ============================================================ */
+
+/* 1. Brand Accent Orange Gradients (Primary CTA Buttons across all pages) */
+button[class*="from-accent-"],
+a[class*="from-accent-"],
+[class*="bg-gradient"][class*="from-accent-"],
+.btn-accent-gradient,
+.btn-primary-gradient,
+.btn-get-started {
+  background-color: #FF8000 !important;
+  background-image: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #ea6c00 !important;
+  box-shadow: 0 4px 14px rgba(255, 128, 0, 0.35) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+button[class*="from-accent-"]:hover:not(:disabled),
+a[class*="from-accent-"]:hover:not(:disabled),
+[class*="bg-gradient"][class*="from-accent-"]:hover:not(:disabled),
+.btn-accent-gradient:hover:not(:disabled),
+.btn-primary-gradient:hover:not(:disabled),
+.btn-get-started:hover:not(:disabled) {
+  background-color: #ea6c00 !important;
+  background-image: linear-gradient(135deg, #fb923c 0%, #FF8000 100%) !important;
+  box-shadow: 0 6px 20px rgba(255, 128, 0, 0.45) !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all nested text and SVG icons inside accent buttons are 100% pure white */
+button[class*="from-accent-"] *,
+button[class*="from-accent-"] span,
+button[class*="from-accent-"] svg,
+a[class*="from-accent-"] *,
+a[class*="from-accent-"] span,
+a[class*="from-accent-"] svg,
+[class*="bg-gradient"][class*="from-accent-"] *,
+.btn-accent-gradient *,
+.btn-primary-gradient *,
+.btn-get-started * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* 2. Brand Navy Gradients (Login, Register, Admin, and Department Buttons) */
+button[class*="from-brand-"],
+a[class*="from-brand-"],
+[class*="bg-gradient"][class*="from-brand-500"],
+[class*="bg-gradient"][class*="from-brand-600"],
+[class*="bg-gradient"][class*="from-brand-700"],
+.btn-brand-gradient {
+  background-color: #173E67 !important;
+  background-image: linear-gradient(135deg, #173E67 0%, #0f2742 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #133355 !important;
+  box-shadow: 0 4px 14px rgba(23, 62, 103, 0.35) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+button[class*="from-brand-"]:hover:not(:disabled),
+a[class*="from-brand-"]:hover:not(:disabled),
+[class*="bg-gradient"][class*="from-brand-500"]:hover:not(:disabled),
+[class*="bg-gradient"][class*="from-brand-600"]:hover:not(:disabled),
+.btn-brand-gradient:hover:not(:disabled) {
+  background-color: #133355 !important;
+  background-image: linear-gradient(135deg, #1d4d7e 0%, #173E67 100%) !important;
+  box-shadow: 0 6px 20px rgba(23, 62, 103, 0.45) !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all nested text and SVG icons inside brand buttons are pure white */
+button[class*="from-brand-"] *,
+button[class*="from-brand-"] span,
+button[class*="from-brand-"] svg,
+a[class*="from-brand-"] *,
+a[class*="from-brand-"] span,
+a[class*="from-brand-"] svg,
+.btn-brand-gradient * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* 3. Solid Brand & Accent Buttons */
 .btn-brand,
-.bg-brand-500 {
+.bg-brand-500,
+button.bg-brand-500,
+a.bg-brand-500 {
   background-color: #173E67 !important;
   color: #ffffff !important;
 }
 
-.bg-brand-600 {
+.bg-brand-600,
+button.bg-brand-600,
+a.bg-brand-600 {
   background-color: #133355 !important;
   color: #ffffff !important;
 }
 
-.bg-accent-500 {
+.btn-brand:hover,
+.bg-brand-500:hover,
+button.bg-brand-500:hover,
+a.bg-brand-500:hover {
+  background-color: #133355 !important;
+  color: #ffffff !important;
+}
+
+.bg-accent-500,
+button.bg-accent-500,
+a.bg-accent-500 {
   background-color: #FF8000 !important;
   color: #ffffff !important;
 }
 
-.bg-accent-600 {
+.bg-accent-600,
+button.bg-accent-600,
+a.bg-accent-600 {
   background-color: #ea6c00 !important;
   color: #ffffff !important;
 }
 
-.btn-brand,
+.bg-accent-500:hover,
+button.bg-accent-500:hover,
+a.bg-accent-500:hover {
+  background-color: #ea6c00 !important;
+  color: #ffffff !important;
+}
+
 .btn-primary,
 .bg-brand-700,
 .bg-brand-800,
@@ -304,6 +411,14 @@ body, main {
 .bg-accent-500 *,
 .bg-accent-600 * {
   color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Disabled buttons */
+button:disabled,
+a[aria-disabled="true"] {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
 }
 
 /* Form controls */
