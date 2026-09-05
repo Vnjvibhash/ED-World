@@ -17,12 +17,10 @@ import {
   ShieldCheck,
   Star,
   Quote,
-  ExternalLink,
   Laptop,
   Check,
   HelpCircle
 } from "lucide-react";
-import { teamMembers } from "@/data/team";
 import { departments } from "@/data/departments";
 import { featureCourses } from "@/data/courses";
 
@@ -381,75 +379,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. PRIVILEGED TEAM MEMBERS */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent-600">OUR PROFESSIONAL LEADERSHIP</span>
-            <h2 className="text-3xl font-bold text-slate-900 mt-1">Most Privileged <span className="text-accent-500">Team Members</span></h2>
-            <p className="text-slate-600 mt-2 text-sm sm:text-base">
-              The founding engineers and leaders behind ED-World's technology and curriculum.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {teamMembers.map((member) => (
-              <div
-                key={member.id}
-                className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-accent-500/50 transition-all glow-hover flex flex-col items-center text-center p-5 group shadow-sm hover:shadow-md"
-              >
-                <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-accent-500/40 p-1 mb-4 group-hover:border-accent-500 transition-colors">
-                  <div className="relative w-full h-full rounded-full overflow-hidden">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
-                  {member.name}
-                </h3>
-                <span className="text-xs font-semibold text-accent-600 mt-0.5">{member.title}</span>
-                <span className="text-xs text-slate-500 mt-1">{member.role}</span>
-
-                <div className="flex items-center space-x-2 mt-4 pt-3 border-t border-slate-100 w-full justify-center">
-                  {member.social.linkedin && (
-                    <a
-                      href={member.social.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-1.5 rounded-lg bg-slate-100 text-slate-600 hover:text-accent-500 hover:bg-accent-50 transition-colors"
-                      aria-label={`${member.name} LinkedIn`}
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-                </div>
-
-                <Link
-                  href="/developer-list"
-                  className="mt-3 text-xs text-brand-500 hover:text-accent-500 font-semibold transition-colors"
-                >
-                  View Profile →
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/developer-list"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-slate-900 bg-white border border-slate-300 hover:bg-slate-50 hover:border-slate-400 shadow-sm transition-colors text-sm"
-            >
-              <span>Meet All Developers & Team</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* 6. EXAMS & CERTIFICATIONS HIGHLIGHT */}
       <section className="py-16 bg-slate-50 border-y border-slate-200">
