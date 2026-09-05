@@ -100,7 +100,7 @@ export default function DeveloperListPage() {
     { text: "ED-World Engineering CLI v2.4.0 [Interactive Node Session]", color: "text-emerald-400" },
     { text: "Type 'help' to view commands or click any action pill below.", color: "text-slate-400" },
     { text: "edworld@leadership:~$ team", color: "text-accent-400" },
-    { text: "Found 3 Core Leadership & Engineering Architects:\n  • Vivek Kumar (CTO & Full-Stack) -> [ONLINE]\n  • Sagar Saini (CEO & AI Dev) -> [ONLINE]\n  • Versha Kumari (Lead Content & Research) -> [ONLINE]", color: "text-slate-300" }
+    { text: "Found 1 Core Leadership & Engineering Architect:\n  • Vivek Kumar (CTO & Full-Stack Developer) -> [ONLINE]", color: "text-slate-300" }
   ]);
 
   // Toast notification state
@@ -167,32 +167,22 @@ export default function DeveloperListPage() {
 
     if (trimmed === "help") {
       newLogs.push({
-        text: "Available Commands:\n  • team                 - List all core architects & roles\n  • stack vivek          - Inspect Vivek Kumar's system design & tech stack\n  • stack sagar          - Inspect Sagar Saini's AI & ML models\n  • stack versha         - Inspect Versha Kumari's curriculum metrics\n  • office-hours         - View weekly student mentorship schedules\n  • verify               - Board certification & accreditation status\n  • clear                - Clear console log",
+        text: "Available Commands:\n  • team                 - List core architect & role\n  • stack vivek          - Inspect Vivek Kumar's system design & tech stack\n  • office-hours         - View weekly student mentorship schedule\n  • verify               - Board certification & accreditation status\n  • clear                - Clear console log",
         color: "text-slate-300"
       });
     } else if (trimmed === "team") {
       newLogs.push({
-        text: "ED-World Founding Leadership:\n1. Vivek Kumar   | CTO & Founder           | EDW-ENG-001 | [ACTIVE]\n2. Sagar Saini   | CEO & Co-Founder        | EDW-AI-002  | [ACTIVE]\n3. Versha Kumari | Content & Research Lead | EDW-RES-003 | [ACTIVE]",
+        text: "ED-World Founding Leadership:\n1. Vivek Kumar   | CTO & Founder           | EDW-ENG-001 | [ACTIVE]",
         color: "text-emerald-300"
       });
-    } else if (trimmed.includes("vivek")) {
+    } else if (trimmed.includes("vivek") || trimmed.includes("stack")) {
       newLogs.push({
         text: "Vivek Kumar [CTO & Founder]:\n  • Core Stack: Next.js 15, React 19, Node.js, Python, Laravel, AWS\n  • Key Systems: Web IDE Playground, Sorting Visualizer, Role Auth\n  • Status: Available for Architecture Reviews (Tue/Thu 4-6 PM)",
         color: "text-blue-300"
       });
-    } else if (trimmed.includes("sagar")) {
-      newLogs.push({
-        text: "Sagar Saini [CEO & Co-Founder]:\n  • Core Stack: Python, TensorFlow, PyTorch, LLM Tuning, Data Science\n  • Key Systems: AI Student Assistant, Automated Question Generator\n  • Status: Available for AI/ML Mentorship (Wed/Sat 3-5 PM)",
-        color: "text-amber-300"
-      });
-    } else if (trimmed.includes("versha")) {
-      newLogs.push({
-        text: "Versha Kumari [Content & Research Lead]:\n  • Core Stack: Syllabus Mapping, Educational Analytics, Research QA\n  • Key Systems: 500+ Verified Study Modules, University Benchmarking\n  • Status: Available for Research Q&A (Mon/Fri 2-4 PM)",
-        color: "text-purple-300"
-      });
     } else if (trimmed === "office-hours" || trimmed === "schedule") {
       newLogs.push({
-        text: "Mentorship Office Hours:\n  • Vivek Kumar:   Tue & Thu  • 4:00 PM - 6:00 PM IST\n  • Sagar Saini:   Wed & Sat  • 3:00 PM - 5:00 PM IST\n  • Versha Kumari: Mon & Fri  • 2:00 PM - 4:00 PM IST\n(Click 'Book Mentorship' on any developer card to reserve your slot)",
+        text: "Mentorship Office Hours:\n  • Vivek Kumar:   Tue & Thu  • 4:00 PM - 6:00 PM IST\n(Click 'Book Mentorship' on the developer card to reserve your slot)",
         color: "text-cyan-300"
       });
     } else if (trimmed === "verify") {
@@ -278,7 +268,7 @@ export default function DeveloperListPage() {
                 Meet Our <span className="text-accent-500">Developers &amp; Architects</span>
               </h1>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Connect directly with the founding engineers, AI developers, and research directors driving ED-World. Book 1:1 mentorship, inspect code architectures, or verify credentials.
+                Connect directly with the technical leadership driving ED-World. Book 1:1 mentorship, inspect code architectures, or verify credentials.
               </p>
             </div>
 
@@ -311,7 +301,7 @@ export default function DeveloperListPage() {
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-accent-500/30 transition-all">
               <div className="flex items-center gap-2 text-brand-500 font-bold text-lg sm:text-xl">
                 <Users className="w-4 h-4 text-accent-500" />
-                <span>3 Core</span>
+                <span>{teamMembers.length} Core</span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5 font-medium">Founding Leaders</p>
             </div>
@@ -374,7 +364,7 @@ export default function DeveloperListPage() {
               {/* Terminal Quick Command Chips */}
               <div className="pt-3 flex flex-wrap items-center gap-2 border-t border-slate-800">
                 <span className="text-xs text-slate-500">Quick run:</span>
-                {["help", "team", "stack vivek", "stack sagar", "office-hours", "verify", "clear"].map((cmd) => (
+                {["help", "team", "stack vivek", "office-hours", "verify", "clear"].map((cmd) => (
                   <button
                     key={cmd}
                     onClick={() => runTerminalCmd(cmd)}
@@ -472,9 +462,9 @@ export default function DeveloperListPage() {
               Need Guidance In:
             </span>
             {[
-              { label: "⚡ Web & Cloud Architecture (Vivek)", filter: "Next.js" },
-              { label: "🤖 AI, ML & Algorithms (Sagar)", filter: "Machine Learning" },
-              { label: "📚 Curriculum & Research (Versha)", filter: "Educational Research" }
+              { label: "⚡ Web & Cloud Architecture", filter: "Next.js" },
+              { label: "⚙️ System Design & Backend", filter: "Node.js" },
+              { label: "🐍 Python & Algorithms", filter: "Python" }
             ].map((match) => (
               <button
                 key={match.filter}
@@ -498,9 +488,7 @@ export default function DeveloperListPage() {
             </span>
             {[
               { id: "all", label: "All Leaders", count: teamMembers.length },
-              { id: "leadership", label: "Full-Stack & Cloud", count: teamMembers.filter((m) => m.category === "leadership").length },
-              { id: "ai", label: "Artificial Intelligence", count: teamMembers.filter((m) => m.category === "ai").length },
-              { id: "research", label: "Research & Content", count: teamMembers.filter((m) => m.category === "research").length }
+              { id: "leadership", label: "Full-Stack & Cloud", count: teamMembers.filter((m) => m.category === "leadership").length }
             ].map((cat) => (
               <button
                 key={cat.id}

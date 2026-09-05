@@ -35,24 +35,7 @@ const initialUsers: AdminUser[] = [
     status: "Active",
     joinedDate: "2021-12-31"
   },
-  {
-    id: "usr-2",
-    name: "Sagar Saini",
-    email: "sagar@edworld.edu",
-    role: "Administrator",
-    department: "Computer Science & Engineering",
-    status: "Active",
-    joinedDate: "2021-12-31"
-  },
-  {
-    id: "usr-3",
-    name: "Versha Kumari",
-    email: "versha@edworld.edu",
-    role: "Instructor",
-    department: "Information Technology",
-    status: "Active",
-    joinedDate: "2022-02-15"
-  },
+
   {
     id: "usr-4",
     name: "Aarav Sharma",

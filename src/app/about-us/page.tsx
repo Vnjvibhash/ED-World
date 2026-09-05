@@ -95,8 +95,7 @@ export default function AboutUsPage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
                 <span className="text-slate-500 text-[11px] uppercase tracking-wider font-bold">Key Leadership</span>
                 <p className="text-slate-900 font-semibold leading-relaxed">
-                  Founder &amp; CTO: Vivek Kumar <br />
-                  CEO &amp; Co-Founder: Sagar Saini
+                  Founder &amp; CTO: Vivek Kumar
                 </p>
               </div>
             </div>
@@ -113,7 +112,7 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={teamMembers.length === 1 ? "max-w-md mx-auto" : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"}>
             {teamMembers.slice(0, 3).map((member) => (
               <div
                 key={member.id}
