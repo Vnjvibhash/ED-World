@@ -50,6 +50,7 @@ html, body {
 .gradient-text {
   background: linear-gradient(135deg, #173E67 0%, #FF8000 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -487,6 +488,7 @@ a[aria-disabled="true"] {
 .popup-form-container input:-webkit-autofill:focus {
   -webkit-text-fill-color: #0f172a !important;
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
   transition: background-color 5000s ease-in-out 0s !important;
 }
 
@@ -532,6 +534,7 @@ a[aria-disabled="true"] {
 .admin-modal input:-webkit-autofill:focus {
   -webkit-text-fill-color: #ffffff !important;
   -webkit-box-shadow: 0 0 0px 1000px #020617 inset !important;
+  box-shadow: 0 0 0px 1000px #020617 inset !important;
   transition: background-color 5000s ease-in-out 0s !important;
 }
 

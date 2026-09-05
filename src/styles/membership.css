@@ -131,6 +131,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   animation: slideUp 0.3s ease-out;
 }

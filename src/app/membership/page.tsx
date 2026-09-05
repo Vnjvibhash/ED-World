@@ -361,7 +361,7 @@ export default function MembershipPage() {
                     >
                       <CheckCheck className="w-4 h-4 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
                       <span className="font-bold tracking-wide" style={{ color: "#ffffff" }}>
-                        Proceed with {tier.name}
+                        Proceed
                       </span>
                       <ArrowRight className="w-4 h-4 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
                     </button>

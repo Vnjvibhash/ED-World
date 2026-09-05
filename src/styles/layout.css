@@ -24,8 +24,8 @@
 /* Navbar */
 .site-navbar {
   background-color: var(--color-bg-dark);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border-subtle);
   transition: padding var(--transition-normal), background-color var(--transition-normal);
 }
