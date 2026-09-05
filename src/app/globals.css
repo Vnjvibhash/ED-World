@@ -421,67 +421,118 @@ a[aria-disabled="true"] {
   cursor: not-allowed !important;
 }
 
-/* Form controls */
-input:not(.dev-terminal-input),
-select,
-textarea {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #cbd5e1 !important;
-}
+/* ============================================================
+   Popup Forms & Modal Controls Styling
+   ============================================================ */
 
-select option {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-}
-
-input:not(.dev-terminal-input)::placeholder,
-textarea::placeholder {
-  color: #94a3b8 !important;
-}
-
-/* Modal and Popup Form General Contrast Rules */
+/* Light Modal & Popup Forms */
 .modal-content-animate,
-[class*="modal"] {
+.popup-form-container {
   color: #0f172a;
 }
 
-.modal-content-animate label {
+.modal-content-animate label,
+.popup-form-container label {
   color: #1e293b !important;
   font-weight: 700 !important;
 }
 
 .modal-content-animate input:not(.dev-terminal-input),
 .modal-content-animate select,
-.modal-content-animate textarea {
+.modal-content-animate textarea,
+.popup-form-container input:not(.dev-terminal-input),
+.popup-form-container select,
+.popup-form-container textarea {
   background-color: #ffffff !important;
   color: #0f172a !important;
-  border-color: #cbd5e1 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.modal-content-animate input:not(.dev-terminal-input)::placeholder,
+.modal-content-animate textarea::placeholder,
+.popup-form-container input:not(.dev-terminal-input)::placeholder,
+.popup-form-container textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.modal-content-animate select option,
+.popup-form-container select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
 
 .modal-content-animate input:not(.dev-terminal-input):focus,
 .modal-content-animate select:focus,
-.modal-content-animate textarea:focus {
+.modal-content-animate textarea:focus,
+.popup-form-container input:not(.dev-terminal-input):focus,
+.popup-form-container select:focus,
+.popup-form-container textarea:focus {
   border-color: #FF8000 !important;
-  box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.15) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.2) !important;
+}
+
+/* Browser Autofill Support for Light Popup Forms */
+.modal-content-animate input:-webkit-autofill,
+.modal-content-animate input:-webkit-autofill:hover,
+.modal-content-animate input:-webkit-autofill:focus,
+.modal-content-animate textarea:-webkit-autofill,
+.modal-content-animate textarea:-webkit-autofill:hover,
+.modal-content-animate textarea:-webkit-autofill:focus,
+.modal-content-animate select:-webkit-autofill,
+.modal-content-animate select:-webkit-autofill:hover,
+.modal-content-animate select:-webkit-autofill:focus,
+.popup-form-container input:-webkit-autofill,
+.popup-form-container input:-webkit-autofill:hover,
+.popup-form-container input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0f172a !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 /* Dark Admin Modal Overrides */
-.admin-modal,
-.admin-modal * {
-  color: #f8fafc;
+.admin-modal {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+}
+
+.admin-modal label {
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
 }
 
 .admin-modal input,
-.admin-modal select {
+.admin-modal select,
+.admin-modal textarea {
   background-color: #020617 !important;
   color: #ffffff !important;
-  border-color: #334155 !important;
+  border: 1px solid #334155 !important;
+}
+
+.admin-modal input:focus,
+.admin-modal select:focus,
+.admin-modal textarea:focus {
+  border-color: #FF8000 !important;
+  box-shadow: 0 0 0 3px rgba(255, 128, 0, 0.25) !important;
 }
 
 .admin-modal select option {
   background-color: #0f172a !important;
   color: #ffffff !important;
+}
+
+.admin-modal input::placeholder,
+.admin-modal textarea::placeholder {
+  color: #64748b !important;
+}
+
+.admin-modal input:-webkit-autofill,
+.admin-modal input:-webkit-autofill:hover,
+.admin-modal input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px #020617 inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 

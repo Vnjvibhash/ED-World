@@ -32,7 +32,11 @@ import {
   QrCode,
   ShieldCheck,
   Play,
-  RotateCcw
+  RotateCcw,
+  User,
+  BookOpen,
+  MessageSquare,
+  Globe
 } from "lucide-react";
 import {
   LinkedinIcon,
@@ -891,16 +895,19 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {bookingMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate">
-          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5 text-slate-900">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5 text-slate-900 overflow-hidden">
+            {/* Top Brand Accent Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-600 via-accent-500 to-accent-400" />
+
             <button
               onClick={() => setBookingMember(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-300 transition-colors shadow-sm"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-1">
               <div className="relative w-14 h-14 rounded-2xl overflow-hidden border-2 border-accent-500 shrink-0 shadow">
                 <Image
                   src={bookingMember.image}
@@ -921,7 +928,7 @@ export default function DeveloperListPage() {
             </div>
 
             {bookingConfirmed ? (
-              <div className="py-8 text-center space-y-3 bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6">
+              <div className="py-8 text-center space-y-3 bg-emerald-50/80 border border-emerald-200 rounded-2xl p-6">
                 <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
                   <Check className="w-7 h-7" />
                 </div>
@@ -938,74 +945,88 @@ export default function DeveloperListPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold text-slate-800 mb-1.5">Your Full Name</label>
-                    <input
-                      required
-                      type="text"
-                      value={bookingData.studentName}
-                      onChange={(e) => setBookingData({ ...bookingData, studentName: e.target.value })}
-                      placeholder="e.g. Ananya Sharma"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
-                    />
+                    <div className="relative">
+                      <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <input
+                        required
+                        type="text"
+                        value={bookingData.studentName}
+                        onChange={(e) => setBookingData({ ...bookingData, studentName: e.target.value })}
+                        placeholder="e.g. Ananya Sharma"
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-800 mb-1.5">Student Email Address</label>
-                    <input
-                      required
-                      type="email"
-                      value={bookingData.studentEmail}
-                      onChange={(e) => setBookingData({ ...bookingData, studentEmail: e.target.value })}
-                      placeholder="ananya@student.ac.in"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
-                    />
+                    <div className="relative">
+                      <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <input
+                        required
+                        type="email"
+                        value={bookingData.studentEmail}
+                        onChange={(e) => setBookingData({ ...bookingData, studentEmail: e.target.value })}
+                        placeholder="ananya@student.ac.in"
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1.5">Guidance Topic</label>
-                  <select
-                    value={bookingData.topic}
-                    onChange={(e) => setBookingData({ ...bookingData, topic: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
-                  >
-                    {bookingMember.mentorshipTopics.map((topic, i) => (
-                      <option key={i} value={topic} className="bg-white text-slate-900 py-1.5">
-                        {topic}
-                      </option>
-                    ))}
-                    <option value="General Architecture Q&A" className="bg-white text-slate-900 py-1.5">General Architecture &amp; Project Review</option>
-                  </select>
+                  <div className="relative">
+                    <BookOpen className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <select
+                      value={bookingData.topic}
+                      onChange={(e) => setBookingData({ ...bookingData, topic: e.target.value })}
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
+                    >
+                      {bookingMember.mentorshipTopics.map((topic, i) => (
+                        <option key={i} value={topic} className="bg-white text-slate-900 py-1.5">
+                          {topic}
+                        </option>
+                      ))}
+                      <option value="General Architecture Q&A" className="bg-white text-slate-900 py-1.5">General Architecture &amp; Project Review</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1.5">Select Available Slot</label>
-                  <select
-                    value={bookingData.date}
-                    onChange={(e) => setBookingData({ ...bookingData, date: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
-                  >
-                    <option value="Tomorrow, 4:30 PM" className="bg-white text-slate-900 py-1.5">Tomorrow • 4:30 PM - 5:00 PM IST</option>
-                    <option value="This Thursday, 5:15 PM" className="bg-white text-slate-900 py-1.5">This Thursday • 5:15 PM - 5:45 PM IST</option>
-                    <option value="This Saturday, 11:00 AM" className="bg-white text-slate-900 py-1.5">This Saturday • 11:00 AM - 11:30 AM IST</option>
-                    <option value="Next Monday, 4:00 PM" className="bg-white text-slate-900 py-1.5">Next Monday • 4:00 PM - 4:30 PM IST</option>
-                  </select>
+                  <div className="relative">
+                    <Calendar className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <select
+                      value={bookingData.date}
+                      onChange={(e) => setBookingData({ ...bookingData, date: e.target.value })}
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
+                    >
+                      <option value="Tomorrow, 4:30 PM" className="bg-white text-slate-900 py-1.5">Tomorrow • 4:30 PM - 5:00 PM IST</option>
+                      <option value="This Thursday, 5:15 PM" className="bg-white text-slate-900 py-1.5">This Thursday • 5:15 PM - 5:45 PM IST</option>
+                      <option value="This Saturday, 11:00 AM" className="bg-white text-slate-900 py-1.5">This Saturday • 11:00 AM - 11:30 AM IST</option>
+                      <option value="Next Monday, 4:00 PM" className="bg-white text-slate-900 py-1.5">Next Monday • 4:00 PM - 4:30 PM IST</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-800 mb-1.5">Specific Questions or GitHub Repo (Optional)</label>
-                  <textarea
-                    rows={2}
-                    value={bookingData.notes}
-                    onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
-                    placeholder="Briefly state what you need help with (e.g. review my Next.js routing code)..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all resize-none"
-                  />
+                  <div className="relative">
+                    <textarea
+                      rows={2}
+                      value={bookingData.notes}
+                      onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
+                      placeholder="Briefly state what you need help with (e.g. review my Next.js routing code)..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm font-medium focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 placeholder:text-slate-400 shadow-sm transition-all resize-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-end gap-2.5 pt-2">
                   <button
                     type="button"
                     onClick={() => setBookingMember(null)}
-                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all"
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all shadow-sm"
                   >
                     Cancel
                   </button>
@@ -1013,8 +1034,8 @@ export default function DeveloperListPage() {
                     type="submit"
                     className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all flex items-center gap-2"
                   >
-                    <Calendar className="w-4 h-4" />
-                    <span>Confirm Free Booking</span>
+                    <Calendar className="w-4 h-4 text-white stroke-white" />
+                    <span className="text-white font-bold">Confirm Free Booking</span>
                   </button>
                 </div>
               </form>
@@ -1028,20 +1049,23 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {digitalIdMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate">
-          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-6 text-slate-900">
+          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 popup-form-container modal-content-animate space-y-6 text-slate-900 overflow-hidden">
+            {/* Top Brand Accent Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-600 via-accent-500 to-accent-400" />
+
             <button
               onClick={() => setDigitalIdMember(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-300 transition-colors shadow-sm"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="text-center">
-              <span className="text-xs font-bold uppercase tracking-wider text-accent-600">
+              <span className="text-xs font-bold uppercase tracking-wider text-accent-600 bg-accent-50 px-3 py-1 rounded-full border border-accent-200">
                 Official Credential
               </span>
-              <h3 className="text-xl font-extrabold text-slate-900 mt-0.5">
+              <h3 className="text-xl font-extrabold text-slate-900 mt-2">
                 Verified Digital ID Card
               </h3>
             </div>
@@ -1084,12 +1108,12 @@ export default function DeveloperListPage() {
 
               <div className="pt-2 border-t border-white/15 grid grid-cols-2 gap-2 text-[11px]">
                 <div>
-                  <span className="text-slate-400 block text-[10px]">Accreditation:</span>
-                  <span className="text-slate-100 font-medium">Karnataka Board Certified</span>
+                  <span className="text-slate-300 block text-[10px]">Accreditation:</span>
+                  <span className="text-white font-semibold">Karnataka Board Certified</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block text-[10px]">Security Status:</span>
-                  <span className="text-emerald-400 font-medium flex items-center gap-1">
+                  <span className="text-slate-300 block text-[10px]">Security Status:</span>
+                  <span className="text-emerald-400 font-bold flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5" /> Active Core
                   </span>
                 </div>
@@ -1099,9 +1123,9 @@ export default function DeveloperListPage() {
             <div className="flex items-center justify-between gap-3 pt-2">
               <button
                 onClick={() => handleCopy(digitalIdMember.idNumber, "ID Number")}
-                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 transition-all flex items-center justify-center gap-1.5"
+                className="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 hover:text-slate-950 border border-slate-300 transition-all flex items-center justify-center gap-1.5 shadow-sm"
               >
-                <Copy className="w-3.5 h-3.5" />
+                <Copy className="w-3.5 h-3.5 text-slate-600" />
                 <span>Copy ID Number</span>
               </button>
               <button
@@ -1109,9 +1133,10 @@ export default function DeveloperListPage() {
                   showToast("Digital credential verified against ED-World ledger!");
                   setDigitalIdMember(null);
                 }}
-                className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all"
+                className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all flex items-center justify-center gap-1.5"
               >
-                Verify Status
+                <CheckCircle2 className="w-3.5 h-3.5 text-white stroke-white" />
+                <span className="text-white font-bold">Verify Status</span>
               </button>
             </div>
           </div>
@@ -1345,21 +1370,24 @@ export default function DeveloperListPage() {
           ============================================================ */}
       {isJoinModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm modal-backdrop-animate">
-          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 modal-content-animate space-y-5 text-slate-900">
+          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 popup-form-container modal-content-animate space-y-5 text-slate-900 overflow-hidden">
+            {/* Top Brand Accent Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-600 via-accent-500 to-accent-400" />
+
             <button
               onClick={() => setIsJoinModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-300 transition-colors shadow-sm"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-accent-600 uppercase tracking-wider">
-                <Rocket className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-accent-600 uppercase tracking-wider bg-accent-50 px-2.5 py-0.5 rounded-full border border-accent-200">
+                <Rocket className="w-3.5 h-3.5 text-accent-600" />
                 <span>Join Developer Network</span>
               </div>
-              <h3 className="text-xl font-extrabold text-slate-900">
+              <h3 className="text-xl font-extrabold text-slate-900 mt-1">
                 Apply as a <span className="text-accent-500">Developer or Mentor</span>
               </h3>
               <p className="text-xs text-slate-600 font-medium">
@@ -1368,9 +1396,9 @@ export default function DeveloperListPage() {
             </div>
 
             {joinSubmitted ? (
-              <div className="py-8 text-center space-y-3 bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6">
+              <div className="py-8 text-center space-y-3 bg-emerald-50/80 border border-emerald-200 rounded-2xl p-6">
                 <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
-                  <Check className="w-7 h-7" />
+                  <Check className="w-7 h-7 text-emerald-600" />
                 </div>
                 <h4 className="text-lg font-bold text-emerald-900">Application Received!</h4>
                 <p className="text-xs text-emerald-800">
@@ -1447,7 +1475,7 @@ export default function DeveloperListPage() {
                   <button
                     type="button"
                     onClick={() => setIsJoinModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all"
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all shadow-sm"
                   >
                     Cancel
                   </button>
@@ -1455,8 +1483,8 @@ export default function DeveloperListPage() {
                     type="submit"
                     className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md flex items-center gap-2 transition-all"
                   >
-                    <Rocket className="w-4 h-4" />
-                    <span>Submit Application</span>
+                    <Rocket className="w-4 h-4 text-white stroke-white" />
+                    <span className="text-white font-bold">Submit Application</span>
                   </button>
                 </div>
               </form>

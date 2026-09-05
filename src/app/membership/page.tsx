@@ -668,18 +668,22 @@ export default function MembershipPage() {
           ============================================================ */}
       {selectedModalPlan && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-6 relative">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-6 relative overflow-hidden popup-form-container modal-content-animate">
+            {/* Top Brand Accent Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-600 via-accent-500 to-accent-400" />
+
             <button
               onClick={() => setSelectedModalPlan(null)}
-              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-300 transition-colors shadow-sm"
+              aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
             {modalSuccess ? (
               <div className="text-center py-8 space-y-4">
-                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-8 h-8" />
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-600" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Enrollment Initiated!</h3>
                 <p className="text-slate-600 text-sm">
@@ -752,8 +756,8 @@ export default function MembershipPage() {
                     type="submit"
                     className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md transition-all flex items-center justify-center gap-2"
                   >
-                    <Lock className="w-4 h-4" />
-                    <span>Proceed to Access Setup</span>
+                    <Lock className="w-4 h-4 text-white stroke-white" />
+                    <span className="text-white">Proceed to Access Setup</span>
                   </button>
 
                   <p className="text-center text-[11px] text-slate-500 font-medium">

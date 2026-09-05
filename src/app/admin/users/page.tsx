@@ -206,50 +206,61 @@ export default function AdminUsersPage() {
         {/* Edit User Modal */}
         {editingUser && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="admin-modal bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4">
-              <h3 className="text-lg font-bold text-white">Edit User Profile</h3>
-              <form onSubmit={handleSaveEdit} className="space-y-3 text-xs sm:text-sm">
-                <div className="space-y-1">
-                  <label className="text-slate-300 font-bold">Full Name</label>
+            <div className="admin-modal relative bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4 overflow-hidden">
+              {/* Top Brand Accent Bar */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-600 via-accent-500 to-accent-400" />
+
+              <button
+                onClick={() => setEditingUser(null)}
+                className="absolute top-4 right-4 p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 transition-colors shadow-sm"
+                aria-label="Close modal"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+
+              <h3 className="text-lg font-bold text-white pt-1">Edit User Profile</h3>
+              <form onSubmit={handleSaveEdit} className="space-y-3.5 text-xs sm:text-sm">
+                <div className="space-y-1.5">
+                  <label className="text-slate-300 font-bold block">Full Name</label>
                   <input
                     type="text"
                     value={editingUser.name}
                     onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-slate-300 font-bold">Email Address</label>
+                <div className="space-y-1.5">
+                  <label className="text-slate-300 font-bold block">Email Address</label>
                   <input
                     type="email"
                     value={editingUser.email}
                     onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-slate-300 font-bold">Assigned Role</label>
+                <div className="space-y-1.5">
+                  <label className="text-slate-300 font-bold block">Assigned Role</label>
                   <select
                     value={editingUser.role}
                     onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value as AdminUser["role"] })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 shadow-sm transition-all cursor-pointer"
                   >
-                    <option value="Administrator" className="bg-slate-900 text-white">Administrator</option>
-                    <option value="Instructor" className="bg-slate-900 text-white">Instructor</option>
-                    <option value="Student" className="bg-slate-900 text-white">Student</option>
+                    <option value="Administrator" className="bg-slate-900 text-white py-1">Administrator</option>
+                    <option value="Instructor" className="bg-slate-900 text-white py-1">Instructor</option>
+                    <option value="Student" className="bg-slate-900 text-white py-1">Student</option>
                   </select>
                 </div>
-                <div className="flex justify-end gap-2 pt-4">
+                <div className="flex justify-end gap-2.5 pt-4">
                   <button
                     type="button"
                     onClick={() => setEditingUser(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-colors"
+                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-semibold transition-colors shadow-sm"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-white text-xs font-bold shadow-md transition-all"
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-white text-xs font-bold shadow-md transition-all"
                   >
                     Save Changes
                   </button>
