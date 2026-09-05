@@ -122,6 +122,10 @@ export function Header() {
 
               <div className="absolute top-full left-0 w-64 pt-2 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
                 <div className="bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden p-2 text-slate-900">
+                  <div className="flex items-center justify-between px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <span>Departments</span>
+                    <Link href="/departments" className="text-brand-600 hover:text-accent-500 font-bold lowercase">view all</Link>
+                  </div>
                   <Link
                     href="/departments/engineering"
                     className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 hover:text-accent-500 transition-colors"
@@ -129,7 +133,7 @@ export function Header() {
                     <GraduationCap className="w-4 h-4 text-brand-500" />
                     <div>
                       <div className="font-semibold text-sm">Engineering</div>
-                      <div className="text-xs text-slate-400">CSE, ECE, Civil & Mech</div>
+                      <div className="text-xs text-slate-400">CSE, ECE, Civil &amp; Mech</div>
                     </div>
                   </Link>
                   <Link
@@ -139,7 +143,7 @@ export function Header() {
                     <Sparkles className="w-4 h-4 text-emerald-500" />
                     <div>
                       <div className="font-semibold text-sm">Public Health</div>
-                      <div className="text-xs text-slate-400">Health & Life Sciences</div>
+                      <div className="text-xs text-slate-400">Health &amp; Life Sciences</div>
                     </div>
                   </Link>
                   <Link
@@ -148,8 +152,8 @@ export function Header() {
                   >
                     <BookOpen className="w-4 h-4 text-amber-500" />
                     <div>
-                      <div className="font-semibold text-sm">Management & Commerce</div>
-                      <div className="text-xs text-slate-400">Finance & Operations</div>
+                      <div className="font-semibold text-sm">Management &amp; Commerce</div>
+                      <div className="text-xs text-slate-400">Finance &amp; Operations</div>
                     </div>
                   </Link>
                   <Link
@@ -158,10 +162,13 @@ export function Header() {
                   >
                     <Award className="w-4 h-4 text-purple-500" />
                     <div>
-                      <div className="font-semibold text-sm">Arts & Designs</div>
-                      <div className="text-xs text-slate-400">UI/UX & Multimedia</div>
+                      <div className="font-semibold text-sm">Arts &amp; Designs</div>
+                      <div className="text-xs text-slate-400">UI/UX &amp; Multimedia</div>
                     </div>
                   </Link>
+                  <div className="border-t border-slate-100 mt-1 pt-1">
+                    <Link href="/departments" className="block px-3 py-2 rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-100 transition-colors text-xs font-bold text-center">Explore All Departments</Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -211,6 +218,10 @@ export function Header() {
 
               <div className="absolute top-full left-0 w-64 pt-2 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
                 <div className="bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden p-2 text-slate-900">
+                  <div className="flex items-center justify-between px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <span>Resources</span>
+                    <Link href="/resources" className="text-brand-600 hover:text-accent-500 font-bold lowercase">view all</Link>
+                  </div>
                   <Link
                     href="/practice"
                     className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 hover:text-accent-500 transition-colors"
@@ -261,6 +272,9 @@ export function Header() {
                       <div className="text-xs text-slate-400">Direct Submission</div>
                     </div>
                   </Link>
+                  <div className="border-t border-slate-100 mt-1 pt-1">
+                    <Link href="/resources" className="block px-3 py-2 rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-100 transition-colors text-xs font-bold text-center">Explore All Learning Tools</Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -324,10 +338,11 @@ export function Header() {
               Departments
             </div>
             <div className="pl-4 space-y-1">
+              <Link href="/departments" onClick={closeMenu} className="block py-1.5 text-sm font-semibold text-brand-600 hover:text-accent-500">View All Departments</Link>
               <Link href="/departments/engineering" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Engineering (CSE/ECE/Civil)</Link>
               <Link href="/departments/non-technical" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Public Health</Link>
-              <Link href="/departments/management" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Management & Commerce</Link>
-              <Link href="/departments/other" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Arts & Designs</Link>
+              <Link href="/departments/management" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Management &amp; Commerce</Link>
+              <Link href="/departments/other" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Arts &amp; Designs</Link>
             </div>
 
             <div className="px-3 py-1 font-bold text-xs text-brand-500 uppercase tracking-wider">
@@ -345,6 +360,7 @@ export function Header() {
               Resources
             </div>
             <div className="pl-4 space-y-1">
+              <Link href="/resources" onClick={closeMenu} className="block py-1.5 text-sm font-semibold text-brand-600 hover:text-accent-500">View All Resources</Link>
               <Link href="/practice" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Coding Practice</Link>
               <Link href="/quiz" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Interactive Quiz</Link>
               <Link href="/sorting-algorithm" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Sorting Visualizer</Link>

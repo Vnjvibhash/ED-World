@@ -1,0 +1,75 @@
+/* ============================================================
+   Resources Page Stylesheet (Light Theme)
+   ============================================================ */
+
+.resource-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.resource-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.resource-category-pill {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.resource-action-btn {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  font-size: 0.8125rem;
+}
+
+.resource-action-btn:hover {
+  background-color: #173E67;
+  color: #ffffff;
+  border-color: #173E67;
+  box-shadow: 0 4px 12px rgba(23, 62, 103, 0.25);
+}
+
+.resource-action-btn:hover * {
+  color: #ffffff;
+}
+
+.resource-hero-badge {
+  background-color: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #ea6c00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.875rem;
+  border-radius: 9999px;
+}
