@@ -145,3 +145,110 @@
     transform: translate(-50%, 0);
   }
 }
+
+/* ============================================================
+   Selected Card Text & Button Color Contrast Rules
+   ============================================================ */
+
+/* Selected Card CTA Button (High-Contrast Radiant Colors) */
+.selected-card-btn {
+  background-color: #FF8000 !important;
+  background-image: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #ea6c00 !important;
+  box-shadow: 0 10px 25px -5px rgba(255, 128, 0, 0.45) !important;
+  cursor: pointer !important;
+}
+
+.selected-card-btn *,
+.selected-card-btn span,
+.selected-card-btn svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+.selected-card-btn:hover {
+  background-color: #ea6c00 !important;
+  background-image: linear-gradient(135deg, #fb923c 0%, #FF8000 100%) !important;
+  box-shadow: 0 14px 30px -5px rgba(255, 128, 0, 0.55) !important;
+}
+
+/* Tier specific selected button styles */
+.selected-card-btn-bronze {
+  background-color: #d97706 !important;
+  background-image: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border-color: #b45309 !important;
+  box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.45) !important;
+}
+
+.selected-card-btn-silver {
+  background-color: #1e293b !important;
+  background-image: linear-gradient(135deg, #334155 0%, #0f172a 100%) !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(30, 41, 59, 0.4) !important;
+}
+
+.selected-card-btn-gold {
+  background-color: #FF8000 !important;
+  background-image: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%) !important;
+  border-color: #ea6c00 !important;
+  box-shadow: 0 10px 25px -5px rgba(255, 128, 0, 0.55) !important;
+}
+
+.selected-card-btn-premium {
+  background-color: #0284c7 !important;
+  background-image: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%) !important;
+  border-color: #0369a1 !important;
+  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.45) !important;
+}
+
+/* Unselected Card Button - Light Card */
+.unselected-card-btn {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.unselected-card-btn *,
+.unselected-card-btn span {
+  color: #0f172a !important;
+}
+
+.unselected-card-btn:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+/* Unselected Card Button - Dark Card (Gold when unselected) */
+.dark-card .unselected-card-btn {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.dark-card .unselected-card-btn *,
+.dark-card .unselected-card-btn span {
+  color: #ffffff !important;
+}
+
+.dark-card .unselected-card-btn:hover {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Selected Status Badge Pill */
+.selected-badge-pill {
+  background: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%) !important;
+  color: #ffffff !important;
+}
+
+.selected-badge-pill *,
+.selected-badge-pill span,
+.selected-badge-pill svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+

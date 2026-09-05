@@ -42,28 +42,35 @@ export function Header() {
 
   return (
     <header className="w-full sticky top-0 z-50 transition-all duration-300">
-      {/* Top Bar */}
-      <div className="bg-slate-100 text-slate-900 text-xs py-2 px-4 border-b border-slate-200">
+      {/* Top Bar - Brand Theme Navy */}
+      <div
+        className="text-xs py-2 px-4 border-b transition-colors header-top-bar"
+        style={{
+          backgroundColor: "#173E67",
+          color: "#ffffff",
+          borderBottom: "1px solid #133355"
+        }}
+      >
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center space-x-3 sm:space-x-4">
-            <Link href="/" className="hover:text-accent-500 transition-colors">Home</Link>
-            <span className="text-slate-300">|</span>
-            <Link href="/developer-list" className="hover:text-accent-500 transition-colors">Developers</Link>
-            <span className="text-slate-300">|</span>
-            <Link href="/about-us" className="hover:text-accent-500 transition-colors">About Us</Link>
+            <Link href="/" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "#ffffff" }}>Home</Link>
+            <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+            <Link href="/developer-list" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Developers</Link>
+            <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+            <Link href="/about-us" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>About Us</Link>
           </div>
 
           <div className="flex items-center space-x-3 sm:space-x-4">
-            <Link href="/login" className="flex items-center gap-1 hover:text-accent-500 transition-colors font-medium">
-              <User className="w-3.5 h-3.5 text-accent-500" />
-              <span>Login</span>
+            <Link href="/login" className="flex items-center gap-1 hover:text-accent-400 transition-colors font-medium" style={{ color: "#ffffff" }}>
+              <User className="w-3.5 h-3.5" style={{ color: "#FF8000" }} />
+              <span style={{ color: "#ffffff" }}>Login</span>
             </Link>
-            <span className="text-slate-300">|</span>
-            <Link href="/sorting-algorithm" className="hover:text-accent-500 transition-colors">Sorting Technique</Link>
-            <span className="text-slate-300">|</span>
-            <Link href="/faqs" className="hover:text-accent-500 transition-colors">FAQs</Link>
-            <span className="text-slate-300">|</span>
-            <Link href="/contact" className="hover:text-accent-500 transition-colors">Contact</Link>
+            <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+            <Link href="/sorting-algorithm" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Sorting Technique</Link>
+            <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+            <Link href="/faqs" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>FAQs</Link>
+            <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+            <Link href="/contact" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Contact</Link>
           </div>
         </div>
       </div>
@@ -281,9 +288,16 @@ export function Header() {
           <div className="flex items-center gap-3">
             <Link
               href="/register"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full font-semibold text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md shadow-accent-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="hidden sm:inline-flex items-center justify-center px-6 py-2.5 rounded-full font-bold text-sm shadow-md transition-all hover:scale-105 active:scale-95 btn-get-started"
+              style={{
+                backgroundColor: "#FF8000",
+                backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
+                color: "#ffffff",
+                border: "1px solid #ea6c00",
+                boxShadow: "0 4px 14px rgba(255, 128, 0, 0.4)"
+              }}
             >
-              Get Started
+              <span style={{ color: "#ffffff", fontWeight: 700 }}>Get Started</span>
             </Link>
 
             <button
@@ -370,9 +384,16 @@ export function Header() {
               <Link
                 href="/register"
                 onClick={closeMenu}
-                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl font-semibold text-white bg-gradient-to-r from-accent-500 to-accent-600 shadow-md shadow-accent-500/20"
+                className="w-full inline-flex items-center justify-center py-2.5 rounded-xl font-bold text-sm shadow-md btn-get-started"
+                style={{
+                  backgroundColor: "#FF8000",
+                  backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
+                  color: "#ffffff",
+                  border: "1px solid #ea6c00",
+                  boxShadow: "0 4px 14px rgba(255, 128, 0, 0.35)"
+                }}
               >
-                Become A User
+                <span style={{ color: "#ffffff", fontWeight: 700 }}>Get Started</span>
               </Link>
             </div>
           </div>

@@ -3,20 +3,42 @@
    ============================================================ */
 
 .header-top-bar {
-  background-color: var(--color-bg-darkest);
-  color: var(--color-text-muted);
+  background-color: #173E67 !important;
+  color: #ffffff !important;
   font-size: 0.75rem;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid #133355 !important;
 }
 
-.header-top-bar a {
-  color: var(--color-text-muted);
+.header-top-bar a,
+.header-top-bar span {
+  color: rgba(255, 255, 255, 0.9) !important;
   transition: color var(--transition-fast);
 }
 
 .header-top-bar a:hover {
-  color: var(--color-accent-500);
+  color: #FF8000 !important;
+}
+
+/* Branded Theme Get Started CTA Button */
+.btn-get-started {
+  background-color: #FF8000 !important;
+  background-image: linear-gradient(135deg, #FF8000 0%, #ea6c00 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #ea6c00 !important;
+  box-shadow: 0 4px 14px rgba(255, 128, 0, 0.4) !important;
+  font-weight: 700 !important;
+}
+
+.btn-get-started *,
+.btn-get-started span {
+  color: #ffffff !important;
+}
+
+.btn-get-started:hover {
+  background-color: #ea6c00 !important;
+  background-image: linear-gradient(135deg, #fb923c 0%, #FF8000 100%) !important;
+  box-shadow: 0 6px 18px rgba(255, 128, 0, 0.5) !important;
 }
 
 .header-navbar {

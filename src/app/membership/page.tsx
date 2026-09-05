@@ -238,9 +238,17 @@ export default function MembershipPage() {
 
                     <div className="flex flex-col items-end gap-1.5">
                       {isSelected ? (
-                        <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-accent-500 text-white shadow-md shadow-accent-500/30 animate-fade-in">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>SELECTED</span>
+                        <div
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold shadow-md animate-fade-in"
+                          style={{
+                            backgroundColor: "#FF8000",
+                            color: "#ffffff",
+                            border: "1px solid #ea6c00",
+                            boxShadow: "0 4px 12px rgba(255, 128, 0, 0.35)"
+                          }}
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
+                          <span style={{ color: "#ffffff", fontWeight: 700 }}>SELECTED</span>
                         </div>
                       ) : (
                         <button
@@ -251,12 +259,17 @@ export default function MembershipPage() {
                           }}
                           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold transition-all ${
                             isPopular
-                              ? "bg-white/10 hover:bg-white/20 text-slate-200 border border-white/20"
-                              : "bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200"
+                              ? "hover:bg-white/20"
+                              : "hover:bg-slate-200"
                           }`}
+                          style={{
+                            backgroundColor: isPopular ? "rgba(255, 255, 255, 0.15)" : "#f1f5f9",
+                            color: isPopular ? "#ffffff" : "#475569",
+                            border: isPopular ? "1px solid rgba(255, 255, 255, 0.25)" : "1px solid #cbd5e1"
+                          }}
                         >
                           <div className="w-2.5 h-2.5 rounded-full border border-current" />
-                          <span>Select Plan</span>
+                          <span style={{ color: isPopular ? "#ffffff" : "#475569" }}>Select Plan</span>
                         </button>
                       )}
                       <span
@@ -337,11 +350,20 @@ export default function MembershipPage() {
                         e.stopPropagation();
                         handleEnrollClick(tier);
                       }}
-                      className="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 text-white shadow-accent-500/35 glow-hover"
+                      className="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg selected-card-btn cursor-pointer"
+                      style={{
+                        backgroundColor: "#FF8000",
+                        backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
+                        color: "#ffffff",
+                        border: "1px solid #ea6c00",
+                        boxShadow: "0 10px 25px -5px rgba(255, 128, 0, 0.45)"
+                      }}
                     >
-                      <CheckCheck className="w-4 h-4" />
-                      <span>Proceed with {tier.name}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <CheckCheck className="w-4 h-4 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
+                      <span className="font-bold tracking-wide" style={{ color: "#ffffff" }}>
+                        Proceed with {tier.name}
+                      </span>
+                      <ArrowRight className="w-4 h-4 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
                     </button>
                   ) : (
                     <button
@@ -350,13 +372,15 @@ export default function MembershipPage() {
                         e.stopPropagation();
                         handleSelectPlan(tier.id);
                       }}
-                      className={`w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
-                        isPopular
-                          ? "bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                          : "bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200"
-                      }`}
+                      className="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all unselected-card-btn cursor-pointer"
+                      style={{
+                        backgroundColor: isPopular ? "rgba(255, 255, 255, 0.15)" : "#f1f5f9",
+                        color: isPopular ? "#ffffff" : "#0f172a",
+                        border: isPopular ? "1px solid rgba(255, 255, 255, 0.25)" : "1px solid #cbd5e1"
+                      }}
                     >
-                      <span>Select {tier.name}</span>
+                      <span style={{ color: isPopular ? "#ffffff" : "#0f172a" }}>Select {tier.name}</span>
+                      <ArrowRight className="w-4 h-4 shrink-0" style={{ color: isPopular ? "#ffffff" : "#0f172a" }} />
                     </button>
                   )}
                 </div>
@@ -625,10 +649,17 @@ export default function MembershipPage() {
 
         <button
           onClick={() => handleEnrollClick(activeSelectedTier)}
-          className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md shadow-accent-500/25 flex items-center gap-2 shrink-0 glow-hover transition-all"
+          className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shrink-0 transition-all shadow-md cursor-pointer"
+          style={{
+            backgroundColor: "#FF8000",
+            backgroundImage: "linear-gradient(135deg, #FF8000 0%, #ea6c00 100%)",
+            color: "#ffffff",
+            border: "1px solid #ea6c00",
+            boxShadow: "0 4px 15px rgba(255, 128, 0, 0.35)"
+          }}
         >
-          <span>Continue with {activeSelectedTier.name}</span>
-          <ArrowRight className="w-4 h-4" />
+          <span style={{ color: "#ffffff", fontWeight: 700 }}>Continue with {activeSelectedTier.name}</span>
+          <ArrowRight className="w-4 h-4 shrink-0" style={{ color: "#ffffff", stroke: "#ffffff" }} />
         </button>
       </div>
 
