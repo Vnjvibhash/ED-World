@@ -91,6 +91,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/data-structures" className="flex items-center gap-2 text-slate-600 hover:text-accent-600 font-medium transition-colors group footer-link-item">
+                  <ChevronRight className="w-4 h-4 text-accent-500 group-hover:translate-x-1 transition-transform" />
+                  Data Structures
+                </Link>
+              </li>
+              <li>
                 <Link href="/sorting-algorithm" className="flex items-center gap-2 text-slate-600 hover:text-accent-600 font-medium transition-colors group footer-link-item">
                   <ChevronRight className="w-4 h-4 text-accent-500 group-hover:translate-x-1 transition-transform" />
                   Sorting Visualizer

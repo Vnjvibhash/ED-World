@@ -18,7 +18,8 @@ import {
   Award,
   Sparkles,
   BookOpen,
-  Laptop
+  Laptop,
+  Layers
 } from "lucide-react";
 
 export function Header() {
@@ -65,6 +66,8 @@ export function Header() {
               <User className="w-3.5 h-3.5" style={{ color: "#FF8000" }} />
               <span style={{ color: "#ffffff" }}>Login</span>
             </Link>
+            <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+            <Link href="/data-structures" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Data Structures</Link>
             <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
             <Link href="/sorting-algorithm" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Sorting Technique</Link>
             <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
@@ -243,6 +246,16 @@ export function Header() {
                     </div>
                   </Link>
                   <Link
+                    href="/data-structures"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 hover:text-accent-500 transition-colors"
+                  >
+                    <Layers className="w-4 h-4 text-violet-500" />
+                    <div>
+                      <div className="font-semibold text-sm">Data Structures</div>
+                      <div className="text-xs text-slate-400">Interactive Lab</div>
+                    </div>
+                  </Link>
+                  <Link
                     href="/sorting-algorithm"
                     className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-slate-50 hover:text-accent-500 transition-colors"
                   >
@@ -363,6 +376,7 @@ export function Header() {
               <Link href="/resources" onClick={closeMenu} className="block py-1.5 text-sm font-semibold text-brand-600 hover:text-accent-500">View All Resources</Link>
               <Link href="/practice" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Coding Practice</Link>
               <Link href="/quiz" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Interactive Quiz</Link>
+              <Link href="/data-structures" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500 font-medium">Data Structures Visualizer</Link>
               <Link href="/sorting-algorithm" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Sorting Visualizer</Link>
               <Link href="/assignment" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Assignments</Link>
               <Link href="/assignment-upload" onClick={closeMenu} className="block py-1.5 text-sm text-slate-900 hover:text-accent-500">Assignment Upload</Link>
