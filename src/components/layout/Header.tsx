@@ -21,7 +21,8 @@ import {
   Laptop,
   Layers,
   Search,
-  Command
+  Command,
+  LogOut
 } from "lucide-react";
 
 export function Header() {
@@ -29,6 +30,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
 
@@ -364,6 +366,91 @@ export function Header() {
               </kbd>
             </button>
 
+            {/* Interactive Profile Icon & Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center gap-2 p-1 pl-2 pr-2.5 rounded-full border border-slate-200 bg-white hover:border-slate-300 hover:shadow-xs transition-all focus:outline-none focus:ring-2 focus:ring-accent-500 cursor-pointer"
+                aria-label="User Profile"
+                title="Account & Profile"
+              >
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white shadow-xs">
+                  <User className="w-4 h-4" />
+                </div>
+                <div className="hidden xl:flex flex-col items-start pr-1 text-left">
+                  <span className="text-xs font-bold text-slate-800 leading-tight">Vivek Kumar</span>
+                  <span className="text-[10px] text-slate-400 font-medium">Student</span>
+                </div>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 hidden sm:block ${isProfileOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {/* Profile Dropdown Menu */}
+              {isProfileOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  onClick={() => setIsProfileOpen(false)}
+                >
+                  <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold shadow-sm">
+                      VK
+                    </div>
+                    <div className="overflow-hidden">
+                      <div className="font-bold text-sm text-slate-900 truncate">Vivek Kumar</div>
+                      <div className="text-xs text-slate-400 truncate">vivek@studentworld.edu</div>
+                    </div>
+                  </div>
+
+                  <div className="p-1 space-y-0.5">
+                    <Link
+                      href="/membership"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                    >
+                      <User className="w-4 h-4 text-slate-400" />
+                      <span>My Profile &amp; Membership</span>
+                    </Link>
+                    <Link
+                      href="/practice"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                    >
+                      <Code2 className="w-4 h-4 text-emerald-500" />
+                      <span>Web IDE &amp; Submissions</span>
+                    </Link>
+                    <Link
+                      href="/quiz"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                    >
+                      <Award className="w-4 h-4 text-amber-500" />
+                      <span>Quiz Rank &amp; Badges</span>
+                    </Link>
+                    <Link
+                      href="/assignment"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                    >
+                      <FileSpreadsheet className="w-4 h-4 text-blue-500" />
+                      <span>Assignments Portal</span>
+                    </Link>
+                  </div>
+
+                  <div className="border-t border-slate-100 p-1 mt-1 space-y-0.5">
+                    <Link
+                      href="/login"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                    >
+                      <LogOut className="w-4 h-4 text-slate-400" />
+                      <span>Sign In / Switch Account</span>
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-brand-600 hover:bg-brand-50 rounded-xl transition-colors"
+                    >
+                      <Sparkles className="w-4 h-4 text-brand-500" />
+                      <span>Register New Account</span>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="lg:hidden p-2 rounded-lg text-slate-900 hover:text-accent-500 hover:bg-slate-100 transition-colors"
@@ -440,13 +527,33 @@ export function Header() {
             >
               Contact Us
             </Link>
-            <Link
-              href="/login"
-              onClick={closeMenu}
-              className="block px-3 py-2 rounded-lg text-slate-900 hover:bg-slate-100 hover:text-accent-500 font-medium"
-            >
-              Login / Account
-            </Link>
+            <div className="pt-2 border-t border-slate-100 mt-2">
+              <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-xl mb-2">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+                  VK
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">Vivek Kumar</div>
+                  <div className="text-[10px] text-slate-400">vivek@studentworld.edu</div>
+                </div>
+              </div>
+              <Link
+                href="/membership"
+                onClick={closeMenu}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-900 hover:bg-slate-100 hover:text-accent-500 text-xs font-semibold"
+              >
+                <User className="w-4 h-4 text-slate-400" />
+                <span>My Profile &amp; Membership</span>
+              </Link>
+              <Link
+                href="/login"
+                onClick={closeMenu}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-900 hover:bg-slate-100 hover:text-accent-500 text-xs font-semibold"
+              >
+                <LogOut className="w-4 h-4 text-slate-400" />
+                <span>Sign In / Switch Account</span>
+              </Link>
+            </div>
           </div>
         )}
       </nav>
