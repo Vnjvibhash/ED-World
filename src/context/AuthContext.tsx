@@ -27,6 +27,7 @@ import {
 } from "firebase/firestore";
 import { auth, googleProvider, db } from "@/lib/firebase";
 import { hashPassword, verifyPassword } from "@/lib/crypto";
+import { useRouter } from "next/navigation";
 
 // ─── User Profile Type ────────────────────────────────────────────────────────
 
@@ -116,6 +117,7 @@ export function formatDisplayNameFromEmail(email?: string | null): string {
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -497,7 +499,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [user, profile]
   );
 
-  /** Sign out */
+  /** Sign out and redirect to login page */
   const logout = useCallback(async () => {
     try {
       if (typeof window !== "undefined") {
@@ -513,8 +515,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (typeof window !== "undefined") {
         localStorage.removeItem("sw_active_session");
       }
+      router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   return (
     <AuthContext.Provider
