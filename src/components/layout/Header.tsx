@@ -14,6 +14,7 @@ import {
   PhoneCall,
   User,
   ShieldCheck,
+  ShieldAlert,
   FileSpreadsheet,
   Award,
   Sparkles,
@@ -22,8 +23,11 @@ import {
   Layers,
   Search,
   Command,
-  LogOut
+  LogOut,
+  KeyRound,
+  LogIn
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +38,20 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const pathname = usePathname();
 
+  const {
+    user,
+    profile,
+    isAdmin,
+    isAuthenticated,
+    signInWithGoogle,
+    logout,
+    openPasswordModal
+  } = useAuth();
+
   const SEARCH_ITEMS = [
+    ...(isAdmin
+      ? [{ title: "Admin Dashboard", desc: "Administrator management portal & metrics", href: "/admin/dashboard", cat: "Admin" }]
+      : []),
     { title: "Stack Visualizer", desc: "LIFO stack operations, push/pop/peek", href: "/data-structures/stack", cat: "Data Structures" },
     { title: "Queue Visualizer", desc: "FIFO, Circular buffer & Priority queue", href: "/data-structures/queue", cat: "Data Structures" },
     { title: "Linked List Visualizer", desc: "Singly & Doubly pointer chaining", href: "/data-structures/linked-list", cat: "Data Structures" },
@@ -82,6 +99,37 @@ export function Header() {
     setActiveDropdown(null);
   };
 
+  const rawDisplayName =
+    (profile?.displayName && profile.displayName !== "Platform Administrator"
+      ? profile.displayName
+      : null) ||
+    (user?.displayName && user.displayName !== "Platform Administrator"
+      ? user.displayName
+      : null);
+
+  const fallbackEmail = profile?.email || user?.email || "";
+  const derivedNameFromEmail = fallbackEmail
+    ? fallbackEmail
+        .split("@")[0]
+        .replace(/[._\-+]/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase())
+    : "";
+
+  const userDisplayName =
+    rawDisplayName ||
+    derivedNameFromEmail ||
+    (isAdmin ? "Administrator" : "Student User");
+
+  const userEmail = profile?.email || user?.email || "";
+  const userPhoto = profile?.photoURL || user?.photoURL;
+  const userInitials = userDisplayName
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => w[0])
+    .join("")
+    .substring(0, 2)
+    .toUpperCase() || (isAdmin ? "AD" : "SU");
+
   return (
     <header className="w-full sticky top-0 z-50 transition-all duration-300">
       {/* Top Bar - Brand Theme Navy */}
@@ -100,13 +148,56 @@ export function Header() {
             <Link href="/developer-list" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Developers</Link>
             <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
             <Link href="/about-us" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>About Us</Link>
+            {isAdmin && (
+              <>
+                <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+                <Link
+                  href="/admin/dashboard"
+                  className="inline-flex items-center gap-1 font-bold text-rose-300 hover:text-white transition-colors"
+                >
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  <span>Admin Portal</span>
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="flex items-center space-x-3 sm:space-x-4">
-            <Link href="/login" className="flex items-center gap-1 hover:text-accent-400 transition-colors font-medium" style={{ color: "#ffffff" }}>
-              <User className="w-3.5 h-3.5" style={{ color: "#FF8000" }} />
-              <span style={{ color: "#ffffff" }}>Login</span>
-            </Link>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <span className={`font-medium truncate max-w-[150px] ${isAdmin ? "text-rose-300 font-bold" : "text-emerald-300"}`}>
+                  {isAdmin ? "🛡️ " : ""}Hi, {userDisplayName.split(" ")[0]}
+                </span>
+                <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+                <button
+                  onClick={logout}
+                  className="text-rose-300 hover:text-rose-100 transition-colors font-bold cursor-pointer inline-flex items-center gap-1"
+                >
+                  <LogOut className="w-3 h-3" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2.5">
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1.5 hover:text-accent-400 transition-colors font-semibold cursor-pointer"
+                  style={{ color: "#ffffff" }}
+                >
+                  <LogIn className="w-3.5 h-3.5 text-accent-400" />
+                  <span>Login</span>
+                </Link>
+                <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
+                <button
+                  onClick={signInWithGoogle}
+                  className="flex items-center gap-1.5 hover:text-accent-400 transition-colors font-medium cursor-pointer"
+                  style={{ color: "#ffffff" }}
+                >
+                  <User className="w-3.5 h-3.5" style={{ color: "#FF8000" }} />
+                  <span>Google Sign In</span>
+                </button>
+              </div>
+            )}
             <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
             <Link href="/data-structures" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "rgba(255, 255, 255, 0.9)" }}>Data Structures</Link>
             <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>
@@ -352,82 +443,224 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Profile Icon & Mobile Toggle */}
-          <div className="flex items-center gap-3">
-            {/* Interactive Profile Icon & Dropdown */}
+          {/* Profile Icon, Search & Mobile Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Quick Search Button */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-slate-50 text-slate-500 hover:text-brand-600 transition-all flex items-center gap-2 cursor-pointer text-xs"
+              title="Quick Search (⌘K)"
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline font-medium">Search...</span>
+              <kbd className="hidden sm:inline px-1.5 py-0.5 text-[10px] font-mono bg-slate-100 border border-slate-200 rounded text-slate-400">⌘K</kbd>
+            </button>
+
+            {/* Interactive Profile Photo & Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="w-10 h-10 rounded-full border-2 border-slate-200 hover:border-accent-500 bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white shadow-sm transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent-500 cursor-pointer"
+                className={`w-10 h-10 rounded-full border-2 ${
+                  isAdmin
+                    ? "border-rose-500 shadow-rose-500/20"
+                    : "border-slate-200 hover:border-brand-500"
+                } bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white shadow-sm transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent-500 cursor-pointer overflow-hidden`}
                 aria-label="User Profile"
-                title="Account & Profile"
+                title={isAuthenticated ? `${userDisplayName} (${isAdmin ? "Admin" : (profile?.role || "Student")})` : "Account & Sign In"}
               >
-                <User className="w-5 h-5 text-white" />
+                {userPhoto ? (
+                  <Image
+                    src={userPhoto}
+                    alt={userDisplayName}
+                    width={40}
+                    height={40}
+                    className="object-cover w-full h-full"
+                  />
+                ) : isAuthenticated ? (
+                  <span className="font-bold text-xs">{userInitials}</span>
+                ) : (
+                  <User className="w-5 h-5 text-white" />
+                )}
               </button>
 
               {/* Profile Dropdown Menu */}
               {isProfileOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
                   onClick={() => setIsProfileOpen(false)}
                 >
-                  <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold shadow-sm">
-                      VK
-                    </div>
-                    <div className="overflow-hidden">
-                      <div className="font-bold text-sm text-slate-900 truncate">Vivek Kumar</div>
-                      <div className="text-xs text-slate-400 truncate">vivek@studentworld.edu</div>
-                    </div>
-                  </div>
+                  {isAuthenticated ? (
+                    // Logged in user profile state
+                    <>
+                      <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+                        <div className={`w-11 h-11 rounded-full ${
+                          isAdmin ? "bg-gradient-to-tr from-rose-600 to-amber-500" : "bg-gradient-to-tr from-brand-600 to-accent-500"
+                        } flex items-center justify-center text-white font-bold shadow-sm overflow-hidden shrink-0`}>
+                          {userPhoto ? (
+                            <Image
+                              src={userPhoto}
+                              alt={userDisplayName}
+                              width={44}
+                              height={44}
+                              className="object-cover w-full h-full"
+                            />
+                          ) : (
+                            userInitials
+                          )}
+                        </div>
+                        <div className="overflow-hidden">
+                          <div className="font-bold text-sm text-slate-900 truncate flex items-center gap-1.5">
+                            <span>{userDisplayName}</span>
+                          </div>
+                          <div className="text-xs text-slate-400 truncate">
+                            {userEmail}
+                          </div>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            {isAdmin ? (
+                              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1">
+                                <ShieldAlert className="w-3 h-3 text-rose-600" /> Admin
+                              </span>
+                            ) : (
+                              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                                Student
+                              </span>
+                            )}
+                            <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              {profile?.membership || "Free"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
 
-                  <div className="p-1 space-y-0.5">
-                    <Link
-                      href="/membership"
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
-                    >
-                      <User className="w-4 h-4 text-slate-400" />
-                      <span>My Profile &amp; Membership</span>
-                    </Link>
-                    <Link
-                      href="/practice"
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
-                    >
-                      <Code2 className="w-4 h-4 text-emerald-500" />
-                      <span>Web IDE &amp; Submissions</span>
-                    </Link>
-                    <Link
-                      href="/quiz"
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
-                    >
-                      <Award className="w-4 h-4 text-amber-500" />
-                      <span>Quiz Rank &amp; Badges</span>
-                    </Link>
-                    <Link
-                      href="/assignment"
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
-                    >
-                      <FileSpreadsheet className="w-4 h-4 text-blue-500" />
-                      <span>Assignments Portal</span>
-                    </Link>
-                  </div>
+                      <div className="p-1 space-y-0.5">
+                        {/* Admin Portal Direct Link (Only visible if Admin) */}
+                        {isAdmin && (
+                          <Link
+                            href="/admin/dashboard"
+                            className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors border border-rose-200/80 mb-1"
+                          >
+                            <div className="flex items-center gap-2.5">
+                              <ShieldAlert className="w-4 h-4 text-rose-600" />
+                              <span>Admin Dashboard</span>
+                            </div>
+                            <span className="text-[10px] uppercase tracking-wider font-extrabold px-1.5 py-0.5 rounded bg-rose-600 text-white">
+                              Portal
+                            </span>
+                          </Link>
+                        )}
 
-                  <div className="border-t border-slate-100 p-1 mt-1 space-y-0.5">
-                    <Link
-                      href="/login"
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
-                    >
-                      <LogOut className="w-4 h-4 text-slate-400" />
-                      <span>Sign In / Switch Account</span>
-                    </Link>
-                    <Link
-                      href="/register"
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-brand-600 hover:bg-brand-50 rounded-xl transition-colors"
-                    >
-                      <Sparkles className="w-4 h-4 text-brand-500" />
-                      <span>Register New Account</span>
-                    </Link>
-                  </div>
+                        {/* Security Password Setup / Update */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsProfileOpen(false);
+                            openPasswordModal();
+                          }}
+                          className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-brand-700 hover:bg-brand-50 rounded-xl transition-colors text-left"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <KeyRound className="w-4 h-4 text-brand-500" />
+                            <span>{profile?.hasPasswordSet ? "Update Master Password" : "Set Security Password"}</span>
+                          </div>
+                          <span className="text-[10px] font-mono text-slate-400">SHA-256</span>
+                        </button>
+
+                        <Link
+                          href="/membership"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                        >
+                          <User className="w-4 h-4 text-slate-400" />
+                          <span>My Profile &amp; Membership</span>
+                        </Link>
+                        <Link
+                          href="/practice"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                        >
+                          <Code2 className="w-4 h-4 text-emerald-500" />
+                          <span>Web IDE &amp; Submissions</span>
+                        </Link>
+                        <Link
+                          href="/quiz"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                        >
+                          <Award className="w-4 h-4 text-amber-500" />
+                          <span>Quiz Rank &amp; Badges</span>
+                        </Link>
+                        <Link
+                          href="/assignment"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-accent-600 rounded-xl transition-colors"
+                        >
+                          <FileSpreadsheet className="w-4 h-4 text-blue-500" />
+                          <span>Assignments Portal</span>
+                        </Link>
+                      </div>
+
+                      <div className="border-t border-slate-100 p-1 mt-1">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsProfileOpen(false);
+                            logout();
+                          }}
+                          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-left cursor-pointer"
+                        >
+                          <LogOut className="w-4 h-4 text-rose-500" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    // Unauthenticated state
+                    <div className="p-3 space-y-3">
+                      <div className="text-center px-2 py-2">
+                        <div className="w-12 h-12 rounded-2xl bg-brand-50 border border-brand-100 mx-auto flex items-center justify-center text-brand-600 mb-2">
+                          <User className="w-6 h-6" />
+                        </div>
+                        <h4 className="font-bold text-sm text-slate-900">Welcome to Student World</h4>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Sign in with Google or Email to sync your quizzes, visualizers, and learning profile in Firestore.
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsProfileOpen(false);
+                          signInWithGoogle();
+                        }}
+                        className="w-full py-2.5 px-3 rounded-xl bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-sm transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 24 24">
+                          <path
+                            fill="#4285F4"
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                          />
+                          <path
+                            fill="#34A853"
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                          />
+                          <path
+                            fill="#FBBC05"
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                          />
+                          <path
+                            fill="#EA4335"
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                          />
+                        </svg>
+                        <span>Continue with Google</span>
+                      </button>
+
+                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] px-1">
+                        <Link href="/login" className="text-slate-600 hover:text-brand-600 font-semibold">
+                          Email Login
+                        </Link>
+                        <Link href="/register" className="text-brand-600 hover:underline font-semibold">
+                          Create Account
+                        </Link>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -452,6 +685,24 @@ export function Header() {
             >
               Home
             </Link>
+
+            {/* Mobile Admin Link (Only visible if Admin) */}
+            {isAdmin && (
+              <Link
+                href="/admin/dashboard"
+                onClick={closeMenu}
+                className="flex items-center justify-between px-3 py-2 rounded-lg bg-rose-50 text-rose-700 font-bold text-sm"
+              >
+                <span className="flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-rose-600" />
+                  <span>Admin Dashboard</span>
+                </span>
+                <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-rose-600 text-white font-mono">
+                  Portal
+                </span>
+              </Link>
+            )}
+
             <div className="px-3 py-1 font-bold text-xs text-brand-500 uppercase tracking-wider">
               Departments
             </div>
@@ -508,32 +759,90 @@ export function Header() {
             >
               Contact Us
             </Link>
+
+            {/* Mobile Auth Profile Bar */}
             <div className="pt-2 border-t border-slate-100 mt-2">
-              <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-xl mb-2">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-600 to-accent-500 flex items-center justify-center text-white font-bold text-xs shadow-xs">
-                  VK
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-slate-800">Vivek Kumar</div>
-                  <div className="text-[10px] text-slate-400">vivek@studentworld.edu</div>
-                </div>
-              </div>
-              <Link
-                href="/membership"
-                onClick={closeMenu}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-900 hover:bg-slate-100 hover:text-accent-500 text-xs font-semibold"
-              >
-                <User className="w-4 h-4 text-slate-400" />
-                <span>My Profile &amp; Membership</span>
-              </Link>
-              <Link
-                href="/login"
-                onClick={closeMenu}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-900 hover:bg-slate-100 hover:text-accent-500 text-xs font-semibold"
-              >
-                <LogOut className="w-4 h-4 text-slate-400" />
-                <span>Sign In / Switch Account</span>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-xl mb-2">
+                    <div className={`w-9 h-9 rounded-full ${
+                      isAdmin ? "bg-gradient-to-tr from-rose-600 to-amber-500" : "bg-gradient-to-tr from-brand-600 to-accent-500"
+                    } flex items-center justify-center text-white font-bold text-xs shadow-xs overflow-hidden shrink-0`}>
+                      {userPhoto ? (
+                        <Image
+                          src={userPhoto}
+                          alt={userDisplayName}
+                          width={36}
+                          height={36}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        userInitials
+                      )}
+                    </div>
+                    <div className="overflow-hidden">
+                      <div className="text-xs font-bold text-slate-800 truncate flex items-center gap-1">
+                        <span>{userDisplayName}</span>
+                        {isAdmin && (
+                          <span className="text-[9px] bg-rose-100 text-rose-700 px-1 py-0.2 rounded font-mono">
+                            Admin
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-[10px] text-slate-400 truncate">{userEmail}</div>
+                    </div>
+                  </div>
+                  {isAdmin && (
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={closeMenu}
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-rose-50 text-rose-700 text-xs font-bold mb-1"
+                    >
+                      <ShieldAlert className="w-4 h-4 text-rose-600" />
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      closeMenu();
+                      openPasswordModal();
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-brand-600 hover:bg-brand-50 text-xs font-semibold text-left"
+                  >
+                    <KeyRound className="w-4 h-4 text-brand-500" />
+                    <span>{profile?.hasPasswordSet ? "Update Master Password" : "Set Security Password"}</span>
+                  </button>
+                  <Link
+                    href="/membership"
+                    onClick={closeMenu}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-900 hover:bg-slate-100 hover:text-accent-500 text-xs font-semibold"
+                  >
+                    <User className="w-4 h-4 text-slate-400" />
+                    <span>My Profile &amp; Membership</span>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      closeMenu();
+                      logout();
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-rose-600 hover:bg-rose-50 text-xs font-semibold text-left cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4 text-rose-500" />
+                    <span>Sign Out</span>
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    closeMenu();
+                    signInWithGoogle();
+                  }}
+                  className="w-full py-2.5 px-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>Sign In with Google</span>
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -572,7 +881,7 @@ export function Header() {
             <div className="max-h-80 overflow-y-auto p-2 divide-y divide-slate-100">
               {filteredItems.length === 0 ? (
                 <div className="py-8 text-center text-xs text-slate-400">
-                  No visualizer or resource matching &ldquo;{searchQuery}&rdquo;
+                  No resource matching &ldquo;{searchQuery}&rdquo;
                 </div>
               ) : (
                 filteredItems.map((item, idx) => (
@@ -586,7 +895,7 @@ export function Header() {
                     className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 transition-colors group"
                   >
                     <div>
-                      <div className="font-semibold text-sm text-slate-900 group-hover:text-violet-600 transition-colors">
+                      <div className="font-semibold text-sm text-slate-900 group-hover:text-brand-600 transition-colors">
                         {item.title}
                       </div>
                       <div className="text-xs text-slate-400 mt-0.5">{item.desc}</div>
