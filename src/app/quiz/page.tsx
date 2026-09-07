@@ -323,8 +323,8 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="quiz-page-wrapper">
-      <div className="quiz-container px-4 sm:px-6">
+    <div className="quiz-page-wrapper w-full">
+      <div className="quiz-container w-full max-w-full">
         {/* ============================================================
             1. INTRO / LOBBY SCREEN (Difficulty & Stage Selection)
            ============================================================ */}
@@ -747,7 +747,7 @@ export default function QuizPage() {
                 )}
 
                 {/* Options List */}
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                   {currentQ.options.map((option, idx) => {
                     const isCorrect = option === currentQ.answer;
                     const isUserPick = option === selectedOption;
