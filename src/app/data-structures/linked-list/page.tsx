@@ -14,12 +14,22 @@ import {
   Info,
   CheckCircle2,
   AlertTriangle,
-  Code2,
   Clock,
   Sparkles,
   ArrowRight,
   ArrowLeftRight,
+  Volume2,
+  VolumeX,
+  Zap,
 } from "lucide-react";
+import {
+  SpeedControl,
+  MultiLangCode,
+  NodeInspector,
+  ChallengeTracker,
+  Challenge,
+} from "@/components/data-structures/InteractiveElements";
+import { DATA_STRUCTURE_CODES } from "@/data/dataStructuresCode";
 
 type ListType = "singly" | "doubly";
 
@@ -28,41 +38,6 @@ interface ListNode {
   value: number;
   status: "idle" | "visiting" | "found" | "inserting" | "deleting";
 }
-
-const PSEUDOCODE = {
-  insertHead: [
-    "function insertHead(val):",
-    "  newNode = new Node(val)",
-    "  newNode.next = head",
-    "  if doubly: head.prev = newNode",
-    "  head = newNode",
-    "  length++",
-  ],
-  insertTail: [
-    "function insertTail(val):",
-    "  newNode = new Node(val)",
-    "  if head is null: head = newNode; return",
-    "  curr = head",
-    "  while curr.next != null: curr = curr.next",
-    "  curr.next = newNode",
-  ],
-  deleteVal: [
-    "function delete(val):",
-    "  if head == null: return",
-    "  if head.val == val: head = head.next; return",
-    "  curr = head",
-    "  while curr.next and curr.next.val != val: curr = curr.next",
-    "  if curr.next: curr.next = curr.next.next",
-  ],
-  search: [
-    "function search(val):",
-    "  curr = head; index = 0",
-    "  while curr != null:",
-    "    if curr.val == val: return index",
-    "    curr = curr.next; index++",
-    "  return -1 // not found",
-  ],
-};
 
 export default function LinkedListVisualizerPage() {
   const [listType, setListType] = useState<ListType>("singly");
@@ -73,200 +48,280 @@ export default function LinkedListVisualizerPage() {
     { id: "4", value: 99, status: "idle" },
   ]);
   const [inputValue, setInputValue] = useState<string>("33");
-  const [inputIndex, setInputIndex] = useState<string>("0");
-  const [activeTab, setActiveTab] = useState<"insertHead" | "insertTail" | "deleteVal" | "search">("insertHead");
+  const [activeTab, setActiveTab] = useState<string>("insertHead");
   const [highlightLine, setHighlightLine] = useState<number | null>(null);
   const [message, setMessage] = useState<{ text: string; type: "info" | "success" | "warning" | "error" }>({
-    text: "Linked List initialized with 4 nodes. Dynamic pointer chain.",
+    text: "Linked List initialized with 4 nodes. Dynamic pointer architecture.",
     type: "info",
   });
   const [logs, setLogs] = useState<string[]>([
-    "Initialized list: 12 -> 45 -> 78 -> 99 -> null",
+    "Linked list initialized with [12, 45, 78, 99]",
   ]);
   const [isBusy, setIsBusy] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [speed, setSpeed] = useState<number>(1);
+  const [selectedNode, setSelectedNode] = useState<{
+    id: string;
+    value: number;
+    index: number;
+    role: string;
+    extra?: Record<string, string | number>;
+  } | null>(null);
+
+  // Challenges
+  const [challenges, setChallenges] = useState<Challenge[]>([
+    { id: "insertHead", title: "Insert a new node at the Head (O(1))", completed: false },
+    { id: "insertTail", title: "Insert a new node at the Tail", completed: false },
+    { id: "search", title: "Search and traverse to locate a value in the list", completed: false },
+    { id: "doubly", title: "Switch to Doubly Linked List mode", completed: false },
+    { id: "inspect", title: "Click any node to inspect its next/prev pointer addresses", completed: false },
+  ]);
+
+  const markChallenge = (id: string) => {
+    setChallenges((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, completed: true } : c))
+    );
+  };
 
   const addLog = (log: string) => {
     setLogs((prev) => [log, ...prev.slice(0, 19)]);
   };
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  const playTone = (freq: number) => {
+    if (!soundEnabled || typeof window === "undefined") return;
+    try {
+      const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch {}
+  };
 
-  const handleInsertHead = async () => {
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms / speed));
+
+  const handleInsertHead = async (valToInsert?: number) => {
     if (isBusy) return;
-    const val = parseInt(inputValue);
-    if (isNaN(val)) return;
+    const num = valToInsert ?? parseInt(inputValue);
+    if (isNaN(num)) return;
 
     if (nodes.length >= 8) {
-      setMessage({ text: "Maximum visualizer limit (8 nodes) reached.", type: "warning" });
+      setMessage({ text: "Max visualizer node limit (8) reached.", type: "warning" });
       return;
     }
 
     setIsBusy(true);
     setActiveTab("insertHead");
     setHighlightLine(1);
+    playTone(520);
 
     const newNode: ListNode = {
       id: Math.random().toString(36).substring(2, 9),
-      value: val,
+      value: num,
       status: "inserting",
     };
 
     setNodes((prev) => [newNode, ...prev]);
-    setMessage({ text: `Allocated node (${val}) and prepended as new HEAD.`, type: "success" });
-    addLog(`➕ Inserted ${val} at HEAD`);
+    setMessage({ text: `Inserted node ${num} at Head. Head pointer updated.`, type: "success" });
+    addLog(`➕ Inserted ${num} at Head`);
+    markChallenge("insertHead");
 
     await sleep(400);
-    setHighlightLine(4);
-    setNodes((prev) => prev.map((n) => (n.id === newNode.id ? { ...n, status: "idle" } : n)));
+    setHighlightLine(3);
+    setNodes((prev) =>
+      prev.map((n) => (n.id === newNode.id ? { ...n, status: "idle" } : n))
+    );
     setHighlightLine(null);
     setIsBusy(false);
   };
 
-  const handleInsertTail = async () => {
+  const handleInsertTail = async (valToInsert?: number) => {
     if (isBusy) return;
-    const val = parseInt(inputValue);
-    if (isNaN(val)) return;
+    const num = valToInsert ?? parseInt(inputValue);
+    if (isNaN(num)) return;
 
     if (nodes.length >= 8) {
-      setMessage({ text: "Maximum visualizer limit (8 nodes) reached.", type: "warning" });
+      setMessage({ text: "Max visualizer node limit (8) reached.", type: "warning" });
       return;
     }
 
     setIsBusy(true);
     setActiveTab("insertTail");
     setHighlightLine(1);
+    playTone(480);
 
     const newNode: ListNode = {
       id: Math.random().toString(36).substring(2, 9),
-      value: val,
+      value: num,
       status: "inserting",
     };
 
     setNodes((prev) => [...prev, newNode]);
-    setMessage({ text: `Appended node (${val}) as new TAIL.`, type: "success" });
-    addLog(`➕ Inserted ${val} at TAIL`);
+    setMessage({ text: `Appended node ${num} at Tail.`, type: "success" });
+    addLog(`➕ Appended ${num} at Tail`);
+    markChallenge("insertTail");
 
     await sleep(400);
-    setHighlightLine(5);
-    setNodes((prev) => prev.map((n) => (n.id === newNode.id ? { ...n, status: "idle" } : n)));
+    setHighlightLine(4);
+    setNodes((prev) =>
+      prev.map((n) => (n.id === newNode.id ? { ...n, status: "idle" } : n))
+    );
     setHighlightLine(null);
     setIsBusy(false);
   };
 
-  const handleDeleteHead = async () => {
+  const handleDelete = async (valToDelete?: number) => {
     if (isBusy || nodes.length === 0) return;
+    const num = valToDelete ?? parseInt(inputValue);
+    if (isNaN(num)) return;
+
     setIsBusy(true);
-    const removedVal = nodes[0].value;
+    setActiveTab("deleteVal");
+    setHighlightLine(3);
+    playTone(380);
 
-    setNodes((prev) => prev.map((n, idx) => (idx === 0 ? { ...n, status: "deleting" } : n)));
-    setMessage({ text: `Deleting HEAD node (${removedVal})...`, type: "warning" });
-
-    await sleep(400);
-    setNodes((prev) => prev.slice(1));
-    setMessage({ text: `Deleted HEAD node (${removedVal}).`, type: "success" });
-    addLog(`➖ Deleted HEAD node (${removedVal})`);
-    setIsBusy(false);
-  };
-
-  const handleDeleteTail = async () => {
-    if (isBusy || nodes.length === 0) return;
-    setIsBusy(true);
-    const removedVal = nodes[nodes.length - 1].value;
+    const targetIdx = nodes.findIndex((n) => n.value === num);
+    if (targetIdx === -1) {
+      setMessage({ text: `Value ${num} not found in list to delete.`, type: "error" });
+      addLog(`❌ Delete failed: ${num} not in list`);
+      setIsBusy(false);
+      return;
+    }
 
     setNodes((prev) =>
-      prev.map((n, idx) => (idx === prev.length - 1 ? { ...n, status: "deleting" } : n))
+      prev.map((n, i) => (i === targetIdx ? { ...n, status: "deleting" } : n))
     );
-    setMessage({ text: `Deleting TAIL node (${removedVal})...`, type: "warning" });
+    setMessage({ text: `Deleting node with value ${num}...`, type: "warning" });
 
-    await sleep(400);
-    setNodes((prev) => prev.slice(0, -1));
-    setMessage({ text: `Deleted TAIL node (${removedVal}).`, type: "success" });
-    addLog(`➖ Deleted TAIL node (${removedVal})`);
+    await sleep(450);
+    setHighlightLine(5);
+    setNodes((prev) => prev.filter((_, i) => i !== targetIdx));
+    if (selectedNode?.value === num) setSelectedNode(null);
+    setMessage({ text: `Node ${num} removed. Pointers re-linked.`, type: "success" });
+    addLog(`➖ Deleted node ${num}`);
+    setHighlightLine(null);
     setIsBusy(false);
   };
 
   const handleSearch = async () => {
     if (isBusy || nodes.length === 0) return;
-    const target = parseInt(inputValue);
-    if (isNaN(target)) return;
+    const num = parseInt(inputValue);
+    if (isNaN(num)) return;
 
     setIsBusy(true);
     setActiveTab("search");
-    setMessage({ text: `Searching for value ${target} starting at HEAD...`, type: "info" });
-    addLog(`🔍 Starting search for ${target}`);
+    setHighlightLine(1);
+    setMessage({ text: `Beginning linear traversal search for ${num}...`, type: "info" });
+    addLog(`🔍 Searching for ${num}`);
 
-    let foundIdx = -1;
+    let found = false;
     for (let i = 0; i < nodes.length; i++) {
       setHighlightLine(3);
+      playTone(350 + i * 50);
       setNodes((prev) =>
-        prev.map((n, idx) => ({
-          ...n,
-          status: idx === i ? "visiting" : "idle",
-        }))
+        prev.map((n, idx) => (idx === i ? { ...n, status: "visiting" } : { ...n, status: "idle" }))
       );
-      await sleep(550);
+      await sleep(500);
 
-      if (nodes[i].value === target) {
-        foundIdx = i;
+      if (nodes[i].value === num) {
         setHighlightLine(4);
+        playTone(700);
         setNodes((prev) =>
-          prev.map((n, idx) => ({
-            ...n,
-            status: idx === i ? "found" : "idle",
-          }))
+          prev.map((n, idx) => (idx === i ? { ...n, status: "found" } : n))
         );
-        setMessage({ text: `Found ${target} at index ${i}!`, type: "success" });
-        addLog(`✅ Target ${target} found at index ${i}`);
+        setMessage({ text: `Found ${num} at index ${i} after ${i + 1} hops!`, type: "success" });
+        addLog(`🎯 Found ${num} at index ${i}`);
+        markChallenge("search");
+        found = true;
         break;
       }
     }
 
-    if (foundIdx === -1) {
-      setHighlightLine(5);
-      setMessage({ text: `Value ${target} does not exist in the linked list.`, type: "error" });
-      addLog(`❌ Target ${target} not found`);
-      setNodes((prev) => prev.map((n) => ({ ...n, status: "idle" })));
+    if (!found) {
+      setHighlightLine(6);
+      playTone(200);
+      setMessage({ text: `Search completed: ${num} is not present in the list.`, type: "error" });
+      addLog(`❌ Value ${num} not found`);
     }
 
-    await sleep(1000);
+    await sleep(900);
     setNodes((prev) => prev.map((n) => ({ ...n, status: "idle" })));
     setHighlightLine(null);
-    setIsBusy(false);
-  };
-
-  const handleReverse = async () => {
-    if (isBusy || nodes.length < 2) return;
-    setIsBusy(true);
-    setMessage({ text: "Reversing pointers in place...", type: "info" });
-    addLog("🔄 Reversing linked list in place");
-
-    // Show reverse animation step
-    for (let i = 0; i < nodes.length; i++) {
-      setNodes((prev) =>
-        prev.map((n, idx) => ({
-          ...n,
-          status: idx === i ? "visiting" : "idle",
-        }))
-      );
-      await sleep(250);
-    }
-
-    setNodes((prev) => [...prev].reverse().map((n) => ({ ...n, status: "idle" })));
-    setMessage({ text: "List successfully reversed! HEAD and TAIL swapped.", type: "success" });
-    addLog("✅ Reversal completed");
     setIsBusy(false);
   };
 
   const handleClear = () => {
     if (isBusy) return;
     setNodes([]);
-    setMessage({ text: "Linked list is now empty.", type: "info" });
+    setSelectedNode(null);
+    setMessage({ text: "Linked list cleared to null.", type: "info" });
     addLog("🗑 Cleared all nodes");
+    playTone(300);
   };
 
-  const handleRandom = () => {
-    const val = Math.floor(Math.random() * 90) + 10;
-    setInputValue(val.toString());
+  // Presets
+  const applyPreset = async (preset: string) => {
+    if (isBusy) return;
+    setIsBusy(true);
+
+    if (preset === "random4") {
+      setNodes([
+        { id: "l1", value: Math.floor(Math.random() * 80) + 10, status: "idle" },
+        { id: "l2", value: Math.floor(Math.random() * 80) + 10, status: "idle" },
+        { id: "l3", value: Math.floor(Math.random() * 80) + 10, status: "idle" },
+        { id: "l4", value: Math.floor(Math.random() * 80) + 10, status: "idle" },
+      ]);
+      addLog("🎲 Loaded Preset: 4 Random Nodes");
+      setMessage({ text: "Loaded 4 random nodes.", type: "info" });
+    } else if (preset === "reverseDemo") {
+      setMessage({ text: "Reversing linked list pointers...", type: "warning" });
+      addLog("🔄 Executing pointer reversal");
+      const rev = [...nodes].reverse();
+      for (let i = 0; i < rev.length; i++) {
+        playTone(400 + i * 60);
+        await sleep(250);
+      }
+      setNodes(rev);
+      setMessage({ text: "List reversed successfully! Head is now at former tail.", type: "success" });
+      addLog("✅ Reversal complete");
+    } else if (preset === "doublyDemo") {
+      setListType("doubly");
+      markChallenge("doubly");
+      setNodes([
+        { id: "d1", value: 10, status: "idle" },
+        { id: "d2", value: 20, status: "idle" },
+        { id: "d3", value: 30, status: "idle" },
+      ]);
+      setMessage({ text: "Doubly Linked List mode: Each node stores both NEXT and PREV memory pointers.", type: "info" });
+      addLog("↔️ Loaded Preset: Doubly Linked Chain");
+    }
+
+    setIsBusy(false);
+  };
+
+  const handleSelectNode = (n: ListNode, idx: number) => {
+    const isHead = idx === 0;
+    const isTail = idx === nodes.length - 1;
+    const nextPtr = isTail ? "NULL (0x0)" : `0x7FFEE${((nodes[idx + 1].value + 15) * 1024).toString(16).toUpperCase()}`;
+    const prevPtr = isHead ? "NULL (0x0)" : `0x7FFEE${((nodes[idx - 1].value + 15) * 1024).toString(16).toUpperCase()}`;
+
+    setSelectedNode({
+      id: n.id,
+      value: n.value,
+      index: idx,
+      role: isHead ? "Head Pointer Node" : isTail ? "Tail Node (Next -> NULL)" : `Internal Node [${idx}]`,
+      extra: {
+        "Next Address": nextPtr,
+        ...(listType === "doubly" ? { "Prev Address": prevPtr } : {}),
+      },
+    });
+    markChallenge("inspect");
+    playTone(550);
   };
 
   return (
@@ -284,90 +339,154 @@ export default function LinkedListVisualizerPage() {
             </Link>
             <div className="h-5 w-px bg-slate-700/60" />
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/30">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-teal-500 to-emerald-600 flex items-center justify-center text-white shadow-md shadow-teal-500/30">
                 <LayoutList className="w-4 h-4" />
               </div>
               <div>
                 <h1 className="text-base font-bold text-white tracking-tight">Linked List Visualizer</h1>
-                <p className="text-xs text-slate-400">Node Pointer Chain Architecture</p>
+                <p className="text-xs text-slate-400">Dynamic Pointer-Chained Memory Nodes</p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-800/90 p-1 rounded-xl border border-slate-700/60">
+          <div className="flex items-center gap-2">
+            <SpeedControl speed={speed} setSpeed={setSpeed} disabled={isBusy} />
             <button
-              onClick={() => setListType("singly")}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                listType === "singly" ? "bg-emerald-500 text-white shadow" : "text-slate-400 hover:text-white"
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className={`p-2 rounded-lg border text-xs font-medium transition-all ${
+                soundEnabled
+                  ? "bg-teal-500/20 border-teal-500/40 text-teal-300"
+                  : "bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200"
               }`}
+              title={soundEnabled ? "Audio active" : "Audio muted"}
             >
-              Singly Linked
+              {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
-            <button
-              onClick={() => setListType("doubly")}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
-                listType === "doubly" ? "bg-teal-500 text-white shadow" : "text-slate-400 hover:text-white"
-              }`}
-            >
-              Doubly Linked
-            </button>
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/30">
+              <Sparkles className="w-3 h-3" />
+              Interactive Lab
+            </span>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Container */}
       <main className="ds-container">
-        {/* Metric Bar */}
+        {/* Metric Ribbons */}
         <div className="ds-stats-grid">
           <div className="ds-stat-card">
-            <div className="ds-stat-label">Total Nodes</div>
-            <div className="ds-stat-value text-emerald-600">{nodes.length}</div>
+            <div className="ds-stat-label">Node Count</div>
+            <div className="ds-stat-value text-teal-600">{nodes.length} Nodes</div>
           </div>
           <div className="ds-stat-card">
-            <div className="ds-stat-label">Head Node</div>
-            <div className="ds-stat-value text-slate-900">
-              {nodes.length > 0 ? nodes[0].value : "null"}
-            </div>
+            <div className="ds-stat-label">Head Value</div>
+            <div className="ds-stat-value text-slate-900">{nodes.length > 0 ? nodes[0].value : "NULL"}</div>
           </div>
           <div className="ds-stat-card">
-            <div className="ds-stat-label">Tail Node</div>
-            <div className="ds-stat-value text-slate-900">
-              {nodes.length > 0 ? nodes[nodes.length - 1].value : "null"}
-            </div>
+            <div className="ds-stat-label">Tail Value</div>
+            <div className="ds-stat-value text-slate-900">{nodes.length > 0 ? nodes[nodes.length - 1].value : "NULL"}</div>
           </div>
           <div className="ds-stat-card">
-            <div className="ds-stat-label">Pointers Per Node</div>
-            <div className="ds-stat-value text-xs font-mono font-bold text-teal-600">
-              {listType === "singly" ? "1 (next)" : "2 (prev, next)"}
+            <div className="ds-stat-label">Chain Architecture</div>
+            <div className="ds-stat-value text-xs font-bold uppercase text-emerald-600 tracking-wider">
+              {listType} linked
             </div>
           </div>
         </div>
 
-        {/* Message Alert */}
+        {/* Action Status Banner */}
         <div
-          className={`mb-6 p-4 rounded-xl border flex items-center gap-3 transition-all ${
+          className={`mb-4 p-3.5 rounded-xl border flex items-center justify-between gap-3 transition-all ${
             message.type === "success"
               ? "bg-emerald-50 border-emerald-200 text-emerald-800"
               : message.type === "error"
               ? "bg-rose-50 border-rose-200 text-rose-800"
               : message.type === "warning"
               ? "bg-amber-50 border-amber-200 text-amber-800"
-              : "bg-emerald-50 border-emerald-200 text-emerald-900"
+              : "bg-teal-50 border-teal-200 text-teal-900"
           }`}
         >
-          {message.type === "success" && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
-          {message.type === "error" && <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />}
-          {message.type === "warning" && <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />}
-          {message.type === "info" && <Info className="w-5 h-5 text-emerald-500 shrink-0" />}
-          <span className="text-sm font-medium">{message.text}</span>
+          <div className="flex items-center gap-3">
+            {message.type === "success" && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
+            {message.type === "error" && <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />}
+            {message.type === "warning" && <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />}
+            {message.type === "info" && <Info className="w-5 h-5 text-teal-500 shrink-0" />}
+            <span className="text-sm font-medium">{message.text}</span>
+          </div>
+
+          <div className="text-xs text-slate-500 font-mono hidden md:block">
+            Animation Speed: <strong className="text-teal-700">{speed}x</strong>
+          </div>
         </div>
 
-        {/* Grid Display */}
+        {/* Quick Presets */}
+        <div className="mb-6 flex flex-wrap items-center gap-2 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mr-2">
+            <Zap className="w-3.5 h-3.5 text-amber-500" />
+            Quick Presets:
+          </span>
+          <button
+            onClick={() => applyPreset("random4")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            🎲 Random 4 Nodes
+          </button>
+          <button
+            onClick={() => applyPreset("reverseDemo")}
+            disabled={isBusy || nodes.length < 2}
+            className="ds-preset-chip"
+          >
+            🔄 Reverse List Flow
+          </button>
+          <button
+            onClick={() => applyPreset("doublyDemo")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            ↔️ Doubly Linked Chain
+          </button>
+        </div>
+
+        {/* Visualization & Controls Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <div className="lg:col-span-8 space-y-6">
             <div className="ds-visualizer-card">
-              {/* Operations Toolbar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-100">
+              {/* List Type Switcher */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                  <button
+                    onClick={() => setListType("singly")}
+                    className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                      listType === "singly"
+                        ? "bg-white text-teal-700 shadow-sm"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    Singly Linked (Next →)
+                  </button>
+                  <button
+                    onClick={() => {
+                      setListType("doubly");
+                      markChallenge("doubly");
+                    }}
+                    className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                      listType === "doubly"
+                        ? "bg-white text-teal-700 shadow-sm"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    Doubly Linked (← Prev | Next →)
+                  </button>
+                </div>
+
+                <div className="text-xs text-slate-400">
+                  Node Size: {nodes.length} / 8
+                </div>
+              </div>
+
+              {/* Controls Toolbar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 py-4 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
@@ -375,20 +494,20 @@ export default function LinkedListVisualizerPage() {
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Val"
                     disabled={isBusy}
-                    className="w-20 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-20 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                   <button
-                    onClick={handleInsertHead}
+                    onClick={() => handleInsertHead()}
                     disabled={isBusy}
-                    className="ds-btn bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
+                    className="ds-btn ds-btn-primary bg-teal-600 hover:bg-teal-700"
                   >
                     <Plus className="w-4 h-4" />
                     Head
                   </button>
                   <button
-                    onClick={handleInsertTail}
+                    onClick={() => handleInsertTail()}
                     disabled={isBusy}
-                    className="ds-btn bg-teal-600 hover:bg-teal-700 text-white shadow-sm"
+                    className="ds-btn ds-btn-secondary"
                   >
                     <Plus className="w-4 h-4" />
                     Tail
@@ -405,138 +524,126 @@ export default function LinkedListVisualizerPage() {
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={handleDeleteHead}
+                    onClick={() => handleDelete()}
                     disabled={isBusy || nodes.length === 0}
                     className="ds-btn bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 disabled:opacity-50"
                   >
-                    Del Head
-                  </button>
-                  <button
-                    onClick={handleDeleteTail}
-                    disabled={isBusy || nodes.length === 0}
-                    className="ds-btn bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 disabled:opacity-50"
-                  >
-                    Del Tail
-                  </button>
-                  <button
-                    onClick={handleReverse}
-                    disabled={isBusy || nodes.length < 2}
-                    className="ds-btn bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    title="Reverse List"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    Reverse
+                    <Minus className="w-4 h-4" />
+                    Delete Val
                   </button>
                   <button
                     onClick={handleClear}
                     disabled={isBusy || nodes.length === 0}
                     className="ds-btn bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    title="Clear List"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              {/* Linked List Canvas */}
-              <div className="ds-stage min-h-[320px] bg-gradient-to-b from-slate-50 to-slate-100/60 p-6 overflow-x-auto">
-                <div className="w-full flex items-center justify-start min-w-max py-8 px-4 gap-2">
+              {/* Stage Visualizer */}
+              <div className="ds-stage min-h-[380px] flex-col justify-center relative bg-gradient-to-b from-slate-50 to-slate-100/60 p-6 overflow-x-auto">
+                <div className="absolute top-3 left-4 text-xs font-semibold text-slate-500 flex items-center gap-1.5 bg-white/80 px-2.5 py-1 rounded-md border border-slate-200">
+                  <Info className="w-3.5 h-3.5 text-teal-500" />
+                  <span>Click any node to inspect pointer memory and pointers</span>
+                </div>
+
+                <div className="w-full flex items-center justify-start min-w-max px-4 py-8">
+                  {/* Head Marker */}
+                  <div className="flex flex-col items-center mr-3">
+                    <span className="text-xs font-bold text-teal-700 uppercase">Head</span>
+                    <ArrowRight className="w-4 h-4 text-teal-500" />
+                  </div>
+
                   {nodes.length === 0 ? (
-                    <div className="w-full text-center py-12 text-slate-400">
-                      <LayoutList className="w-12 h-12 mx-auto mb-2 opacity-30" />
-                      <p className="text-sm font-semibold">Linked List is empty (HEAD points to NULL)</p>
+                    <div className="px-10 py-6 border-2 border-dashed border-slate-300 rounded-xl bg-white text-slate-400 font-mono text-xs">
+                      NULL (Empty List)
                     </div>
                   ) : (
                     nodes.map((node, idx) => {
                       const isHead = idx === 0;
                       const isTail = idx === nodes.length - 1;
+                      const isSelected = selectedNode?.id === node.id;
 
                       return (
-                        <React.Fragment key={node.id}>
-                          {/* Node Card */}
-                          <div className="flex flex-col items-center">
-                            {/* Head/Tail Indicator */}
-                            <div className="h-6 mb-1 text-[11px] font-bold uppercase tracking-wider">
-                              {isHead && (
-                                <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-300">
-                                  HEAD
-                                </span>
-                              )}
-                              {isTail && !isHead && (
-                                <span className="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full border border-teal-300">
-                                  TAIL
-                                </span>
-                              )}
+                        <div key={node.id} className="flex items-center">
+                          {/* Node Box */}
+                          <div
+                            onClick={() => handleSelectNode(node, idx)}
+                            className={`flex flex-col items-center justify-center min-w-[90px] h-24 rounded-2xl border-2 p-2 cursor-pointer transition-all duration-300 bg-white shadow-md relative ${
+                              isSelected
+                                ? "border-teal-600 ring-4 ring-teal-400 scale-105"
+                                : node.status === "visiting"
+                                ? "border-amber-500 bg-amber-50 scale-105 animate-pulse"
+                                : node.status === "found"
+                                ? "border-emerald-500 bg-emerald-50 ring-4 ring-emerald-300 scale-110"
+                                : node.status === "inserting"
+                                ? "border-blue-500 bg-blue-50 animate-bounce"
+                                : node.status === "deleting"
+                                ? "border-rose-500 bg-rose-50 opacity-40 scale-90"
+                                : "border-slate-200 hover:border-teal-300"
+                            }`}
+                          >
+                            <div className="text-[10px] font-mono text-slate-400">
+                              [{idx}]
+                            </div>
+                            <div className="text-lg font-bold font-mono text-slate-900">
+                              {node.value}
+                            </div>
+                            <div className="text-[9px] font-mono text-slate-400 mt-1">
+                              0x{(idx * 16 + 10).toString(16).toUpperCase()}
                             </div>
 
-                            {/* Node Compound Box */}
-                            <div
-                              className={`flex rounded-2xl overflow-hidden shadow-md border-2 transition-all duration-300 ${
-                                node.status === "visiting"
-                                  ? "border-amber-400 ring-4 ring-amber-300 scale-110"
-                                  : node.status === "found"
-                                  ? "border-emerald-500 ring-4 ring-emerald-300 scale-110"
-                                  : node.status === "inserting"
-                                  ? "border-cyan-400 ring-4 ring-cyan-300 scale-105"
-                                  : node.status === "deleting"
-                                  ? "border-rose-400 opacity-20 scale-75"
-                                  : "border-slate-300 bg-white"
-                              }`}
-                            >
-                              {/* Prev Pointer Block (for Doubly Linked List) */}
-                              {listType === "doubly" && (
-                                <div className="px-2 py-3 bg-slate-100 border-r border-slate-200 text-[10px] font-mono text-slate-400 flex items-center justify-center">
-                                  {isHead ? "null" : "•"}
-                                </div>
-                              )}
-
-                              {/* Data Val Cell */}
-                              <div className="px-4 py-3 bg-gradient-to-tr from-emerald-500 to-teal-600 text-white font-mono font-bold text-lg min-w-[50px] text-center">
-                                {node.value}
-                              </div>
-
-                              {/* Next Pointer Block */}
-                              <div className="px-2.5 py-3 bg-slate-100 border-l border-slate-200 text-[10px] font-mono text-slate-500 flex items-center justify-center">
-                                •
-                              </div>
-                            </div>
-
-                            {/* Index Subtext */}
-                            <div className="text-[10px] text-slate-400 font-mono mt-2">
-                              idx: {idx}
-                            </div>
-                          </div>
-
-                          {/* Connector Arrow */}
-                          <div className="flex items-center px-1 text-slate-400">
-                            {listType === "singly" ? (
-                              <ArrowRight className="w-6 h-6 text-emerald-500/70" />
-                            ) : (
-                              <ArrowLeftRight className="w-6 h-6 text-teal-500/70" />
+                            {isHead && (
+                              <span className="absolute -top-2.5 left-2 px-1.5 py-0.2 bg-teal-600 text-white text-[9px] font-bold uppercase rounded-full">
+                                Head
+                              </span>
+                            )}
+                            {isTail && (
+                              <span className="absolute -bottom-2.5 right-2 px-1.5 py-0.2 bg-slate-700 text-white text-[9px] font-bold uppercase rounded-full">
+                                Tail
+                              </span>
                             )}
                           </div>
-                        </React.Fragment>
+
+                          {/* Pointer Arrow */}
+                          <div className="flex flex-col items-center px-2 text-slate-400">
+                            {listType === "doubly" ? (
+                              <ArrowLeftRight className="w-5 h-5 text-teal-600" />
+                            ) : (
+                              <ArrowRight className="w-5 h-5 text-teal-500" />
+                            )}
+                            <span className="text-[9px] font-mono">next</span>
+                          </div>
+                        </div>
                       );
                     })
                   )}
 
-                  {/* Terminal NULL pointer */}
-                  {nodes.length > 0 && (
-                    <div className="flex flex-col items-center">
-                      <div className="h-6 mb-1" />
-                      <div className="px-3 py-3 rounded-xl border-2 border-dashed border-slate-300 bg-slate-100/60 text-slate-400 font-mono font-bold text-xs">
-                        NULL
-                      </div>
-                    </div>
-                  )}
+                  {/* Null Terminator */}
+                  <div className="flex flex-col items-center ml-1">
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-mono text-xs font-bold shadow-sm">
+                      NULL
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 text-xs text-slate-500">
-                Nodes are dynamically chained via pointers. Singly linked list flows forwards; Doubly allows bidirectional traversal.
-              </div>
+              {/* Inspector */}
+              {selectedNode && (
+                <div className="mt-4">
+                  <NodeInspector
+                    selectedNode={selectedNode}
+                    onClose={() => setSelectedNode(null)}
+                    actionLabel="Delete This Node"
+                    onAction={() => handleDelete(selectedNode.value)}
+                  />
+                </div>
+              )}
             </div>
 
-            {/* History Logs */}
+            {/* Logs */}
             <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -558,52 +665,25 @@ export default function LinkedListVisualizerPage() {
 
           {/* Right Column */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="ds-card">
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-emerald-600" />
-                  <h3 className="text-sm font-bold text-slate-900">Pseudocode</h3>
-                </div>
-                <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-[10px]">
-                  {(["insertHead", "insertTail", "deleteVal", "search"] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => {
-                        setActiveTab(tab);
-                        setHighlightLine(null);
-                      }}
-                      className={`px-2 py-1 font-semibold rounded capitalize transition-all ${
-                        activeTab === tab
-                          ? "bg-white text-emerald-600 shadow-sm"
-                          : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      {tab.replace("insert", "ins").replace("delete", "del")}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <MultiLangCode
+              codeMap={DATA_STRUCTURE_CODES.linkedList.code[activeTab] || DATA_STRUCTURE_CODES.linkedList.code.insertHead}
+              activeOperation={activeTab}
+              operations={DATA_STRUCTURE_CODES.linkedList.operations}
+              onOperationChange={(op) => {
+                setActiveTab(op);
+                setHighlightLine(null);
+              }}
+              highlightLine={highlightLine}
+            />
 
-              <div className="bg-slate-900 rounded-xl p-3 font-mono text-xs overflow-x-auto">
-                {PSEUDOCODE[activeTab].map((line, idx) => (
-                  <div
-                    key={idx}
-                    className={`py-1 px-2 rounded transition-colors ${
-                      highlightLine === idx
-                        ? "bg-emerald-600/40 text-emerald-200 font-bold border-l-2 border-emerald-400"
-                        : "text-slate-300"
-                    }`}
-                  >
-                    <span className="text-slate-600 select-none mr-3">{idx + 1}</span>
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ChallengeTracker
+              topicTitle="Linked List"
+              challenges={challenges}
+            />
 
             <div className="ds-card">
               <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <Info className="w-4 h-4 text-teal-500" />
+                <Info className="w-4 h-4 text-blue-500" />
                 Complexity Specs
               </h3>
               <div className="space-y-2 text-xs">
@@ -613,28 +693,17 @@ export default function LinkedListVisualizerPage() {
                 </div>
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
                   <span className="text-slate-600 font-medium">Insert at Tail</span>
-                  <span className="font-mono font-bold text-emerald-600">O(1) with tail ptr</span>
+                  <span className="font-mono font-bold text-amber-600">O(n) (or O(1) w/ tail ptr)</span>
                 </div>
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">Delete at Head</span>
-                  <span className="font-mono font-bold text-emerald-600">O(1)</span>
+                  <span className="text-slate-600 font-medium">Search Value</span>
+                  <span className="font-mono font-bold text-amber-600">O(n)</span>
                 </div>
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">Search / Access</span>
+                  <span className="text-slate-600 font-medium">Delete Node</span>
                   <span className="font-mono font-bold text-amber-600">O(n)</span>
                 </div>
               </div>
-            </div>
-
-            <div className="ds-card">
-              <h3 className="text-sm font-bold text-slate-900 mb-2">Real-World Applications</h3>
-              <ul className="text-xs text-slate-600 space-y-2 list-disc list-inside">
-                <li>Dynamic memory allocation in kernels (free list)</li>
-                <li>Music player playlists (next song / previous song)</li>
-                <li>Hash table collision chaining (buckets)</li>
-                <li>Image viewer next / previous slide carousel</li>
-                <li>Polynomial arithmetic representations</li>
-              </ul>
             </div>
           </div>
         </div>

@@ -1,17 +1,177 @@
 /* ============================================================
-   Data Structures Visualizer Shared Stylesheet
+   Data Structures Visualizer Shared Stylesheet (100% View Width)
    ============================================================ */
 
 .ds-page-wrapper {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
   background-color: #f8fafc;
-  padding: 2.5rem 1rem;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(23, 62, 103, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 128, 0, 0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(23, 62, 103, 0.03) 0px, transparent 50%);
+  padding: 1.5rem 0 5rem 0;
+}
+
+.ds-container {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .ds-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ds-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ds-container {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+}
+
+/* Header Component */
+.ds-header {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.ds-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+/* Stats Ribbon Grid */
+.ds-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .ds-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ds-stat-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.ds-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 12px -2px rgba(15, 23, 42, 0.06);
+}
+
+.ds-stat-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.ds-stat-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Buttons */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.825rem;
+  font-weight: 700;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.ds-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.ds-btn-primary {
+  background-color: #173E67;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(23, 62, 103, 0.25);
+}
+
+.ds-btn-primary:hover:not(:disabled) {
+  background-color: #133355;
+  box-shadow: 0 4px 12px rgba(23, 62, 103, 0.35);
+}
+
+.ds-btn-secondary {
+  background-color: #f1f5f9;
+  color: #334155;
+  border-color: #e2e8f0;
+}
+
+.ds-btn-secondary:hover:not(:disabled) {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.ds-btn-accent {
+  background-color: #FF8000;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(255, 128, 0, 0.25);
+}
+
+.ds-btn-accent:hover:not(:disabled) {
+  background-color: #ea6c00;
+  box-shadow: 0 4px 14px rgba(255, 128, 0, 0.35);
+}
+
+/* Card Container */
+.ds-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
 }
 
 .ds-visualizer-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 24px;
+  border-radius: 1.5rem;
   padding: 1.5rem;
   box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
 }
@@ -345,4 +505,109 @@
 .ds-queue-item.rear {
   border-color: #10b981;
   background-color: #ecfdf5;
+}
+
+/* Preset Scenario Chips */
+.ds-preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.ds-preset-chip:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.ds-preset-chip.active {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+/* Interactive Node Inspector */
+.ds-inspector-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.12);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Multi-language code tabs */
+.ds-lang-tab {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  color: #94a3b8;
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+
+.ds-lang-tab:hover {
+  color: #f8fafc;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.ds-lang-tab.active {
+  color: #FF8000;
+  background-color: rgba(255, 128, 0, 0.12);
+  border: 1px solid rgba(255, 128, 0, 0.25);
+}
+
+/* Speed Controls */
+.ds-speed-btn {
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ds-speed-btn.active {
+  background-color: #173E67;
+  color: #ffffff;
+  border-color: #173E67;
+}
+
+/* Challenge Banner */
+.ds-challenge-card {
+  background: linear-gradient(135deg, #173E67 0%, #133355 100%);
+  color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(23, 62, 103, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-challenge-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 128, 0, 0.2) 0%, transparent 70%);
+  pointer-events: none;
 }

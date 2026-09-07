@@ -6,7 +6,6 @@ import {
   GitBranch,
   ArrowLeft,
   Plus,
-  Minus,
   Search,
   RotateCcw,
   Trash2,
@@ -14,11 +13,21 @@ import {
   Info,
   CheckCircle2,
   AlertTriangle,
-  Code2,
   Clock,
   Sparkles,
   Play,
+  Volume2,
+  VolumeX,
+  Zap,
 } from "lucide-react";
+import {
+  SpeedControl,
+  MultiLangCode,
+  NodeInspector,
+  ChallengeTracker,
+  Challenge,
+} from "@/components/data-structures/InteractiveElements";
+import { DATA_STRUCTURE_CODES } from "@/data/dataStructuresCode";
 
 interface TreeNode {
   value: number;
@@ -34,41 +43,10 @@ interface PositionedNode {
   leftY?: number;
   rightX?: number;
   rightY?: number;
+  depth: number;
+  hasLeft: boolean;
+  hasRight: boolean;
 }
-
-const PSEUDOCODE = {
-  insert: [
-    "function insert(root, val):",
-    "  if root is null: return new Node(val)",
-    "  if val < root.val:",
-    "    root.left = insert(root.left, val)",
-    "  else if val > root.val:",
-    "    root.right = insert(root.right, val)",
-    "  return root",
-  ],
-  search: [
-    "function search(root, target):",
-    "  if root is null or root.val == target:",
-    "    return root",
-    "  if target < root.val:",
-    "    return search(root.left, target)",
-    "  return search(root.right, target)",
-  ],
-  inorder: [
-    "function inorder(root):",
-    "  if root is null: return",
-    "  inorder(root.left)",
-    "  visit(root.val)  // yields sorted sequence",
-    "  inorder(root.right)",
-  ],
-  preorder: [
-    "function preorder(root):",
-    "  if root is null: return",
-    "  visit(root.val)  // root first",
-    "  preorder(root.left)",
-    "  preorder(root.right)",
-  ],
-};
 
 function insertNode(root: TreeNode | null, val: number): TreeNode {
   if (!root) return { value: val, left: null, right: null };
@@ -80,158 +58,160 @@ function insertNode(root: TreeNode | null, val: number): TreeNode {
   return root;
 }
 
-function deleteNode(root: TreeNode | null, val: number): TreeNode | null {
-  if (!root) return null;
-  if (val < root.value) {
-    root.left = deleteNode(root.left, val);
-  } else if (val > root.value) {
-    root.right = deleteNode(root.right, val);
-  } else {
-    // Node with only one child or no child
-    if (!root.left) return root.right;
-    if (!root.right) return root.left;
-    // Node with two children: Get the inorder successor
-    let succ = root.right;
-    while (succ.left) succ = succ.left;
-    root.value = succ.value;
-    root.right = deleteNode(root.right, succ.value);
+function calculatePositions(
+  node: TreeNode | null,
+  x: number,
+  y: number,
+  offset: number,
+  depth: number = 0,
+  positions: PositionedNode[] = []
+): PositionedNode[] {
+  if (!node) return positions;
+
+  const currentPos: PositionedNode = {
+    value: node.value,
+    x,
+    y,
+    depth,
+    hasLeft: !!node.left,
+    hasRight: !!node.right,
+  };
+
+  if (node.left) {
+    const leftX = x - offset;
+    const leftY = y + 70;
+    currentPos.leftX = leftX;
+    currentPos.leftY = leftY;
+    calculatePositions(node.left, leftX, leftY, Math.max(offset / 1.8, 28), depth + 1, positions);
   }
-  return root;
+
+  if (node.right) {
+    const rightX = x + offset;
+    const rightY = y + 70;
+    currentPos.rightX = rightX;
+    currentPos.rightY = rightY;
+    calculatePositions(node.right, rightX, rightY, Math.max(offset / 1.8, 28), depth + 1, positions);
+  }
+
+  positions.push(currentPos);
+  return positions;
 }
 
-function getTreeHeight(root: TreeNode | null): number {
-  if (!root) return 0;
-  return 1 + Math.max(getTreeHeight(root.left), getTreeHeight(root.right));
-}
-
-function getNodeCount(root: TreeNode | null): number {
-  if (!root) return 0;
-  return 1 + getNodeCount(root.left) + getNodeCount(root.right);
-}
-
-// Initial demo tree: 50 -> 30, 70 -> 20, 40, 60, 80
-function createInitialTree(): TreeNode {
-  let root: TreeNode | null = null;
-  [50, 30, 70, 20, 40, 60, 80].forEach((v) => {
-    root = insertNode(root, v);
+export default function BinaryTreeVisualizerPage() {
+  const [root, setRoot] = useState<TreeNode | null>(() => {
+    let r: TreeNode | null = null;
+    [50, 30, 70, 20, 40, 60, 80].forEach((v) => {
+      r = insertNode(r, v);
+    });
+    return r;
   });
-  return root!;
-}
 
-export default function BSTVisualizerPage() {
-  const [root, setRoot] = useState<TreeNode | null>(() => createInitialTree());
   const [inputValue, setInputValue] = useState<string>("25");
-  const [activeTab, setActiveTab] = useState<"insert" | "search" | "inorder" | "preorder">("insert");
+  const [activeTab, setActiveTab] = useState<string>("insert");
   const [highlightLine, setHighlightLine] = useState<number | null>(null);
-  const [highlightedNodes, setHighlightedNodes] = useState<number[]>([]);
-  const [visitedSequence, setVisitedSequence] = useState<number[]>([]);
+  const [visitingNode, setVisitingNode] = useState<number | null>(null);
+  const [foundNode, setFoundNode] = useState<number | null>(null);
+  const [traversalSeq, setTraversalSeq] = useState<number[]>([]);
   const [message, setMessage] = useState<{ text: string; type: "info" | "success" | "warning" | "error" }>({
-    text: "Binary Search Tree loaded. Left < Root < Right hierarchy.",
+    text: "Binary Search Tree (BST) loaded. Left < Root < Right invariant.",
     type: "info",
   });
   const [logs, setLogs] = useState<string[]>([
-    "Initialized BST with [50, 30, 70, 20, 40, 60, 80]",
+    "BST initialized with [50, 30, 70, 20, 40, 60, 80]",
   ]);
   const [isBusy, setIsBusy] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [speed, setSpeed] = useState<number>(1);
+  const [selectedNode, setSelectedNode] = useState<{
+    id: string;
+    value: number;
+    index?: number;
+    role: string;
+    extra?: Record<string, string | number>;
+  } | null>(null);
+
+  // Challenges
+  const [challenges, setChallenges] = useState<Challenge[]>([
+    { id: "insert5", title: "Have a tree with at least 5 nodes", completed: true },
+    { id: "inorder", title: "Run In-Order traversal to observe sorted output", completed: false },
+    { id: "preorder", title: "Run Pre-Order traversal", completed: false },
+    { id: "search", title: "Search and navigate binary tree for a value", completed: false },
+    { id: "inspect", title: "Click any node to inspect its depth, children, and memory", completed: false },
+  ]);
+
+  const markChallenge = (id: string) => {
+    setChallenges((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, completed: true } : c))
+    );
+  };
 
   const addLog = (log: string) => {
     setLogs((prev) => [log, ...prev.slice(0, 19)]);
   };
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  const playTone = (freq: number) => {
+    if (!soundEnabled || typeof window === "undefined") return;
+    try {
+      const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch {}
+  };
 
-  // Compute 2D node coordinates for SVG rendering
-  const positionedNodes: PositionedNode[] = [];
-  const lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms / speed));
 
-  function layoutTree(node: TreeNode | null, depth = 0, minX = 0, maxX = 700) {
-    if (!node) return null;
-    const x = (minX + maxX) / 2;
-    const y = depth * 65 + 40;
-
-    const left = layoutTree(node.left, depth + 1, minX, x);
-    const right = layoutTree(node.right, depth + 1, x, maxX);
-
-    if (left) {
-      lines.push({ x1: x, y1: y, x2: left.x, y2: left.y });
-    }
-    if (right) {
-      lines.push({ x1: x, y1: y, x2: right.x, y2: right.y });
-    }
-
-    const pos: PositionedNode = {
-      value: node.value,
-      x,
-      y,
-      leftX: left ? left.x : undefined,
-      leftY: left ? left.y : undefined,
-      rightX: right ? right.x : undefined,
-      rightY: right ? right.y : undefined,
-    };
-    positionedNodes.push(pos);
-    return pos;
-  }
-
-  if (root) {
-    layoutTree(root);
-  }
-
-  const handleInsert = async () => {
+  const handleInsert = async (valToInsert?: number) => {
     if (isBusy) return;
-    const val = parseInt(inputValue);
-    if (isNaN(val)) return;
-
-    if (getNodeCount(root) >= 15) {
-      setMessage({ text: "Max 15 nodes allowed for clear visual clarity.", type: "warning" });
-      return;
-    }
+    const num = valToInsert ?? parseInt(inputValue);
+    if (isNaN(num)) return;
 
     setIsBusy(true);
     setActiveTab("insert");
     setHighlightLine(1);
+    playTone(480);
 
-    // Animate traversal path
+    // Animate traversal down BST
     let curr = root;
-    const path: number[] = [];
+    let path: number[] = [];
     while (curr) {
       path.push(curr.value);
-      setHighlightedNodes([...path]);
-      await sleep(400);
-      if (val < curr.value) {
+      setVisitingNode(curr.value);
+      playTone(350 + path.length * 40);
+      await sleep(350);
+
+      if (num === curr.value) {
+        setMessage({ text: `Value ${num} already exists in this BST.`, type: "warning" });
+        setIsBusy(false);
+        setVisitingNode(null);
+        return;
+      } else if (num < curr.value) {
         setHighlightLine(3);
         curr = curr.left;
-      } else if (val > curr.value) {
+      } else {
         setHighlightLine(5);
         curr = curr.right;
-      } else {
-        setMessage({ text: `Value ${val} already exists in BST (no duplicates).`, type: "warning" });
-        setIsBusy(false);
-        setHighlightedNodes([]);
-        return;
       }
     }
 
-    const newRoot = insertNode(JSON.parse(JSON.stringify(root)), val);
-    setRoot(newRoot);
-    setHighlightedNodes([val]);
-    setMessage({ text: `Successfully inserted ${val} into BST.`, type: "success" });
-    addLog(`➕ Inserted ${val} in BST`);
+    setRoot((prev) => insertNode(prev, num));
+    setVisitingNode(null);
+    setFoundNode(num);
+    playTone(650);
+    setMessage({ text: `Inserted ${num} into BST.`, type: "success" });
+    addLog(`➕ Inserted node ${num}`);
+    markChallenge("insert5");
 
-    await sleep(700);
-    setHighlightedNodes([]);
+    await sleep(600);
+    setFoundNode(null);
     setHighlightLine(null);
     setIsBusy(false);
-  };
-
-  const handleDelete = () => {
-    if (isBusy || !root) return;
-    const val = parseInt(inputValue);
-    if (isNaN(val)) return;
-
-    const newRoot = deleteNode(JSON.parse(JSON.stringify(root)), val);
-    setRoot(newRoot);
-    setMessage({ text: `Deleted node ${val} from BST.`, type: "info" });
-    addLog(`➖ Deleted ${val} from BST`);
   };
 
   const handleSearch = async () => {
@@ -241,127 +221,162 @@ export default function BSTVisualizerPage() {
 
     setIsBusy(true);
     setActiveTab("search");
-    setMessage({ text: `Searching for node ${target} from root...`, type: "info" });
+    setHighlightLine(1);
+    setMessage({ text: `Searching for target ${target} using BST binary decisions...`, type: "info" });
     addLog(`🔍 Searching for ${target}`);
 
     let curr: TreeNode | null = root;
-    const path: number[] = [];
     let found = false;
+    let depth = 0;
 
     while (curr) {
-      path.push(curr.value);
-      setHighlightedNodes([...path]);
+      setVisitingNode(curr.value);
+      depth++;
+      playTone(400 + depth * 50);
       await sleep(500);
 
       if (curr.value === target) {
         setHighlightLine(2);
+        setFoundNode(curr.value);
+        playTone(720);
+        setMessage({ text: `Found ${target} at depth ${depth}!`, type: "success" });
+        addLog(`🎯 Target ${target} found at depth ${depth}`);
+        markChallenge("search");
         found = true;
-        setMessage({ text: `Target ${target} located! Path: [${path.join(" → ")}]`, type: "success" });
-        addLog(`✅ Target ${target} found along path`);
         break;
       } else if (target < curr.value) {
-        setHighlightLine(4);
+        setHighlightLine(3);
         curr = curr.left;
       } else {
-        setHighlightLine(5);
+        setHighlightLine(4);
         curr = curr.right;
       }
     }
 
     if (!found) {
-      setMessage({ text: `Node ${target} not found in this BST.`, type: "error" });
-      addLog(`❌ Node ${target} not found`);
+      setHighlightLine(5);
+      playTone(200);
+      setMessage({ text: `Target ${target} is not in this BST.`, type: "error" });
+      addLog(`❌ Target ${target} not found`);
     }
 
-    await sleep(1000);
-    setHighlightedNodes([]);
+    await sleep(800);
+    setVisitingNode(null);
+    setFoundNode(null);
     setHighlightLine(null);
     setIsBusy(false);
   };
 
-  const runTraversal = async (type: "inorder" | "preorder" | "postorder" | "levelorder") => {
+  const runTraversal = async (type: "inorder" | "preorder") => {
     if (isBusy || !root) return;
     setIsBusy(true);
-    const order: number[] = [];
+    setActiveTab(type);
+    setTraversalSeq([]);
+    setMessage({ text: `Executing ${type} traversal...`, type: "info" });
+    addLog(`🏃 Running ${type} traversal`);
 
-    function traverseInorder(node: TreeNode | null) {
+    const seq: number[] = [];
+
+    const traverse = async (node: TreeNode | null) => {
       if (!node) return;
-      traverseInorder(node.left);
-      order.push(node.value);
-      traverseInorder(node.right);
-    }
 
-    function traversePreorder(node: TreeNode | null) {
-      if (!node) return;
-      order.push(node.value);
-      traversePreorder(node.left);
-      traversePreorder(node.right);
-    }
-
-    function traversePostorder(node: TreeNode | null) {
-      if (!node) return;
-      traversePostorder(node.left);
-      traversePostorder(node.right);
-      order.push(node.value);
-    }
-
-    function traverseLevelOrder(r: TreeNode) {
-      const q: TreeNode[] = [r];
-      while (q.length > 0) {
-        const n = q.shift()!;
-        order.push(n.value);
-        if (n.left) q.push(n.left);
-        if (n.right) q.push(n.right);
+      if (type === "preorder") {
+        setVisitingNode(node.value);
+        playTone(440 + seq.length * 30);
+        seq.push(node.value);
+        setTraversalSeq([...seq]);
+        await sleep(400);
+        await traverse(node.left);
+        await traverse(node.right);
+      } else {
+        // Inorder
+        await traverse(node.left);
+        setVisitingNode(node.value);
+        playTone(440 + seq.length * 30);
+        seq.push(node.value);
+        setTraversalSeq([...seq]);
+        await sleep(400);
+        await traverse(node.right);
       }
-    }
+    };
+
+    await traverse(root);
+    setVisitingNode(null);
 
     if (type === "inorder") {
-      setActiveTab("inorder");
-      traverseInorder(root);
-    } else if (type === "preorder") {
-      setActiveTab("preorder");
-      traversePreorder(root);
-    } else if (type === "postorder") {
-      traversePostorder(root);
+      markChallenge("inorder");
+      setMessage({
+        text: `In-Order traversal complete: [${seq.join(", ")}]. Notice elements are in ascending sorted order!`,
+        type: "success",
+      });
     } else {
-      traverseLevelOrder(root);
+      markChallenge("preorder");
+      setMessage({
+        text: `Pre-Order traversal complete: [${seq.join(", ")}].`,
+        type: "success",
+      });
     }
 
-    setVisitedSequence([]);
-    setMessage({ text: `Running ${type.toUpperCase()} traversal...`, type: "info" });
-    addLog(`🔄 Executing ${type} traversal`);
-
-    for (let i = 0; i < order.length; i++) {
-      setHighlightedNodes([order[i]]);
-      setVisitedSequence(order.slice(0, i + 1));
-      await sleep(450);
-    }
-
-    setMessage({ text: `${type.toUpperCase()} traversal complete: [${order.join(", ")}]`, type: "success" });
-    addLog(`✅ Traversal completed: [${order.join(", ")}]`);
-    await sleep(800);
-    setHighlightedNodes([]);
+    addLog(`✅ ${type} finished: [${seq.join(", ")}]`);
     setIsBusy(false);
   };
 
   const handleClear = () => {
     if (isBusy) return;
     setRoot(null);
-    setVisitedSequence([]);
+    setSelectedNode(null);
+    setTraversalSeq([]);
     setMessage({ text: "Tree cleared.", type: "info" });
-    addLog("🗑 Cleared the entire tree");
+    addLog("🗑 Cleared the binary tree");
+    playTone(300);
   };
 
-  const handleReset = () => {
+  // Presets
+  const applyPreset = async (preset: string) => {
     if (isBusy) return;
-    setRoot(createInitialTree());
-    setVisitedSequence([]);
-    setMessage({ text: "Restored initial balanced BST.", type: "info" });
-    addLog("🔄 Reset tree to default nodes");
+    setIsBusy(true);
+    setTraversalSeq([]);
+
+    if (preset === "balanced") {
+      let r: TreeNode | null = null;
+      [50, 25, 75, 12, 37, 62, 87].forEach((v) => {
+        r = insertNode(r, v);
+      });
+      setRoot(r);
+      addLog("🎲 Loaded Preset: Balanced 3-Level BST");
+      setMessage({ text: "Loaded Balanced BST. Height is O(log n).", type: "info" });
+    } else if (preset === "skewed") {
+      let r: TreeNode | null = null;
+      [10, 20, 30, 40, 50].forEach((v) => {
+        r = insertNode(r, v);
+      });
+      setRoot(r);
+      addLog("📈 Loaded Preset: Skewed Tree (Degenerate to O(n))");
+      setMessage({
+        text: "Degenerate Right-Skewed BST loaded! Search becomes O(n) identical to a Linked List!",
+        type: "warning",
+      });
+    }
+
+    setIsBusy(false);
   };
 
-  const treeHeight = getTreeHeight(root);
-  const nodeCount = getNodeCount(root);
+  const positions = calculatePositions(root, 360, 50, 140);
+
+  const handleSelectNode = (node: PositionedNode) => {
+    setSelectedNode({
+      id: `tree-node-${node.value}`,
+      value: node.value,
+      role: node.depth === 0 ? "Root of Tree" : !node.hasLeft && !node.hasRight ? "Leaf Node" : `Internal Node (Level ${node.depth})`,
+      extra: {
+        Depth: node.depth,
+        "Has Left Child": node.hasLeft ? "Yes" : "None",
+        "Has Right Child": node.hasRight ? "Yes" : "None",
+      },
+    });
+    markChallenge("inspect");
+    playTone(550);
+  };
 
   return (
     <div className="ds-page-wrapper">
@@ -378,78 +393,130 @@ export default function BSTVisualizerPage() {
             </Link>
             <div className="h-5 w-px bg-slate-700/60" />
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-md shadow-amber-500/30">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-green-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/30">
                 <GitBranch className="w-4 h-4" />
               </div>
               <div>
-                <h1 className="text-base font-bold text-white tracking-tight">Binary Search Tree (BST)</h1>
-                <p className="text-xs text-slate-400">Hierarchical Tree Structure</p>
+                <h1 className="text-base font-bold text-white tracking-tight">Binary Search Tree Visualizer</h1>
+                <p className="text-xs text-slate-400">Hierarchical Node Split with O(log n) Search</p>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            <SpeedControl speed={speed} setSpeed={setSpeed} disabled={isBusy} />
             <button
-              onClick={handleReset}
-              className="px-3 py-1.5 text-xs font-medium text-slate-300 bg-slate-800 rounded-lg hover:text-white transition-colors border border-slate-700"
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className={`p-2 rounded-lg border text-xs font-medium transition-all ${
+                soundEnabled
+                  ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
+                  : "bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200"
+              }`}
+              title={soundEnabled ? "Audio active" : "Audio muted"}
             >
-              Reset Tree
+              {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              <Sparkles className="w-3 h-3" />
+              Interactive Lab
+            </span>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Container */}
       <main className="ds-container">
-        {/* Metric Bar */}
+        {/* Metric Ribbons */}
         <div className="ds-stats-grid">
           <div className="ds-stat-card">
-            <div className="ds-stat-label">Node Count</div>
-            <div className="ds-stat-value text-amber-600">{nodeCount}</div>
-          </div>
-          <div className="ds-stat-card">
-            <div className="ds-stat-label">Tree Height</div>
-            <div className="ds-stat-value text-slate-900">{treeHeight}</div>
+            <div className="ds-stat-label">Total Nodes</div>
+            <div className="ds-stat-value text-emerald-600">{positions.length} Nodes</div>
           </div>
           <div className="ds-stat-card">
             <div className="ds-stat-label">Root Value</div>
-            <div className="ds-stat-value text-slate-900">
-              {root ? root.value : "null"}
+            <div className="ds-stat-value text-slate-900">{root ? root.value : "NULL"}</div>
+          </div>
+          <div className="ds-stat-card">
+            <div className="ds-stat-label">Max Depth</div>
+            <div className="ds-stat-value text-indigo-600">
+              {positions.length > 0 ? Math.max(...positions.map((p) => p.depth)) : 0}
             </div>
           </div>
           <div className="ds-stat-card">
             <div className="ds-stat-label">Search Complexity</div>
-            <div className="ds-stat-value text-xs font-mono font-bold text-orange-600">
-              O(log n) avg, O(n) worst
+            <div className="ds-stat-value text-xs font-mono font-bold text-amber-600">
+              O(log n) avg / O(n) worst
             </div>
           </div>
         </div>
 
-        {/* Message Alert */}
+        {/* Action Status Banner */}
         <div
-          className={`mb-6 p-4 rounded-xl border flex items-center gap-3 transition-all ${
+          className={`mb-4 p-3.5 rounded-xl border flex items-center justify-between gap-3 transition-all ${
             message.type === "success"
               ? "bg-emerald-50 border-emerald-200 text-emerald-800"
               : message.type === "error"
               ? "bg-rose-50 border-rose-200 text-rose-800"
               : message.type === "warning"
               ? "bg-amber-50 border-amber-200 text-amber-800"
-              : "bg-amber-50/70 border-amber-200 text-amber-900"
+              : "bg-emerald-50 border-emerald-200 text-emerald-900"
           }`}
         >
-          {message.type === "success" && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
-          {message.type === "error" && <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />}
-          {message.type === "warning" && <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />}
-          {message.type === "info" && <Info className="w-5 h-5 text-amber-500 shrink-0" />}
-          <span className="text-sm font-medium">{message.text}</span>
+          <div className="flex items-center gap-3">
+            {message.type === "success" && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
+            {message.type === "error" && <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />}
+            {message.type === "warning" && <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />}
+            {message.type === "info" && <Info className="w-5 h-5 text-emerald-500 shrink-0" />}
+            <span className="text-sm font-medium">{message.text}</span>
+          </div>
+
+          <div className="text-xs text-slate-500 font-mono hidden md:block">
+            Speed: <strong className="text-emerald-700">{speed}x</strong>
+          </div>
         </div>
 
-        {/* Workspace */}
+        {/* Presets Bar */}
+        <div className="mb-6 flex flex-wrap items-center gap-2 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mr-2">
+            <Zap className="w-3.5 h-3.5 text-amber-500" />
+            Quick Presets:
+          </span>
+          <button
+            onClick={() => applyPreset("balanced")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            ⚖️ Balanced BST
+          </button>
+          <button
+            onClick={() => applyPreset("skewed")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            📈 Degenerate Skewed Tree
+          </button>
+          <button
+            onClick={() => runTraversal("inorder")}
+            disabled={isBusy || !root}
+            className="ds-preset-chip"
+          >
+            ▶️ In-Order (Sorted Sequence)
+          </button>
+          <button
+            onClick={() => runTraversal("preorder")}
+            disabled={isBusy || !root}
+            className="ds-preset-chip"
+          >
+            ▶️ Pre-Order Traversal
+          </button>
+        </div>
+
+        {/* Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <div className="lg:col-span-8 space-y-6">
             <div className="ds-visualizer-card">
-              {/* Operations Toolbar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-100">
+              {/* Controls Toolbar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
@@ -457,12 +524,12 @@ export default function BSTVisualizerPage() {
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Val"
                     disabled={isBusy}
-                    className="w-20 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-20 px-3 py-2 text-sm font-semibold rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                   <button
-                    onClick={handleInsert}
+                    onClick={() => handleInsert()}
                     disabled={isBusy}
-                    className="ds-btn bg-amber-500 hover:bg-amber-600 text-white shadow-sm"
+                    className="ds-btn ds-btn-primary bg-emerald-600 hover:bg-emerald-700"
                   >
                     <Plus className="w-4 h-4" />
                     Insert
@@ -476,133 +543,144 @@ export default function BSTVisualizerPage() {
                     Search
                   </button>
                   <button
-                    onClick={handleDelete}
-                    disabled={isBusy || !root}
-                    className="ds-btn bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100"
+                    onClick={() => handleInsert(Math.floor(Math.random() * 90) + 10)}
+                    disabled={isBusy}
+                    className="ds-btn ds-btn-secondary"
+                    title="Insert Random Node"
                   >
-                    <Minus className="w-4 h-4" />
-                    Delete
+                    <Shuffle className="w-4 h-4" />
                   </button>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
+                    onClick={() => runTraversal("inorder")}
+                    disabled={isBusy || !root}
+                    className="ds-btn bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
+                  >
+                    <Play className="w-3.5 h-3.5" />
+                    In-Order
+                  </button>
+                  <button
                     onClick={handleClear}
                     disabled={isBusy || !root}
                     className="ds-btn bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    title="Clear Tree"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              {/* Traversal Controls */}
-              <div className="flex flex-wrap items-center gap-2 py-3 px-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
-                <span className="font-bold text-slate-700">Traversals:</span>
-                <button
-                  onClick={() => runTraversal("inorder")}
-                  disabled={isBusy || !root}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-semibold hover:bg-amber-50 hover:border-amber-300 text-slate-700"
-                >
-                  Inorder (Sorted)
-                </button>
-                <button
-                  onClick={() => runTraversal("preorder")}
-                  disabled={isBusy || !root}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-semibold hover:bg-amber-50 hover:border-amber-300 text-slate-700"
-                >
-                  Preorder
-                </button>
-                <button
-                  onClick={() => runTraversal("postorder")}
-                  disabled={isBusy || !root}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-semibold hover:bg-amber-50 hover:border-amber-300 text-slate-700"
-                >
-                  Postorder
-                </button>
-                <button
-                  onClick={() => runTraversal("levelorder")}
-                  disabled={isBusy || !root}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-semibold hover:bg-amber-50 hover:border-amber-300 text-slate-700"
-                >
-                  Level-Order (BFS)
-                </button>
-              </div>
-
               {/* Traversal Output Sequence */}
-              {visitedSequence.length > 0 && (
-                <div className="p-3 bg-amber-50/60 rounded-xl border border-amber-200 text-xs flex items-center gap-2 overflow-x-auto">
-                  <span className="font-bold text-amber-800 shrink-0">Visited Sequence:</span>
-                  <div className="flex items-center gap-1.5 font-mono">
-                    {visitedSequence.map((val, idx) => (
-                      <span
-                        key={idx}
-                        className="bg-white px-2 py-1 rounded shadow-sm border border-amber-300 text-amber-900 font-bold"
-                      >
-                        {val}
+              {traversalSeq.length > 0 && (
+                <div className="py-2.5 px-3 bg-slate-900 rounded-xl my-4 text-xs font-mono text-white flex items-center gap-2 overflow-x-auto">
+                  <span className="text-slate-400 font-bold uppercase select-none">Traversal Output:</span>
+                  <div className="flex items-center gap-1.5">
+                    {traversalSeq.map((v, i) => (
+                      <span key={i} className="px-2 py-0.5 bg-emerald-600/80 rounded font-bold">
+                        {v}
                       </span>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* SVG Tree Stage */}
-              <div className="ds-stage min-h-[380px] bg-gradient-to-b from-slate-50 to-slate-100/60 p-4 overflow-x-auto">
-                {!root ? (
-                  <div className="text-center py-16 text-slate-400">
-                    <GitBranch className="w-12 h-12 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm font-semibold">Tree is empty. Click Insert to add root node.</p>
-                  </div>
-                ) : (
-                  <svg className="w-full h-[320px] min-w-[650px]">
-                    {/* Connecting Edges */}
-                    {lines.map((l, i) => (
-                      <line
-                        key={i}
-                        x1={l.x1}
-                        y1={l.y1}
-                        x2={l.x2}
-                        y2={l.y2}
-                        stroke="#cbd5e1"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                      />
-                    ))}
+              {/* SVG Visual Stage */}
+              <div className="ds-stage min-h-[420px] flex-col justify-center relative bg-gradient-to-b from-slate-50 to-slate-100/60 p-4 overflow-x-auto">
+                <div className="absolute top-3 left-4 text-xs font-semibold text-slate-500 flex items-center gap-1.5 bg-white/80 px-2.5 py-1 rounded-md border border-slate-200 z-10">
+                  <Info className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Click any node in the tree to inspect memory & depth</span>
+                </div>
 
-                    {/* Nodes */}
-                    {positionedNodes.map((n) => {
-                      const isHighlighted = highlightedNodes.includes(n.value);
-                      return (
-                        <g key={n.value} className="cursor-pointer transition-all">
-                          <circle
-                            cx={n.x}
-                            cy={n.y}
-                            r="22"
-                            className={`transition-all duration-300 ${
-                              isHighlighted
-                                ? "fill-amber-500 stroke-amber-300 stroke-[5px]"
-                                : "fill-gradient-to-b fill-white stroke-slate-400 stroke-2"
-                            }`}
-                          />
-                          <text
-                            x={n.x}
-                            y={n.y + 5}
-                            textAnchor="middle"
-                            className={`font-mono font-bold text-xs select-none transition-all ${
-                              isHighlighted ? "fill-white font-extrabold text-sm" : "fill-slate-800"
-                            }`}
-                          >
-                            {n.value}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </svg>
-                )}
+                <svg className="w-[720px] h-[340px] mx-auto overflow-visible select-none">
+                  {/* Branch Edges */}
+                  {positions.map((node) => (
+                    <React.Fragment key={`edge-${node.value}`}>
+                      {node.leftX !== undefined && node.leftY !== undefined && (
+                        <line
+                          x1={node.x}
+                          y1={node.y}
+                          x2={node.leftX}
+                          y2={node.leftY}
+                          stroke="#cbd5e1"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                      )}
+                      {node.rightX !== undefined && node.rightY !== undefined && (
+                        <line
+                          x1={node.x}
+                          y1={node.y}
+                          x2={node.rightX}
+                          y2={node.rightY}
+                          stroke="#cbd5e1"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                      )}
+                    </React.Fragment>
+                  ))}
+
+                  {/* Nodes */}
+                  {positions.map((node) => {
+                    const isVisiting = visitingNode === node.value;
+                    const isFound = foundNode === node.value;
+                    const isSelected = selectedNode?.value === node.value;
+
+                    return (
+                      <g
+                        key={`node-${node.value}`}
+                        onClick={() => handleSelectNode(node)}
+                        className="cursor-pointer"
+                      >
+                        <circle
+                          cx={node.x}
+                          cy={node.y}
+                          r="22"
+                          className={`transition-all duration-300 ${
+                            isSelected
+                              ? "fill-emerald-600 stroke-indigo-500 stroke-[4px]"
+                              : isFound
+                              ? "fill-emerald-500 stroke-emerald-300 stroke-[4px] animate-pulse"
+                              : isVisiting
+                              ? "fill-amber-400 stroke-amber-200 stroke-[4px] animate-bounce"
+                              : "fill-white stroke-slate-300 stroke-[2.5px] hover:stroke-emerald-400"
+                          }`}
+                        />
+                        <text
+                          x={node.x}
+                          y={node.y + 5}
+                          textAnchor="middle"
+                          className={`text-xs font-mono font-bold select-none ${
+                            isSelected || isFound || isVisiting ? "fill-white" : "fill-slate-800"
+                          }`}
+                        >
+                          {node.value}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </svg>
               </div>
+
+              {/* Inspector */}
+              {selectedNode && (
+                <div className="mt-4">
+                  <NodeInspector
+                    selectedNode={selectedNode}
+                    onClose={() => setSelectedNode(null)}
+                    actionLabel="Search Target"
+                    onAction={() => {
+                      setInputValue(selectedNode.value.toString());
+                      handleSearch();
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
-            {/* Logs */}
+            {/* History Logs */}
             <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -624,82 +702,45 @@ export default function BSTVisualizerPage() {
 
           {/* Right Column */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="ds-card">
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-amber-600" />
-                  <h3 className="text-sm font-bold text-slate-900">Pseudocode</h3>
-                </div>
-                <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-[10px]">
-                  {(["insert", "search", "inorder", "preorder"] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => {
-                        setActiveTab(tab);
-                        setHighlightLine(null);
-                      }}
-                      className={`px-2 py-1 font-semibold rounded capitalize transition-all ${
-                        activeTab === tab
-                          ? "bg-white text-amber-600 shadow-sm"
-                          : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <MultiLangCode
+              codeMap={DATA_STRUCTURE_CODES.binaryTree.code[activeTab] || DATA_STRUCTURE_CODES.binaryTree.code.insert}
+              activeOperation={activeTab}
+              operations={DATA_STRUCTURE_CODES.binaryTree.operations}
+              onOperationChange={(op) => {
+                setActiveTab(op);
+                setHighlightLine(null);
+              }}
+              highlightLine={highlightLine}
+            />
 
-              <div className="bg-slate-900 rounded-xl p-3 font-mono text-xs overflow-x-auto">
-                {PSEUDOCODE[activeTab].map((line, idx) => (
-                  <div
-                    key={idx}
-                    className={`py-1 px-2 rounded transition-colors ${
-                      highlightLine === idx
-                        ? "bg-amber-600/40 text-amber-200 font-bold border-l-2 border-amber-400"
-                        : "text-slate-300"
-                    }`}
-                  >
-                    <span className="text-slate-600 select-none mr-3">{idx + 1}</span>
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ChallengeTracker
+              topicTitle="Binary Search Tree"
+              challenges={challenges}
+            />
 
             <div className="ds-card">
               <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <Info className="w-4 h-4 text-orange-500" />
-                BST Properties & Rules
+                <Info className="w-4 h-4 text-blue-500" />
+                Complexity Specs
               </h3>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">Search / Insert (Avg)</span>
+                  <span className="text-slate-600 font-medium">Search Average</span>
                   <span className="font-mono font-bold text-emerald-600">O(log n)</span>
                 </div>
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">Search / Insert (Worst)</span>
-                  <span className="font-mono font-bold text-rose-600">O(n) skewed</span>
+                  <span className="text-slate-600 font-medium">Search Worst (Skewed)</span>
+                  <span className="font-mono font-bold text-rose-600">O(n)</span>
                 </div>
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">Inorder Traversal</span>
-                  <span className="font-mono font-bold text-indigo-600">Ascending Order</span>
+                  <span className="text-slate-600 font-medium">Insertion</span>
+                  <span className="font-mono font-bold text-emerald-600">O(log n) avg</span>
                 </div>
                 <div className="flex justify-between p-2 bg-slate-50 rounded-lg">
-                  <span className="text-slate-600 font-medium">Space Complexity</span>
-                  <span className="font-mono font-bold text-slate-900">O(n)</span>
+                  <span className="text-slate-600 font-medium">In-Order Traversal</span>
+                  <span className="font-mono font-bold text-indigo-600">O(n)</span>
                 </div>
               </div>
-            </div>
-
-            <div className="ds-card">
-              <h3 className="text-sm font-bold text-slate-900 mb-2">Real-World Applications</h3>
-              <ul className="text-xs text-slate-600 space-y-2 list-disc list-inside">
-                <li>Database index structures (B-Trees / Red-Black Trees)</li>
-                <li>Syntax parsing trees in compilers and Linters</li>
-                <li>Autocomplete dictionary search tries & prefix trees</li>
-                <li>3D graphics spatial partitioning (BSP Trees)</li>
-              </ul>
             </div>
           </div>
         </div>

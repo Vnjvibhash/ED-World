@@ -1,12 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   Layers,
   ArrowLeft,
-  Play,
-  RotateCcw,
   Plus,
   Minus,
   Eye,
@@ -15,13 +13,21 @@ import {
   Info,
   CheckCircle2,
   AlertTriangle,
-  Code2,
   Clock,
   Sparkles,
   ArrowUp,
   Volume2,
   VolumeX,
+  Zap,
 } from "lucide-react";
+import {
+  SpeedControl,
+  MultiLangCode,
+  NodeInspector,
+  ChallengeTracker,
+  Challenge,
+} from "@/components/data-structures/InteractiveElements";
+import { DATA_STRUCTURE_CODES } from "@/data/dataStructuresCode";
 
 interface StackItem {
   id: string;
@@ -42,31 +48,6 @@ const COLOR_PALETTE = [
   "from-pink-500 to-rose-600",
 ];
 
-const PSEUDOCODE = {
-  push: [
-    "function push(stack, value):",
-    "  if stack.size >= stack.capacity:",
-    "    throw StackOverflowError",
-    "  stack.top = stack.top + 1",
-    "  stack[stack.top] = value",
-    "  return true",
-  ],
-  pop: [
-    "function pop(stack):",
-    "  if stack.isEmpty():",
-    "    throw StackUnderflowError",
-    "  value = stack[stack.top]",
-    "  stack.top = stack.top - 1",
-    "  return value",
-  ],
-  peek: [
-    "function peek(stack):",
-    "  if stack.isEmpty():",
-    "    return null",
-    "  return stack[stack.top]",
-  ],
-};
-
 export default function StackVisualizerPage() {
   const [stack, setStack] = useState<StackItem[]>([
     { id: "1", value: 15, color: COLOR_PALETTE[0], status: "idle" },
@@ -75,10 +56,10 @@ export default function StackVisualizerPage() {
   ]);
   const [inputValue, setInputValue] = useState<string>("99");
   const [capacity, setCapacity] = useState<number>(8);
-  const [activeTab, setActiveTab] = useState<"push" | "pop" | "peek">("push");
+  const [activeTab, setActiveTab] = useState<string>("push");
   const [highlightLine, setHighlightLine] = useState<number | null>(null);
   const [message, setMessage] = useState<{ text: string; type: "info" | "success" | "warning" | "error" }>({
-    text: "Stack initialized with 3 elements. LIFO (Last In, First Out).",
+    text: "Stack initialized. LIFO (Last In, First Out) Architecture.",
     type: "info",
   });
   const [logs, setLogs] = useState<string[]>([
@@ -86,6 +67,29 @@ export default function StackVisualizerPage() {
   ]);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
+  const [speed, setSpeed] = useState<number>(1);
+  const [selectedItem, setSelectedItem] = useState<{
+    id: string;
+    value: number;
+    index: number;
+    role: string;
+    extra?: Record<string, string | number>;
+  } | null>(null);
+
+  // Challenges
+  const [challenges, setChallenges] = useState<Challenge[]>([
+    { id: "push4", title: "Push at least 4 items onto the stack", completed: false },
+    { id: "peek", title: "Peek at the current top item", completed: false },
+    { id: "overflow", title: "Trigger an intentional Stack Overflow error", completed: false },
+    { id: "underflow", title: "Trigger an intentional Stack Underflow error", completed: false },
+    { id: "inspect", title: "Click any item in the stack to inspect its memory address", completed: false },
+  ]);
+
+  const markChallenge = (id: string) => {
+    setChallenges((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, completed: true } : c))
+    );
+  };
 
   const addLog = (log: string) => {
     setLogs((prev) => [log, ...prev.slice(0, 19)]);
@@ -107,6 +111,8 @@ export default function StackVisualizerPage() {
     } catch {}
   };
 
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms / speed));
+
   const handlePush = async (valToPush?: number) => {
     if (isBusy) return;
     const num = valToPush ?? parseInt(inputValue);
@@ -121,6 +127,7 @@ export default function StackVisualizerPage() {
       setMessage({ text: `Stack Overflow! Capacity (${capacity}) reached.`, type: "error" });
       addLog(`❌ Stack Overflow: cannot push ${num}`);
       playTone(220);
+      markChallenge("overflow");
       return;
     }
 
@@ -140,17 +147,20 @@ export default function StackVisualizerPage() {
     setMessage({ text: `Pushed ${num} onto the stack. Top index is now ${stack.length}.`, type: "success" });
     addLog(`➕ Pushed ${num} at index ${stack.length}`);
 
-    setTimeout(() => {
-      setHighlightLine(4);
-      setStack((prev) =>
-        prev.map((item) => (item.id === newItem.id ? { ...item, status: "idle" } : item))
-      );
-      setHighlightLine(null);
-      setIsBusy(false);
-    }, 400);
+    if (stack.length + 1 >= 4) {
+      markChallenge("push4");
+    }
+
+    await sleep(400);
+    setHighlightLine(4);
+    setStack((prev) =>
+      prev.map((item) => (item.id === newItem.id ? { ...item, status: "idle" } : item))
+    );
+    setHighlightLine(null);
+    setIsBusy(false);
   };
 
-  const handlePop = () => {
+  const handlePop = async () => {
     if (isBusy) return;
     if (stack.length === 0) {
       setActiveTab("pop");
@@ -158,6 +168,7 @@ export default function StackVisualizerPage() {
       setMessage({ text: "Stack Underflow! Cannot pop from an empty stack.", type: "error" });
       addLog("❌ Stack Underflow: stack is empty");
       playTone(200);
+      markChallenge("underflow");
       return;
     }
 
@@ -172,17 +183,17 @@ export default function StackVisualizerPage() {
     );
     setMessage({ text: `Popping top element (${topItem.value})...`, type: "warning" });
 
-    setTimeout(() => {
-      setHighlightLine(4);
-      setStack((prev) => prev.slice(0, prev.length - 1));
-      setMessage({ text: `Popped ${topItem.value} from the top.`, type: "success" });
-      addLog(`➖ Popped ${topItem.value} from top`);
-      setHighlightLine(null);
-      setIsBusy(false);
-    }, 450);
+    await sleep(450);
+    setHighlightLine(4);
+    setStack((prev) => prev.slice(0, prev.length - 1));
+    if (selectedItem?.id === topItem.id) setSelectedItem(null);
+    setMessage({ text: `Popped ${topItem.value} from the top.`, type: "success" });
+    addLog(`➖ Popped ${topItem.value} from top`);
+    setHighlightLine(null);
+    setIsBusy(false);
   };
 
-  const handlePeek = () => {
+  const handlePeek = async () => {
     if (isBusy) return;
     setActiveTab("peek");
     if (stack.length === 0) {
@@ -202,25 +213,97 @@ export default function StackVisualizerPage() {
     );
     setMessage({ text: `Top element is ${topItem.value} at index ${stack.length - 1}.`, type: "info" });
     addLog(`👁 Peeked at top: ${topItem.value}`);
+    markChallenge("peek");
 
-    setTimeout(() => {
-      setStack((prev) => prev.map((item) => ({ ...item, status: "idle" })));
-      setHighlightLine(null);
-      setIsBusy(false);
-    }, 700);
+    await sleep(700);
+    setStack((prev) => prev.map((item) => ({ ...item, status: "idle" })));
+    setHighlightLine(null);
+    setIsBusy(false);
   };
 
   const handleClear = () => {
     if (isBusy) return;
     setStack([]);
+    setSelectedItem(null);
     setMessage({ text: "Stack has been cleared.", type: "info" });
     addLog("🗑 Cleared the entire stack");
     playTone(300);
   };
 
-  const handlePushRandom = () => {
-    const rand = Math.floor(Math.random() * 90) + 10;
-    handlePush(rand);
+  // Presets
+  const applyPreset = async (presetName: string) => {
+    if (isBusy) return;
+    setIsBusy(true);
+
+    if (presetName === "random4") {
+      setStack([]);
+      await sleep(150);
+      const newItems: StackItem[] = [
+        { id: "r1", value: Math.floor(Math.random() * 80) + 10, color: COLOR_PALETTE[0], status: "idle" },
+        { id: "r2", value: Math.floor(Math.random() * 80) + 10, color: COLOR_PALETTE[1], status: "idle" },
+        { id: "r3", value: Math.floor(Math.random() * 80) + 10, color: COLOR_PALETTE[2], status: "idle" },
+        { id: "r4", value: Math.floor(Math.random() * 80) + 10, color: COLOR_PALETTE[3], status: "idle" },
+      ];
+      setStack(newItems);
+      addLog("🎲 Loaded Preset: Random 4 Elements");
+      markChallenge("push4");
+    } else if (presetName === "overflow") {
+      // Fill to capacity then overflow
+      const fullItems: StackItem[] = Array.from({ length: capacity }, (_, i) => ({
+        id: `full-${i}`,
+        value: (i + 1) * 11,
+        color: COLOR_PALETTE[i % COLOR_PALETTE.length],
+        status: "idle",
+      }));
+      setStack(fullItems);
+      setMessage({ text: `Stack filled to capacity (${capacity}). Now trying to push overflow element...`, type: "warning" });
+      await sleep(600);
+      setActiveTab("push");
+      setHighlightLine(1);
+      setMessage({ text: `Stack Overflow! Cannot push into full stack (${capacity}/${capacity}).`, type: "error" });
+      addLog(`❌ Stack Overflow Triggered!`);
+      playTone(220);
+      markChallenge("overflow");
+    } else if (presetName === "underflow") {
+      setStack([]);
+      setSelectedItem(null);
+      await sleep(200);
+      setActiveTab("pop");
+      setHighlightLine(1);
+      setMessage({ text: "Stack Underflow! Popping an empty stack.", type: "error" });
+      addLog("❌ Stack Underflow Triggered!");
+      playTone(200);
+      markChallenge("underflow");
+    } else if (presetName === "palindrome") {
+      const vals = [7, 3, 3, 7];
+      const items: StackItem[] = vals.map((v, i) => ({
+        id: `p-${i}`,
+        value: v,
+        color: COLOR_PALETTE[i],
+        status: "idle",
+      }));
+      setStack(items);
+      addLog("🔄 Loaded Palindrome Preset: [7, 3, 3, 7]");
+      setMessage({ text: "Palindrome loaded! Notice LIFO unwinds [7, 3, 3, 7] into the exact same order!", type: "info" });
+    }
+
+    setIsBusy(false);
+  };
+
+  const handleSelectNode = (item: StackItem, index: number) => {
+    const isTop = index === stack.length - 1;
+    setSelectedItem({
+      id: item.id,
+      value: item.value,
+      index,
+      role: isTop ? "Top Element (LIFO Point)" : index === 0 ? "Stack Base (Index 0)" : `Element at Index [${index}]`,
+      extra: {
+        "Distance to Top": stack.length - 1 - index,
+        "Hex Status": item.status,
+      },
+    });
+    markChallenge("inspect");
+    playTone(550);
   };
 
   const topElement = stack.length > 0 ? stack[stack.length - 1].value : "null";
@@ -251,6 +334,7 @@ export default function StackVisualizerPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <SpeedControl speed={speed} setSpeed={setSpeed} disabled={isBusy} />
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
               className={`p-2 rounded-lg border text-xs font-medium transition-all ${
@@ -304,7 +388,7 @@ export default function StackVisualizerPage() {
 
         {/* Action Status Banner */}
         <div
-          className={`mb-6 p-4 rounded-xl border flex items-center gap-3 transition-all ${
+          className={`mb-4 p-3.5 rounded-xl border flex items-center justify-between gap-3 transition-all ${
             message.type === "success"
               ? "bg-emerald-50 border-emerald-200 text-emerald-800"
               : message.type === "error"
@@ -314,11 +398,53 @@ export default function StackVisualizerPage() {
               : "bg-violet-50 border-violet-200 text-violet-900"
           }`}
         >
-          {message.type === "success" && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
-          {message.type === "error" && <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />}
-          {message.type === "warning" && <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />}
-          {message.type === "info" && <Info className="w-5 h-5 text-violet-500 shrink-0" />}
-          <span className="text-sm font-medium">{message.text}</span>
+          <div className="flex items-center gap-3">
+            {message.type === "success" && <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />}
+            {message.type === "error" && <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0" />}
+            {message.type === "warning" && <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />}
+            {message.type === "info" && <Info className="w-5 h-5 text-violet-500 shrink-0" />}
+            <span className="text-sm font-medium">{message.text}</span>
+          </div>
+
+          <div className="text-xs text-slate-500 font-mono hidden md:block">
+            Animation Speed: <strong className="text-violet-700">{speed}x</strong>
+          </div>
+        </div>
+
+        {/* Interactive Scenario Presets Bar */}
+        <div className="mb-6 flex flex-wrap items-center gap-2 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mr-2">
+            <Zap className="w-3.5 h-3.5 text-amber-500" />
+            Quick Presets:
+          </span>
+          <button
+            onClick={() => applyPreset("random4")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            🎲 Random 4 Items
+          </button>
+          <button
+            onClick={() => applyPreset("overflow")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            🔥 Overflow Test
+          </button>
+          <button
+            onClick={() => applyPreset("underflow")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            🧹 Underflow Test
+          </button>
+          <button
+            onClick={() => applyPreset("palindrome")}
+            disabled={isBusy}
+            className="ds-preset-chip"
+          >
+            🔄 Palindrome [7, 3, 3, 7]
+          </button>
         </div>
 
         {/* Visualization & Controls Layout */}
@@ -346,7 +472,7 @@ export default function StackVisualizerPage() {
                     Push
                   </button>
                   <button
-                    onClick={handlePushRandom}
+                    onClick={() => handlePush(Math.floor(Math.random() * 90) + 10)}
                     disabled={isBusy}
                     className="ds-btn ds-btn-secondary"
                     title="Push Random Value"
@@ -386,6 +512,11 @@ export default function StackVisualizerPage() {
 
               {/* Stack Visual Bucket */}
               <div className="ds-stage min-h-[420px] flex-col justify-end relative bg-gradient-to-b from-slate-50 to-slate-100/60 p-6 overflow-hidden">
+                <div className="absolute top-3 left-4 text-xs font-semibold text-slate-500 flex items-center gap-1.5 bg-white/80 px-2.5 py-1 rounded-md border border-slate-200">
+                  <Info className="w-3.5 h-3.5 text-violet-500" />
+                  <span>Click any element to inspect its simulated memory address</span>
+                </div>
+
                 {/* Top Indicator Arrow */}
                 {stack.length > 0 && (
                   <div
@@ -420,19 +551,23 @@ export default function StackVisualizerPage() {
                   ) : (
                     stack.map((item, index) => {
                       const isTop = index === stack.length - 1;
+                      const isSelected = selectedItem?.id === item.id;
                       return (
                         <div
                           key={item.id}
-                          className={`w-full py-3 px-4 rounded-xl text-white font-bold flex items-center justify-between shadow-md transition-all duration-300 bg-gradient-to-r ${item.color} ${
+                          onClick={() => handleSelectNode(item, index)}
+                          className={`w-full py-3 px-4 rounded-xl text-white font-bold flex items-center justify-between shadow-md transition-all duration-300 bg-gradient-to-r cursor-pointer ${item.color} ${
                             item.status === "entering"
                               ? "scale-105 ring-4 ring-emerald-400 translate-y-2"
                               : item.status === "popping"
                               ? "scale-90 opacity-0 -translate-y-4"
                               : item.status === "peeking"
                               ? "scale-105 ring-4 ring-amber-400 animate-pulse"
+                              : isSelected
+                              ? "ring-4 ring-violet-500 scale-[1.02] shadow-xl"
                               : isTop
                               ? "ring-2 ring-violet-400"
-                              : ""
+                              : "hover:scale-[1.01]"
                           }`}
                           style={{ height: "46px" }}
                         >
@@ -442,11 +577,18 @@ export default function StackVisualizerPage() {
                             </span>
                             <span className="text-base tracking-wide font-mono">{item.value}</span>
                           </div>
-                          {isTop && (
-                            <span className="text-[10px] font-bold uppercase tracking-wider bg-white text-violet-700 px-2 py-0.5 rounded-full shadow-sm">
-                              Top
-                            </span>
-                          )}
+                          <div className="flex items-center gap-1.5">
+                            {isSelected && (
+                              <span className="text-[10px] font-bold uppercase tracking-wider bg-violet-900/60 text-white px-2 py-0.5 rounded-full">
+                                Inspected
+                              </span>
+                            )}
+                            {isTop && (
+                              <span className="text-[10px] font-bold uppercase tracking-wider bg-white text-violet-700 px-2 py-0.5 rounded-full shadow-sm">
+                                Top
+                              </span>
+                            )}
+                          </div>
                         </div>
                       );
                     })
@@ -457,6 +599,18 @@ export default function StackVisualizerPage() {
                   Bottom of Stack (LIFO: Base Index 0)
                 </div>
               </div>
+
+              {/* Selected Node Inspector Drawer */}
+              {selectedItem && (
+                <div className="mt-4">
+                  <NodeInspector
+                    selectedNode={selectedItem}
+                    onClose={() => setSelectedItem(null)}
+                    actionLabel="Duplicate This Value"
+                    onAction={() => handlePush(selectedItem.value)}
+                  />
+                </div>
+              )}
 
               {/* Slider Settings */}
               <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-600">
@@ -499,51 +653,25 @@ export default function StackVisualizerPage() {
             </div>
           </div>
 
-          {/* Right Column: Pseudocode & Theory */}
+          {/* Right Column: Code Viewer, Challenges & Theory */}
           <div className="lg:col-span-4 space-y-6">
-            {/* Algorithm Pseudocode Card */}
-            <div className="ds-card">
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-violet-600" />
-                  <h3 className="text-sm font-bold text-slate-900">Pseudocode</h3>
-                </div>
-                <div className="flex items-center bg-slate-100 p-1 rounded-lg">
-                  {(["push", "pop", "peek"] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => {
-                        setActiveTab(tab);
-                        setHighlightLine(null);
-                      }}
-                      className={`px-2.5 py-1 text-xs font-semibold rounded capitalize transition-all ${
-                        activeTab === tab
-                          ? "bg-white text-violet-600 shadow-sm"
-                          : "text-slate-500 hover:text-slate-900"
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            {/* Multi-Language Code Component */}
+            <MultiLangCode
+              codeMap={DATA_STRUCTURE_CODES.stack.code[activeTab] || DATA_STRUCTURE_CODES.stack.code.push}
+              activeOperation={activeTab}
+              operations={DATA_STRUCTURE_CODES.stack.operations}
+              onOperationChange={(op) => {
+                setActiveTab(op);
+                setHighlightLine(null);
+              }}
+              highlightLine={highlightLine}
+            />
 
-              <div className="bg-slate-900 rounded-xl p-3 font-mono text-xs overflow-x-auto">
-                {PSEUDOCODE[activeTab].map((line, idx) => (
-                  <div
-                    key={idx}
-                    className={`py-1 px-2 rounded transition-colors ${
-                      highlightLine === idx
-                        ? "bg-violet-600/40 text-violet-200 font-bold border-l-2 border-violet-400"
-                        : "text-slate-300"
-                    }`}
-                  >
-                    <span className="text-slate-600 select-none mr-3">{idx + 1}</span>
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* Interactive Sandbox Challenge Tracker */}
+            <ChallengeTracker
+              topicTitle="Stack"
+              challenges={challenges}
+            />
 
             {/* Complexity & Key Properties */}
             <div className="ds-card">
