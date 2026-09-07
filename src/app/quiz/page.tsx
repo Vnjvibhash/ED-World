@@ -526,13 +526,18 @@ export default function QuizPage() {
 
                 {/* Subject Category Filter */}
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-lg bg-brand-500 text-white text-xs font-bold flex items-center justify-center shadow-xs">
-                      3
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-7 h-7 rounded-lg bg-brand-500 text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                        3
+                      </span>
+                      <h3 className="text-sm font-bold text-slate-900">
+                        Subject Category Filter
+                      </h3>
+                    </div>
+                    <span className="text-[11px] font-semibold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200">
+                      {selectedCategory}
                     </span>
-                    <h3 className="text-sm font-bold text-slate-900">
-                      Subject Category Filter
-                    </h3>
                   </div>
 
                   <div className="relative">
@@ -549,8 +554,47 @@ export default function QuizPage() {
                       ))}
                     </select>
                   </div>
+
+                  {/* Interactive Quick-Select Pills */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {quizCategories.map((cat) => {
+                      const isCatSelected = selectedCategory === cat;
+                      const catIcons: Record<string, string> = {
+                        All: "🌐",
+                        "Data Structures": "🌳",
+                        "AI & Machine Learning": "🤖",
+                        Cybersecurity: "🛡️",
+                        "Operating Systems": "💻",
+                        "Computer Networks": "📡",
+                        "Electrical & Electronics": "⚡",
+                        "Mechanical Engineering": "⚙️",
+                        "Civil Engineering": "🏗️",
+                        "Java & OOP": "☕",
+                        "C / C++": "🔧",
+                        Python: "🐍",
+                        "General Web": "🌍",
+                        "SQL & DB": "🗄️",
+                      };
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setSelectedCategory(cat)}
+                          className={`px-2.5 py-1.5 rounded-lg text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                            isCatSelected
+                              ? "bg-brand-500 text-white shadow-xs scale-102"
+                              : "bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                          }`}
+                        >
+                          <span className="text-xs">{catIcons[cat] || "📚"}</span>
+                          <span>{cat}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
                   <p className="text-[11px] text-slate-500">
-                    Filter across Web Dev, Python, Data Structures &amp; Algorithms, or SQL Databases.
+                    Comprehensive coverage across Computer Science, AI, Cybersecurity, Electrical, Mechanical, Civil, Software, and Database Engineering.
                   </p>
                 </div>
               </div>
