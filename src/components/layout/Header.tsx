@@ -141,7 +141,7 @@ export function Header() {
           borderBottom: "1px solid #133355"
         }}
       >
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center space-x-3 sm:space-x-4">
             <Link href="/" className="hover:text-accent-400 transition-colors font-medium" style={{ color: "#ffffff" }}>Home</Link>
             <span style={{ color: "rgba(255, 255, 255, 0.3)" }}>|</span>

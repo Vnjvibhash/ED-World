@@ -20,6 +20,32 @@ html, body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 100% Full View Width for Whole Website */
+.max-w-7xl {
+  max-width: 100% !important;
+  width: 100%;
+}
+
+@media (min-width: 1536px) {
+  .max-w-7xl.px-4,
+  .max-w-7xl.px-6,
+  .max-w-7xl.px-8 {
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  .max-w-7xl.px-4,
+  .max-w-7xl.px-6,
+  .max-w-7xl.px-8 {
+    padding-left: 3.5rem !important;
+    padding-right: 3.5rem !important;
+  }
 }
 
 /* Custom Scrollbar - Light Theme */

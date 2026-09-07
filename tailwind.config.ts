@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        '7xl': '100%',
+      },
       colors: {
         brand: {
           50: '#f0f4f9',
