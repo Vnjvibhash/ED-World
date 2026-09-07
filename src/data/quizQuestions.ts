@@ -1,117 +1,576 @@
+export type QuizDifficulty = "easy" | "medium" | "hard";
+export type QuizStageNumber = 1 | 2 | 3;
+
 export interface QuizQuestion {
+  id: string;
   numb: number;
   category: "General Web" | "Python" | "Data Structures" | "SQL & DB";
+  difficulty: QuizDifficulty;
+  stage: QuizStageNumber;
   question: string;
+  codeSnippet?: string;
   answer: string;
   options: string[];
-  explanation?: string;
+  explanation: string;
 }
 
-export const quizCategories = ["All", "General Web", "Python", "Data Structures", "SQL & DB"] as const;
+export const quizCategories = [
+  "All",
+  "General Web",
+  "Python",
+  "Data Structures",
+  "SQL & DB",
+] as const;
+
+export const difficultyMeta = {
+  easy: {
+    label: "Easy",
+    stageTitle: "Stage 1: Fundamentals",
+    badgeColor: "emerald",
+    bgLight: "bg-emerald-50",
+    borderLight: "border-emerald-200",
+    textLight: "text-emerald-700",
+    accentGrad: "from-emerald-500 to-teal-600",
+    timerSeconds: 20,
+    pointValue: 100,
+    desc: "Core concepts, language basics, and fundamental syntax",
+    icon: "🌱",
+  },
+  medium: {
+    label: "Medium",
+    stageTitle: "Stage 2: Practical Logic",
+    badgeColor: "amber",
+    bgLight: "bg-amber-50",
+    borderLight: "border-amber-200",
+    textLight: "text-amber-700",
+    accentGrad: "from-amber-500 to-orange-600",
+    timerSeconds: 25,
+    pointValue: 200,
+    desc: "Algorithmic logic, data manipulation, methods & queries",
+    icon: "⚡",
+  },
+  hard: {
+    label: "Hard",
+    stageTitle: "Stage 3: Advanced Mastery",
+    badgeColor: "rose",
+    bgLight: "bg-rose-50",
+    borderLight: "border-rose-200",
+    textLight: "text-rose-700",
+    accentGrad: "from-rose-500 to-purple-600",
+    timerSeconds: 30,
+    pointValue: 300,
+    desc: "Runtime complexity, tricky edge cases, and internals",
+    icon: "🔥",
+  },
+} as const;
+
+export const stageNames: Record<QuizStageNumber, { title: string; subtitle: string }> = {
+  1: { title: "Round 1: Foundations", subtitle: "Essential syntax & definitions" },
+  2: { title: "Round 2: Applied Logic", subtitle: "Practical mechanics & code analysis" },
+  3: { title: "Round 3: Mastery Arena", subtitle: "Complex challenges & optimization" },
+};
 
 export const quizQuestions: QuizQuestion[] = [
+  // ==========================================
+  // EASY - STAGE 1 (Foundations)
+  // ==========================================
   {
+    id: "e1-1",
     numb: 1,
     category: "General Web",
+    difficulty: "easy",
+    stage: 1,
     question: "What does HTML stand for?",
     answer: "Hyper Text Markup Language",
     options: [
       "Hyper Text Preprocessor",
       "Hyper Text Markup Language",
       "Hyper Text Multiple Language",
-      "Hyper Tool Multi Language"
+      "Hyper Tool Multi Language",
     ],
-    explanation: "HTML is standard markup language for creating web documents."
+    explanation: "HTML is standard markup language used to structure web documents.",
   },
   {
+    id: "e1-2",
     numb: 2,
-    category: "General Web",
-    question: "What does CSS stand for?",
-    answer: "Cascading Style Sheet",
-    options: [
-      "Common Style Sheet",
-      "Colorful Style Sheet",
-      "Computer Style Sheet",
-      "Cascading Style Sheet"
-    ],
-    explanation: "CSS describes how HTML elements are to be displayed on screen."
+    category: "Python",
+    difficulty: "easy",
+    stage: 1,
+    question: "Which keyword is used to define a function in Python?",
+    answer: "def",
+    options: ["function", "func", "def", "define"],
+    explanation: "In Python, the 'def' keyword introduces a function definition.",
   },
   {
+    id: "e1-3",
     numb: 3,
-    category: "General Web",
-    question: "What does PHP stand for?",
-    answer: "Hypertext Preprocessor",
-    options: [
-      "Hypertext Preprocessor",
-      "Hypertext Programming",
-      "Hypertext Preprogramming",
-      "Hometext Preprocessor"
-    ],
-    explanation: "PHP is a recursive acronym for 'PHP: Hypertext Preprocessor'."
+    category: "Data Structures",
+    difficulty: "easy",
+    stage: 1,
+    question: "Which data structure operates on a Last In First Out (LIFO) principle?",
+    answer: "Stack",
+    options: ["Queue", "Stack", "Array", "Linked List"],
+    explanation: "A Stack follows the LIFO principle where elements added last are removed first.",
   },
   {
+    id: "e1-4",
     numb: 4,
     category: "SQL & DB",
+    difficulty: "easy",
+    stage: 1,
     question: "What does SQL stand for?",
     answer: "Structured Query Language",
     options: [
       "Stylish Question Language",
       "Stylesheet Query Language",
       "Statement Question Language",
-      "Structured Query Language"
+      "Structured Query Language",
     ],
-    explanation: "SQL is domain-specific language used in programming and designed for managing data held in an RDBMS."
+    explanation: "SQL is domain-specific language designed for managing data held in an RDBMS.",
   },
+
+  // ==========================================
+  // EASY - STAGE 2 (Core Concepts)
+  // ==========================================
   {
+    id: "e2-1",
     numb: 5,
     category: "General Web",
-    question: "What does XML stand for?",
-    answer: "eXtensible Markup Language",
+    difficulty: "easy",
+    stage: 2,
+    question: "What does CSS stand for?",
+    answer: "Cascading Style Sheets",
     options: [
-      "eXtensible Markup Language",
-      "eXecutable Multiple Language",
-      "eXTra Multi-Program Language",
-      "eXamine Multiple Language"
+      "Common Style Sheet",
+      "Colorful Style Sheet",
+      "Computer Style Sheet",
+      "Cascading Style Sheets",
     ],
-    explanation: "XML is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable."
+    explanation: "CSS describes how HTML elements are to be styled and presented on screen.",
   },
   {
+    id: "e2-2",
     numb: 6,
-    category: "Data Structures",
-    question: "What is the average time complexity of QuickSort?",
-    answer: "O(n log n)",
-    options: [
-      "O(n)",
-      "O(n log n)",
-      "O(n^2)",
-      "O(log n)"
-    ],
-    explanation: "QuickSort has an average time complexity of O(n log n) using divide-and-conquer partitioning."
+    category: "Python",
+    difficulty: "easy",
+    stage: 2,
+    question: "What is the correct file extension for standard Python script files?",
+    answer: ".py",
+    options: [".python", ".py", ".pyt", ".pt"],
+    explanation: "Python source files conventionally end with the '.py' extension.",
   },
   {
+    id: "e2-3",
     numb: 7,
     category: "Data Structures",
-    question: "Which data structure operates on a Last In First Out (LIFO) principle?",
-    answer: "Stack",
-    options: [
-      "Queue",
-      "Stack",
-      "Array",
-      "Linked List"
-    ],
-    explanation: "A Stack works on the LIFO principle where elements added last are popped first."
+    difficulty: "easy",
+    stage: 2,
+    question: "In standard zero-indexed programming languages, what is the index of the first array element?",
+    answer: "0",
+    options: ["0", "1", "-1", "null"],
+    explanation: "Zero-based indexing starts counting array elements at index 0.",
   },
   {
+    id: "e2-4",
     numb: 8,
+    category: "SQL & DB",
+    difficulty: "easy",
+    stage: 2,
+    question: "Which SQL keyword is used to eliminate duplicate rows from a query result?",
+    answer: "DISTINCT",
+    options: ["UNIQUE", "DISTINCT", "DIFFERENT", "SEPARATE"],
+    explanation: "The SELECT DISTINCT statement is used to return only distinct (different) values.",
+  },
+
+  // ==========================================
+  // EASY - STAGE 3 (Applied Basics)
+  // ==========================================
+  {
+    id: "e3-1",
+    numb: 9,
+    category: "General Web",
+    difficulty: "easy",
+    stage: 3,
+    question: "Which HTML element is used to insert a single line break?",
+    answer: "<br>",
+    options: ["<break>", "<lb>", "<br>", "<newline>"],
+    explanation: "The HTML <br> element produces a line break in text (carriage-return).",
+  },
+  {
+    id: "e3-2",
+    numb: 10,
     category: "Python",
-    question: "Which keyword is used to define a function in Python?",
-    answer: "def",
+    difficulty: "easy",
+    stage: 3,
+    question: "What is the output of `type(3.14)` in Python?",
+    codeSnippet: "print(type(3.14))",
+    answer: "<class 'float'>",
+    options: ["<class 'float'>", "<class 'int'>", "<class 'decimal'>", "<class 'number'>"],
+    explanation: "Numbers with a decimal point are instances of the built-in 'float' type in Python.",
+  },
+  {
+    id: "e3-3",
+    numb: 11,
+    category: "Data Structures",
+    difficulty: "easy",
+    stage: 3,
+    question: "Which data structure operates on a First In First Out (FIFO) principle?",
+    answer: "Queue",
+    options: ["Stack", "Queue", "Binary Tree", "Heap"],
+    explanation: "A Queue works on the FIFO principle where the first item inserted is processed first.",
+  },
+  {
+    id: "e3-4",
+    numb: 12,
+    category: "SQL & DB",
+    difficulty: "easy",
+    stage: 3,
+    question: "Which SQL query extracts all columns from the 'students' table?",
+    answer: "SELECT * FROM students;",
     options: [
-      "function",
-      "func",
-      "def",
-      "define"
+      "SELECT * FROM students;",
+      "EXTRACT ALL FROM students;",
+      "FETCH * FROM students;",
+      "GET ALL students;",
     ],
-    explanation: "In Python, the 'def' keyword introduces a function definition."
-  }
+    explanation: "The asterisk (*) wildcard in SQL selects all columns from the specified table.",
+  },
+
+  // ==========================================
+  // MEDIUM - STAGE 1 (Intermediate Logic)
+  // ==========================================
+  {
+    id: "m1-1",
+    numb: 13,
+    category: "General Web",
+    difficulty: "medium",
+    stage: 1,
+    question: "Which CSS Flexbox property aligns flex items along the cross axis?",
+    answer: "align-items",
+    options: ["justify-content", "align-items", "flex-direction", "align-content"],
+    explanation: "In CSS Flexbox, 'justify-content' aligns on the main axis while 'align-items' aligns on the cross axis.",
+  },
+  {
+    id: "m1-2",
+    numb: 14,
+    category: "Python",
+    difficulty: "medium",
+    stage: 1,
+    question: "What will be the output of this Python list comprehension?",
+    codeSnippet: "nums = [x * 2 for x in [1, 2, 3]]\nprint(nums)",
+    answer: "[2, 4, 6]",
+    options: ["[2, 4, 6]", "[1, 2, 3, 1, 2, 3]", "[2, 2, 2]", "[4, 4, 4]"],
+    explanation: "The comprehension iterates over 1, 2, and 3, multiplying each value by 2 to yield [2, 4, 6].",
+  },
+  {
+    id: "m1-3",
+    numb: 15,
+    category: "Data Structures",
+    difficulty: "medium",
+    stage: 1,
+    question: "What is the average time complexity of Binary Search on a sorted array of size n?",
+    answer: "O(log n)",
+    options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+    explanation: "Binary Search halves the search space at each comparison step, leading to logarithmic time O(log n).",
+  },
+  {
+    id: "m1-4",
+    numb: 16,
+    category: "SQL & DB",
+    difficulty: "medium",
+    stage: 1,
+    question: "Which SQL JOIN returns all rows from the left table and matched rows from the right table?",
+    answer: "LEFT JOIN",
+    options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"],
+    explanation: "A LEFT JOIN returns all records from the left table, and matching records from the right table (with NULLs if no match).",
+  },
+
+  // ==========================================
+  // MEDIUM - STAGE 2 (Practical Mechanics)
+  // ==========================================
+  {
+    id: "m2-1",
+    numb: 17,
+    category: "General Web",
+    difficulty: "medium",
+    stage: 2,
+    question: "In JavaScript, what does `typeof null` evaluate to due to a legacy ECMAScript design quirk?",
+    codeSnippet: "console.log(typeof null);",
+    answer: "object",
+    options: ["null", "undefined", "object", "boolean"],
+    explanation: "In the first implementation of JavaScript, values were stored in 32-bit units with type tags. Null was tagged 000 (object).",
+  },
+  {
+    id: "m2-2",
+    numb: 18,
+    category: "Python",
+    difficulty: "medium",
+    stage: 2,
+    question: "Which Python dictionary method retrieves a value with a fallback if the key is missing?",
+    answer: "dict.get(key, default)",
+    options: [
+      "dict.get(key, default)",
+      "dict.fetch(key, default)",
+      "dict.lookup(key, default)",
+      "dict.find(key, default)",
+    ],
+    explanation: "The `.get()` method returns the value for the key if present, or the optional default fallback without throwing a KeyError.",
+  },
+  {
+    id: "m2-3",
+    numb: 19,
+    category: "Data Structures",
+    difficulty: "medium",
+    stage: 2,
+    question: "What is the time complexity to insert a new node at the head of a Singly Linked List?",
+    answer: "O(1)",
+    options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
+    explanation: "Inserting at the head requires only updating the new node's next pointer and head pointer, taking constant O(1) time.",
+  },
+  {
+    id: "m2-4",
+    numb: 20,
+    category: "SQL & DB",
+    difficulty: "medium",
+    stage: 2,
+    question: "Which SQL aggregate function calculates the total number of non-null rows?",
+    answer: "COUNT()",
+    options: ["SUM()", "COUNT()", "TOTAL()", "TALLY()"],
+    explanation: "COUNT(column) counts the number of non-null values; COUNT(*) counts all matching rows in the table.",
+  },
+
+  // ==========================================
+  // MEDIUM - STAGE 3 (Applied Challenges)
+  // ==========================================
+  {
+    id: "m3-1",
+    numb: 21,
+    category: "General Web",
+    difficulty: "medium",
+    stage: 3,
+    question: "Which modern JavaScript method is standard for attaching event listeners to DOM elements?",
+    answer: "addEventListener()",
+    options: [
+      "addEventListener()",
+      "attachEvent()",
+      "bindEvent()",
+      "onEvent()",
+    ],
+    explanation: "'addEventListener()' allows multiple event handlers to be attached to an event target without overriding existing ones.",
+  },
+  {
+    id: "m3-2",
+    numb: 22,
+    category: "Python",
+    difficulty: "medium",
+    stage: 3,
+    question: "What is the truth value result of `bool([])` and `bool([0])` in Python?",
+    codeSnippet: "print(bool([]), bool([0]))",
+    answer: "False and True",
+    options: [
+      "False and True",
+      "False and False",
+      "True and True",
+      "True and False",
+    ],
+    explanation: "Empty collections evaluate to False (falsy), whereas a non-empty list containing element 0 evaluates to True (truthy).",
+  },
+  {
+    id: "m3-3",
+    numb: 23,
+    category: "Data Structures",
+    difficulty: "medium",
+    stage: 3,
+    question: "What is the average time complexity for key lookup in a well-distributed Hash Table?",
+    answer: "O(1)",
+    options: ["O(1)", "O(log n)", "O(n)", "O(n^2)"],
+    explanation: "With a uniform hash function and low load factor, average search, insert, and delete take O(1) constant time.",
+  },
+  {
+    id: "m3-4",
+    numb: 24,
+    category: "SQL & DB",
+    difficulty: "medium",
+    stage: 3,
+    question: "Which SQL clause is used to filter groups of records created by the GROUP BY clause?",
+    answer: "HAVING",
+    options: ["WHERE", "HAVING", "FILTER", "RESTRICT"],
+    explanation: "WHERE filters rows before grouping; HAVING filters aggregated groups after the GROUP BY clause has executed.",
+  },
+
+  // ==========================================
+  // HARD - STAGE 1 (Deep Concepts & Internals)
+  // ==========================================
+  {
+    id: "h1-1",
+    numb: 25,
+    category: "General Web",
+    difficulty: "hard",
+    stage: 1,
+    question: "In the JavaScript Event Loop, which queue executes immediately after the current call stack clears, before macrotasks?",
+    answer: "Microtask Queue (Promises, queueMicrotask)",
+    options: [
+      "Microtask Queue (Promises, queueMicrotask)",
+      "Macrotask Queue (setTimeout, setInterval)",
+      "Render Frame Pipeline",
+      "I/O Polling Queue",
+    ],
+    explanation: "Microtasks (resolved Promise callbacks, queueMicrotask, MutationObserver) are processed immediately after the current script run until the microtask queue is empty.",
+  },
+  {
+    id: "h1-2",
+    numb: 26,
+    category: "Python",
+    difficulty: "hard",
+    stage: 1,
+    question: "What does a Python function return when invoked if it contains the `yield` keyword?",
+    codeSnippet: "def count_up():\n    yield 1\n    yield 2\n\nc = count_up()\nprint(type(c))",
+    answer: "A Generator object",
+    options: ["A Generator object", "A List", "A Tuple", "None"],
+    explanation: "Functions containing 'yield' return a generator iterator object that yields values on demand via next() or in a loop.",
+  },
+  {
+    id: "h1-3",
+    numb: 27,
+    category: "Data Structures",
+    difficulty: "hard",
+    stage: 1,
+    question: "What is the worst-case time complexity of standard QuickSort without randomized pivot on an already sorted array?",
+    answer: "O(n^2)",
+    options: ["O(n^2)", "O(n log n)", "O(n)", "O(log n)"],
+    explanation: "When picking the first or last element as pivot on a sorted array, the partitions are unbalanced (size 0 and n-1), resulting in O(n^2) runtime.",
+  },
+  {
+    id: "h1-4",
+    numb: 28,
+    category: "SQL & DB",
+    difficulty: "hard",
+    stage: 1,
+    question: "In database transaction ACID properties, what does 'I' stand for?",
+    answer: "Isolation",
+    options: ["Isolation", "Integrity", "Indexing", "Immutability"],
+    explanation: "ACID stands for Atomicity, Consistency, Isolation, and Durability. Isolation ensures concurrent transactions don't interfere.",
+  },
+
+  // ==========================================
+  // HARD - STAGE 2 (Optimization & Architecture)
+  // ==========================================
+  {
+    id: "h2-1",
+    numb: 29,
+    category: "General Web",
+    difficulty: "hard",
+    stage: 2,
+    question: "In JavaScript, what mechanism allows an inner function to retain access to variables from its outer lexical scope after the outer function finishes?",
+    answer: "Closure",
+    options: ["Closure", "Hoisting", "Prototype Chaining", "Event Bubbling"],
+    explanation: "A closure is the combination of a function bundled together with references to its surrounding state (lexical environment).",
+  },
+  {
+    id: "h2-2",
+    numb: 30,
+    category: "Python",
+    difficulty: "hard",
+    stage: 2,
+    question: "What is the primary role of `@functools.wraps` when writing custom Python decorators?",
+    codeSnippet: "import functools\ndef my_dec(fn):\n    @functools.wraps(fn)\n    def wrapper(*args, **kwargs):\n        return fn(*args, **kwargs)\n    return wrapper",
+    answer: "Preserves the decorated function's original name and docstring metadata",
+    options: [
+      "Preserves the decorated function's original name and docstring metadata",
+      "Executes the decorated function asynchronously",
+      "Automatically memoizes returned outputs in memory",
+      "Enforces strict runtime type verification",
+    ],
+    explanation: "@functools.wraps copies the original function's attributes (__name__, __doc__, __module__) to the wrapper.",
+  },
+  {
+    id: "h2-3",
+    numb: 31,
+    category: "Data Structures",
+    difficulty: "hard",
+    stage: 2,
+    question: "Which self-balancing binary search tree strictly maintains a balance factor difference of at most 1 between left and right subtree heights?",
+    answer: "AVL Tree",
+    options: ["AVL Tree", "Binary Heap", "B-Tree", "Trie"],
+    explanation: "An AVL Tree strictly requires that for every node, the height difference (balance factor) between left and right subtrees is -1, 0, or +1.",
+  },
+  {
+    id: "h2-4",
+    numb: 32,
+    category: "SQL & DB",
+    difficulty: "hard",
+    stage: 2,
+    question: "Which database index structure is most widely used by RDBMS engines (PostgreSQL, MySQL InnoDB) for efficient range scans and sorting?",
+    answer: "B+ Tree",
+    options: ["B+ Tree", "Hash Index", "Inverted Index", "Bitmap Index"],
+    explanation: "B+ Trees store all records/pointers in linked leaf nodes, making range queries, inequality scans, and sorted traversals extremely efficient.",
+  },
+
+  // ==========================================
+  // HARD - STAGE 3 (Mastery Arena)
+  // ==========================================
+  {
+    id: "h3-1",
+    numb: 33,
+    category: "General Web",
+    difficulty: "hard",
+    stage: 3,
+    question: "Which CSS property can trigger hardware GPU acceleration and create an isolated stacking context?",
+    answer: "transform: translateZ(0) / will-change: transform",
+    options: [
+      "transform: translateZ(0) / will-change: transform",
+      "display: block",
+      "position: static",
+      "box-sizing: border-box",
+    ],
+    explanation: "3D transforms or 'will-change' hint the browser engine to promote the element to its own composite GPU layer.",
+  },
+  {
+    id: "h3-2",
+    numb: 34,
+    category: "Python",
+    difficulty: "hard",
+    stage: 3,
+    question: "What is the Global Interpreter Lock (GIL) in standard CPython?",
+    answer: "A mutex that allows only one native thread to execute Python bytecode at a time",
+    options: [
+      "A mutex that allows only one native thread to execute Python bytecode at a time",
+      "A garbage collection safety lock for circular references",
+      "A security sandbox preventing arbitrary memory access",
+      "A file-system lock on open file descriptors",
+    ],
+    explanation: "CPython's GIL is a mutual-exclusion lock preventing multi-threading from executing Python bytecode simultaneously across multiple CPU cores.",
+  },
+  {
+    id: "h3-3",
+    numb: 35,
+    category: "Data Structures",
+    difficulty: "hard",
+    stage: 3,
+    question: "Which graph algorithm finds the shortest path from a source node in a weighted graph with non-negative edge weights in O((V + E) log V)?",
+    answer: "Dijkstra's Algorithm",
+    options: [
+      "Dijkstra's Algorithm",
+      "Prim's Minimum Spanning Tree",
+      "Kruskal's Algorithm",
+      "Floyd-Warshall Algorithm",
+    ],
+    explanation: "Dijkstra's algorithm uses a min-priority queue to greedily discover the shortest path in non-negative weighted graphs.",
+  },
+  {
+    id: "h3-4",
+    numb: 36,
+    category: "SQL & DB",
+    difficulty: "hard",
+    stage: 3,
+    question: "In database isolation levels, which level guarantees complete isolation from Dirty Reads, Non-Repeatable Reads, and Phantom Reads?",
+    answer: "SERIALIZABLE",
+    options: [
+      "SERIALIZABLE",
+      "REPEATABLE READ",
+      "READ COMMITTED",
+      "READ UNCOMMITTED",
+    ],
+    explanation: "SERIALIZABLE is the strictest ANSI SQL isolation level, emulating serial transaction execution and preventing phantom rows.",
+  },
 ];

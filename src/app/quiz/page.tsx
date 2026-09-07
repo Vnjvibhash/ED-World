@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import {
@@ -13,34 +13,134 @@ import {
   XCircle,
   Sparkles,
   ArrowRight,
-  Filter
+  Filter,
+  Flame,
+  Zap,
+  ChevronRight,
+  Trophy,
+  Target,
+  Code2,
+  Layers,
+  ChevronDown,
+  ChevronUp,
+  AlertCircle,
+  Play,
+  Share2,
 } from "lucide-react";
-import { quizQuestions, quizCategories, QuizQuestion } from "@/data/quizQuestions";
+import {
+  quizQuestions,
+  quizCategories,
+  QuizQuestion,
+  QuizDifficulty,
+  QuizStageNumber,
+  difficultyMeta,
+  stageNames,
+} from "@/data/quizQuestions";
 
-const TIME_PER_QUESTION = 15;
+interface QuestionResult {
+  question: QuizQuestion;
+  userAnswer: string | null;
+  isCorrect: boolean;
+  timeSpent: number;
+}
 
 export default function QuizPage() {
-  const [gameState, setGameState] = useState<"intro" | "playing" | "finished">("intro");
+  // Game states:
+  // "intro": Setup & selection lobby
+  // "playing": Active question
+  // "stage_transition": Interstitial celebration when a stage is cleared
+  // "finished": Final results and analysis
+  const [gameState, setGameState] = useState<
+    "intro" | "playing" | "stage_transition" | "finished"
+  >("intro");
+
+  // Selection configurations
+  const [selectedDifficulty, setSelectedDifficulty] = useState<QuizDifficulty | "all">("easy");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [activeQuestions, setActiveQuestions] = useState<QuizQuestion[]>(quizQuestions);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [stageMode, setStageMode] = useState<"all_stages" | "single_stage">("all_stages");
+  const [singleStageChoice, setSingleStageChoice] = useState<QuizStageNumber>(1);
+
+  // Active runtime state
+  const [currentStage, setCurrentStage] = useState<QuizStageNumber>(1);
+  const [stageQuestions, setStageQuestions] = useState<QuizQuestion[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
 
+  // Scoring & Stats
+  const [score, setScore] = useState(0);
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [maxStreak, setMaxStreak] = useState(0);
+  const [questionResults, setQuestionResults] = useState<QuestionResult[]>([]);
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  // Dynamic timer configuration based on active question difficulty
+  const activeDifficulty = useMemo<QuizDifficulty>(() => {
+    if (selectedDifficulty !== "all") return selectedDifficulty;
+    // In "all" gauntlet: Stage 1 is Easy, Stage 2 is Medium, Stage 3 is Hard
+    if (currentStage === 1) return "easy";
+    if (currentStage === 2) return "medium";
+    return "hard";
+  }, [selectedDifficulty, currentStage]);
+
+  const timeLimit = difficultyMeta[activeDifficulty].timerSeconds;
+  const [timeLeft, setTimeLeft] = useState<number>(timeLimit);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Filter questions on category change
-  useEffect(() => {
-    if (selectedCategory === "All") {
-      setActiveQuestions(quizQuestions);
-    } else {
-      setActiveQuestions(quizQuestions.filter((q) => q.category === selectedCategory));
-    }
-  }, [selectedCategory]);
+  // Filter available questions based on selections
+  const getFilteredQuestionsForStage = (stageNum: QuizStageNumber): QuizQuestion[] => {
+    return quizQuestions.filter((q) => {
+      // Difficulty match
+      if (selectedDifficulty !== "all" && q.difficulty !== selectedDifficulty) {
+        return false;
+      }
+      // If "all" gauntlet mode, each stage corresponds to its native difficulty
+      if (selectedDifficulty === "all") {
+        const targetDiff: QuizDifficulty =
+          stageNum === 1 ? "easy" : stageNum === 2 ? "medium" : "hard";
+        if (q.difficulty !== targetDiff) return false;
+      }
 
-  // Handle countdown timer during game
+      // Stage match
+      if (q.stage !== stageNum) return false;
+
+      // Category match
+      if (selectedCategory !== "All" && q.category !== selectedCategory) {
+        return false;
+      }
+
+      return true;
+    });
+  };
+
+  // Start the entire Quiz session
+  const startQuiz = () => {
+    const initialStage: QuizStageNumber =
+      stageMode === "single_stage" ? singleStageChoice : 1;
+
+    const initialQs = getFilteredQuestionsForStage(initialStage);
+    if (initialQs.length === 0) {
+      alert("No questions found matching your filter criteria. Try selecting 'All' categories.");
+      return;
+    }
+
+    setCurrentStage(initialStage);
+    setStageQuestions(initialQs);
+    setCurrentQuestionIndex(0);
+    setSelectedOption(null);
+    setIsAnswered(false);
+    setScore(0);
+    setTotalPoints(0);
+    setStreak(0);
+    setMaxStreak(0);
+    setQuestionResults([]);
+    setTimeLeft(difficultyMeta[activeDifficulty].timerSeconds);
+    setGameState("playing");
+  };
+
+  // Handle countdown timer
   useEffect(() => {
     if (gameState === "playing" && !isAnswered) {
       if (timeLeft > 0) {
@@ -48,8 +148,8 @@ export default function QuizPage() {
           setTimeLeft((prev) => prev - 1);
         }, 1000);
       } else {
-        // Time ran out!
-        setIsAnswered(true);
+        // Time expired for this question
+        handleTimeOut();
       }
     }
 
@@ -58,280 +158,920 @@ export default function QuizPage() {
     };
   }, [gameState, isAnswered, timeLeft]);
 
-  const startQuiz = () => {
-    setCurrentIndex(0);
-    setScore(0);
+  // When time runs out
+  const handleTimeOut = () => {
+    if (isAnswered) return;
+    setIsAnswered(true);
     setSelectedOption(null);
-    setIsAnswered(false);
-    setTimeLeft(TIME_PER_QUESTION);
-    setGameState("playing");
+    setStreak(0);
+
+    const currentQ = stageQuestions[currentQuestionIndex];
+    if (currentQ) {
+      setQuestionResults((prev) => [
+        ...prev,
+        {
+          question: currentQ,
+          userAnswer: null,
+          isCorrect: false,
+          timeSpent: timeLimit,
+        },
+      ]);
+    }
   };
 
+  // Option selection
   const handleSelectOption = (option: string) => {
     if (isAnswered) return;
     setSelectedOption(option);
     setIsAnswered(true);
 
-    const currentQ = activeQuestions[currentIndex];
-    if (option === currentQ.answer) {
+    const currentQ = stageQuestions[currentQuestionIndex];
+    const isCorrect = option === currentQ.answer;
+
+    if (isCorrect) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      if (newStreak > maxStreak) setMaxStreak(newStreak);
+
       setScore((prev) => prev + 1);
+
+      // Point calculation: base point * difficulty multiplier + streak bonus + time speed bonus
+      const basePoints = difficultyMeta[currentQ.difficulty].pointValue;
+      const speedBonus = Math.round((timeLeft / timeLimit) * 50);
+      const streakBonus = Math.min(newStreak * 20, 100);
+      setTotalPoints((prev) => prev + basePoints + speedBonus + streakBonus);
+    } else {
+      setStreak(0);
     }
+
+    setQuestionResults((prev) => [
+      ...prev,
+      {
+        question: currentQ,
+        userAnswer: option,
+        isCorrect,
+        timeSpent: timeLimit - timeLeft,
+      },
+    ]);
   };
 
-  const handleNextQuestion = () => {
-    if (currentIndex + 1 < activeQuestions.length) {
-      setCurrentIndex((prev) => prev + 1);
+  // Progress to next question or trigger stage transition / finish
+  const handleNext = () => {
+    const isLastQuestionInStage = currentQuestionIndex + 1 >= stageQuestions.length;
+
+    if (!isLastQuestionInStage) {
+      // Proceed to next question in current stage
+      const nextIdx = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIdx);
       setSelectedOption(null);
       setIsAnswered(false);
-      setTimeLeft(TIME_PER_QUESTION);
+      const nextQ = stageQuestions[nextIdx];
+      setTimeLeft(difficultyMeta[nextQ.difficulty].timerSeconds);
     } else {
-      setGameState("finished");
-      // Trigger Confetti!
-      try {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
-      } catch {
-        // Confetti fallback
+      // Last question in current stage reached!
+      const canAdvanceStage = stageMode === "all_stages" && currentStage < 3;
+
+      if (canAdvanceStage) {
+        // Trigger celebratory stage transition interstitial
+        try {
+          confetti({
+            particleCount: 60,
+            spread: 55,
+            origin: { y: 0.6 },
+          });
+        } catch {}
+        setGameState("stage_transition");
+      } else {
+        // Finished all stages or completed chosen single stage
+        try {
+          confetti({
+            particleCount: 120,
+            spread: 80,
+            origin: { y: 0.5 },
+          });
+        } catch {}
+        setGameState("finished");
       }
     }
   };
 
-  const currentQ = activeQuestions[currentIndex] || activeQuestions[0];
-  const timerPercentage = (timeLeft / TIME_PER_QUESTION) * 100;
+  // Advance from Stage Transition to the Next Stage
+  const proceedToNextStage = () => {
+    const nextStageNum = (currentStage + 1) as QuizStageNumber;
+    const nextQuestions = getFilteredQuestionsForStage(nextStageNum);
+
+    if (nextQuestions.length === 0) {
+      // If no questions in next stage, conclude quiz
+      setGameState("finished");
+      return;
+    }
+
+    setCurrentStage(nextStageNum);
+    setStageQuestions(nextQuestions);
+    setCurrentQuestionIndex(0);
+    setSelectedOption(null);
+    setIsAnswered(false);
+
+    // Determine time for first question in new stage
+    const nextDiff =
+      selectedDifficulty === "all"
+        ? nextStageNum === 2
+          ? "medium"
+          : "hard"
+        : selectedDifficulty;
+    setTimeLeft(difficultyMeta[nextDiff].timerSeconds);
+    setGameState("playing");
+  };
+
+  const currentQ = stageQuestions[currentQuestionIndex];
+  const timerPercentage = Math.max(0, (timeLeft / timeLimit) * 100);
+
+  // Stage accuracy calculations for transition & finish
+  const stageStats = useMemo(() => {
+    const stats: Record<QuizStageNumber, { total: number; correct: number }> = {
+      1: { total: 0, correct: 0 },
+      2: { total: 0, correct: 0 },
+      3: { total: 0, correct: 0 },
+    };
+
+    questionResults.forEach((r) => {
+      const s = r.question.stage;
+      stats[s].total += 1;
+      if (r.isCorrect) stats[s].correct += 1;
+    });
+
+    return stats;
+  }, [questionResults]);
+
+  // Overall accuracy
+  const totalQuestionsAnswered = questionResults.length;
+  const overallAccuracy =
+    totalQuestionsAnswered > 0 ? Math.round((score / totalQuestionsAnswered) * 100) : 0;
+
+  // Mastery Rank Badge
+  const masteryRank = useMemo(() => {
+    if (totalQuestionsAnswered === 0) return { title: "Apprentice", icon: "🌱", color: "text-slate-600" };
+    if (overallAccuracy >= 90) return { title: "Grandmaster Architect", icon: "👑", color: "text-amber-500" };
+    if (overallAccuracy >= 75) return { title: "Senior Code Crafter", icon: "🥇", color: "text-emerald-500" };
+    if (overallAccuracy >= 50) return { title: "Skilled Practitioner", icon: "🥈", color: "text-blue-500" };
+    return { title: "Rising Apprentice", icon: "🥉", color: "text-slate-500" };
+  }, [overallAccuracy, totalQuestionsAnswered]);
+
+  const handleShare = () => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(
+        `I scored ${score}/${totalQuestionsAnswered} (${overallAccuracy}%) with ${totalPoints} pts on Student World Interactive Quiz! Try it: ${window.location.href}`
+      );
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-100/60 to-slate-50 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header Breadcrumb */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-50 border border-accent-200 text-accent-600 text-xs font-bold uppercase tracking-wider mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-accent-500" />
-            <span>Interactive Assessment</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Student World <span className="text-accent-500">Interactive Quiz</span>
-          </h1>
-          <p className="text-slate-600 mt-2 text-sm sm:text-base">
-            Test your computer science, web technologies, and programming knowledge with live countdowns.
-          </p>
-        </div>
-
-        {/* 1. INTRO / RULES SCREEN */}
+        {/* ============================================================
+            1. INTRO / LOBBY SCREEN (Difficulty & Stage Selection)
+           ============================================================ */}
         {gameState === "intro" && (
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <HelpCircle className="w-6 h-6 text-accent-500" />
-                <span>Quiz Rules &amp; Guidelines</span>
-              </h2>
+          <div className="space-y-8 animate-in fade-in duration-300">
+            {/* Header Title Banner */}
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold uppercase tracking-wider shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-accent-500" />
+                <span>Multi-Tier Interactive Assessment</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+                Master Computer Science <br />
+                <span className="bg-gradient-to-r from-brand-600 via-accent-500 to-amber-500 bg-clip-text text-transparent">
+                  Stage by Stage
+                </span>
+              </h1>
+              <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
+                Select your preferred challenge tier or conquer all 3 progressive stages with dynamic time limits, live streaks, and real-time feedback.
+              </p>
+            </div>
 
-              {/* Category Filter */}
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-slate-400" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl px-3 py-2 outline-none focus:border-accent-500"
+            {/* Main Selection Card */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/40 space-y-8">
+              {/* STEP 1: Select Difficulty Option */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-brand-600 text-white text-xs font-bold flex items-center justify-center">
+                      1
+                    </span>
+                    <h3 className="text-base font-bold text-slate-900">
+                      Choose Your Challenge Difficulty
+                    </h3>
+                  </div>
+                  <span className="text-xs text-slate-500 font-medium">
+                    Questions scale in complexity
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {(["easy", "medium", "hard"] as QuizDifficulty[]).map((diff) => {
+                    const meta = difficultyMeta[diff];
+                    const isSelected = selectedDifficulty === diff;
+
+                    return (
+                      <button
+                        key={diff}
+                        type="button"
+                        onClick={() => setSelectedDifficulty(diff)}
+                        className={`relative p-5 rounded-2xl border-2 text-left transition-all cursor-pointer group ${
+                          isSelected
+                            ? `border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/15 ring-2 ring-slate-900/10 scale-[1.02]`
+                            : `border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/70 text-slate-800`
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-2xl">{meta.icon}</span>
+                          <span
+                            className={`text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                              isSelected
+                                ? "bg-white/20 text-white"
+                                : `${meta.bgLight} ${meta.textLight}`
+                            }`}
+                          >
+                            {meta.timerSeconds}s / Question
+                          </span>
+                        </div>
+                        <h4 className="font-bold text-lg mb-1">{meta.label}</h4>
+                        <p
+                          className={`text-xs leading-relaxed ${
+                            isSelected ? "text-slate-300" : "text-slate-500"
+                          }`}
+                        >
+                          {meta.desc}
+                        </p>
+                        <div className="mt-4 pt-3 border-t border-slate-200/20 flex items-center justify-between text-[11px] font-semibold">
+                          <span className={isSelected ? "text-accent-400" : "text-slate-600"}>
+                            +{meta.pointValue} pts / answer
+                          </span>
+                          <span className={isSelected ? "text-slate-300" : "text-slate-400"}>
+                            3 Stages
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Optional "All Stages Gauntlet" option */}
+                <div
+                  onClick={() => setSelectedDifficulty("all")}
+                  className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-4 ${
+                    selectedDifficulty === "all"
+                      ? "border-amber-500 bg-gradient-to-r from-amber-500/10 via-brand-500/10 to-purple-500/10 ring-2 ring-amber-400/20 shadow-sm"
+                      : "border-slate-200 bg-slate-50/50 hover:bg-slate-100/70"
+                  }`}
                 >
-                  {quizCategories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat} ({cat === "All" ? quizQuestions.length : quizQuestions.filter((q) => q.category === cat).length} Qs)
-                    </option>
-                  ))}
-                </select>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white text-lg shadow-sm">
+                      ⚡
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-sm text-slate-900">
+                          All-Stages Gauntlet (Progressive Journey)
+                        </span>
+                        <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200">
+                          Recommended
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500">
+                        Start at Stage 1 (Easy), climb to Stage 2 (Medium), and conquer Stage 3 (Hard) continuously!
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                      selectedDifficulty === "all"
+                        ? "border-amber-500 bg-amber-500 text-white"
+                        : "border-slate-300"
+                    }`}
+                  >
+                    {selectedDifficulty === "all" && <CheckCircle2 className="w-3.5 h-3.5" />}
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-3.5 text-sm text-slate-700">
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="font-bold text-accent-600">1.</span>
-                <span>You will have only <strong className="text-accent-600">15 seconds</strong> per question.</span>
-              </div>
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="font-bold text-accent-600">2.</span>
-                <span>Once you select your answer, it cannot be undone.</span>
-              </div>
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="font-bold text-accent-600">3.</span>
-                <span>You cannot select any option once the 15-second timer runs out.</span>
-              </div>
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="font-bold text-accent-600">4.</span>
-                <span>Points are awarded based on accuracy and speed.</span>
-              </div>
-            </div>
+              {/* STEP 2: Stage Mode & Category Settings */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+                {/* Stage Progression Mode */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-brand-600 text-white text-xs font-bold flex items-center justify-center">
+                      2
+                    </span>
+                    <h3 className="text-sm font-bold text-slate-900">
+                      Stage Progression Mode
+                    </h3>
+                  </div>
 
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-slate-100">
-              <Link
-                href="/"
-                className="w-full sm:w-auto px-6 py-3 rounded-xl text-center text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors"
-              >
-                Back to Home
-              </Link>
-              <button
-                onClick={startQuiz}
-                className="w-full sm:w-auto px-8 py-3 rounded-xl text-center text-sm font-semibold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-md shadow-accent-500/25 glow-hover transition-all"
-              >
-                Start Quiz Now →
-              </button>
+                  <div className="flex rounded-xl bg-slate-100 p-1">
+                    <button
+                      type="button"
+                      onClick={() => setStageMode("all_stages")}
+                      className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                        stageMode === "all_stages"
+                          ? "bg-white text-slate-900 shadow-xs"
+                          : "text-slate-600 hover:text-slate-900"
+                      }`}
+                    >
+                      All 3 Stages (1 &rarr; 2 &rarr; 3)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStageMode("single_stage")}
+                      className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                        stageMode === "single_stage"
+                          ? "bg-white text-slate-900 shadow-xs"
+                          : "text-slate-600 hover:text-slate-900"
+                      }`}
+                    >
+                      Specific Stage Only
+                    </button>
+                  </div>
+
+                  {stageMode === "single_stage" && (
+                    <div className="pt-2 flex items-center gap-2">
+                      <span className="text-xs font-semibold text-slate-600">Choose Stage:</span>
+                      {([1, 2, 3] as QuizStageNumber[]).map((stg) => (
+                        <button
+                          key={stg}
+                          type="button"
+                          onClick={() => setSingleStageChoice(stg)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                            singleStageChoice === stg
+                              ? "bg-brand-600 text-white shadow-xs"
+                              : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                          }`}
+                        >
+                          Stage {stg}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Subject Category Filter */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-brand-600 text-white text-xs font-bold flex items-center justify-center">
+                      3
+                    </span>
+                    <h3 className="text-sm font-bold text-slate-900">
+                      Subject Category Filter
+                    </h3>
+                  </div>
+
+                  <div className="relative">
+                    <Filter className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                    <select
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl pl-9 pr-4 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 font-semibold cursor-pointer"
+                    >
+                      {quizCategories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <p className="text-[11px] text-slate-500">
+                    Filter to Web Dev, Python, Data Structures & Algorithms, or SQL Databases.
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <Link
+                  href="/"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-center text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                >
+                  &larr; Back to Home
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={startQuiz}
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-brand-600 via-accent-500 to-amber-500 hover:opacity-95 shadow-lg shadow-brand-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Start Challenge Now</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        {/* 2. PLAYING SCREEN */}
+        {/* ============================================================
+            2. PLAYING SCREEN (Active Question & Live Stepper)
+           ============================================================ */}
         {gameState === "playing" && currentQ && (
-          <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-            {/* Top Bar with Timer */}
-            <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-              <div>
-                <span className="text-xs uppercase font-bold tracking-wider text-accent-600">
-                  {currentQ.category}
-                </span>
-                <div className="text-sm font-semibold text-slate-900">Awesome Quiz Challenge</div>
-              </div>
-
-              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-sm font-mono font-bold shadow-sm">
-                <Clock className={`w-4 h-4 ${timeLeft <= 5 ? "text-red-500 animate-pulse" : "text-accent-500"}`} />
-                <span className={timeLeft <= 5 ? "text-red-500 font-bold" : "text-slate-900"}>
-                  {timeLeft < 10 ? `0${timeLeft}` : timeLeft}s
-                </span>
-              </div>
-            </div>
-
-            {/* Timer Progress Bar */}
-            <div className="w-full h-1.5 bg-slate-100">
-              <div
-                className={`h-full transition-all duration-1000 ${
-                  timeLeft <= 5 ? "bg-red-500" : "bg-gradient-to-r from-brand-500 to-accent-500"
-                }`}
-                style={{ width: `${timerPercentage}%` }}
-              />
-            </div>
-
-            {/* Question Text */}
-            <div className="p-6 sm:p-8 space-y-6">
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
-                {currentIndex + 1}. {currentQ.question}
-              </h3>
-
-              {/* Options Grid */}
-              <div className="grid grid-cols-1 gap-3">
-                {currentQ.options.map((option, idx) => {
-                  const isCorrect = option === currentQ.answer;
-                  const isUserPick = option === selectedOption;
-
-                  let optionStyle = "bg-slate-50 border-slate-200 text-slate-800 hover:border-accent-500 hover:bg-accent-50/40";
-
-                  if (isAnswered) {
-                    if (isCorrect) {
-                      optionStyle = "bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold";
-                    } else if (isUserPick) {
-                      optionStyle = "bg-red-50 border-red-500 text-red-800 font-semibold";
-                    } else {
-                      optionStyle = "bg-slate-50/50 border-slate-200 text-slate-400 opacity-60";
-                    }
-                  }
+          <div className="space-y-6 animate-in fade-in duration-200">
+            {/* Top Stage Progression Bar */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              {/* Stages Stepper */}
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                {([1, 2, 3] as QuizStageNumber[]).map((stg) => {
+                  const isCurrent = currentStage === stg;
+                  const isCompleted = currentStage > stg;
 
                   return (
-                    <button
-                      key={idx}
-                      onClick={() => handleSelectOption(option)}
-                      disabled={isAnswered}
-                      className={`w-full p-4 rounded-2xl border text-left text-sm sm:text-base flex items-center justify-between transition-all ${optionStyle}`}
+                    <div
+                      key={stg}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                        isCurrent
+                          ? "bg-brand-600 text-white shadow-md shadow-brand-600/20 ring-2 ring-brand-600/20"
+                          : isCompleted
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          : "bg-slate-100 text-slate-400 opacity-70"
+                      }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-lg bg-white border border-slate-200 flex items-center justify-center font-bold text-xs text-slate-700 shadow-sm">
-                          {String.fromCharCode(65 + idx)}
+                      {isCompleted ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      ) : (
+                        <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">
+                          {stg}
                         </span>
-                        <span>{option}</span>
-                      </div>
-
-                      {isAnswered && isCorrect && (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                       )}
-                      {isAnswered && isUserPick && !isCorrect && (
-                        <XCircle className="w-5 h-5 text-red-500 shrink-0" />
-                      )}
-                    </button>
+                      <span>Stage {stg}</span>
+                    </div>
                   );
                 })}
               </div>
 
-              {/* Explanation note when answered */}
-              {isAnswered && currentQ.explanation && (
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
-                  <strong className="text-accent-600">Explanation: </strong> {currentQ.explanation}
+              {/* Current Stage Title & Streak */}
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                {streak >= 2 && (
+                  <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 text-white text-xs font-black shadow-sm animate-streak">
+                    <Flame className="w-3.5 h-3.5 fill-white" />
+                    <span>{streak}x Combo!</span>
+                  </div>
+                )}
+
+                <div className="text-right">
+                  <div className="text-xs font-bold text-slate-500">Live Score</div>
+                  <div className="text-sm font-black text-brand-600 font-mono">
+                    {totalPoints} pts
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
 
-            {/* Footer with Question Progress & Next Button */}
-            <div className="px-6 sm:px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-600">
-                Question <strong className="text-slate-900">{currentIndex + 1}</strong> of <strong className="text-slate-900">{activeQuestions.length}</strong>
-              </span>
+            {/* Quiz Question Card */}
+            <div className="quiz-card border border-slate-200/80 shadow-xl">
+              {/* Question Header */}
+              <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`text-[11px] font-black uppercase px-2.5 py-1 rounded-full ${
+                      difficultyMeta[currentQ.difficulty].bgLight
+                    } ${difficultyMeta[currentQ.difficulty].textLight} border ${
+                      difficultyMeta[currentQ.difficulty].borderLight
+                    }`}
+                  >
+                    {difficultyMeta[currentQ.difficulty].icon} {difficultyMeta[currentQ.difficulty].label}
+                  </span>
+                  <span className="text-xs text-slate-400 font-bold">•</span>
+                  <span className="text-xs font-bold text-slate-700">
+                    {currentQ.category}
+                  </span>
+                </div>
 
-              {isAnswered ? (
-                <button
-                  onClick={handleNextQuestion}
-                  className="px-6 py-2.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 shadow-sm transition-all flex items-center gap-1.5"
+                {/* Countdown Timer */}
+                <div
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-xs font-bold transition-colors ${
+                    timeLeft <= 5
+                      ? "bg-rose-100 text-rose-700 border border-rose-200 animate-pulse"
+                      : "bg-white text-slate-800 border border-slate-200 shadow-xs"
+                  }`}
                 >
-                  <span>{currentIndex + 1 === activeQuestions.length ? "Finish Quiz" : "Next Question"}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <Clock className={`w-3.5 h-3.5 ${timeLeft <= 5 ? "text-rose-600" : "text-brand-600"}`} />
+                  <span>{timeLeft < 10 ? `0${timeLeft}` : timeLeft}s</span>
+                </div>
+              </div>
+
+              {/* Timer Progress Bar */}
+              <div className="w-full h-1.5 bg-slate-100">
+                <div
+                  className={`h-full transition-all duration-1000 ${
+                    timeLeft <= 5
+                      ? "bg-rose-500"
+                      : currentQ.difficulty === "easy"
+                      ? "bg-emerald-500"
+                      : currentQ.difficulty === "medium"
+                      ? "bg-amber-500"
+                      : "bg-rose-500"
+                  }`}
+                  style={{ width: `${timerPercentage}%` }}
+                />
+              </div>
+
+              {/* Question Body */}
+              <div className="p-6 sm:p-8 space-y-6">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Question {currentQuestionIndex + 1} of {stageQuestions.length}
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 mt-1 leading-snug">
+                    {currentQ.question}
+                  </h3>
+                </div>
+
+                {/* Code Snippet Box if available */}
+                {currentQ.codeSnippet && (
+                  <pre className="quiz-code-box">
+                    <code>{currentQ.codeSnippet}</code>
+                  </pre>
+                )}
+
+                {/* Options List */}
+                <div className="grid grid-cols-1 gap-3">
+                  {currentQ.options.map((option, idx) => {
+                    const isCorrect = option === currentQ.answer;
+                    const isUserPick = option === selectedOption;
+
+                    let optionClasses = "quiz-option-btn";
+                    if (isAnswered) {
+                      if (isCorrect) {
+                        optionClasses += " correct";
+                      } else if (isUserPick) {
+                        optionClasses += " incorrect";
+                      } else {
+                        optionClasses += " dimmed";
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => handleSelectOption(option)}
+                        disabled={isAnswered}
+                        className={`${optionClasses} cursor-pointer`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center shrink-0">
+                            {String.fromCharCode(65 + idx)}
+                          </span>
+                          <span className="text-sm sm:text-base font-medium">{option}</span>
+                        </div>
+
+                        {isAnswered && isCorrect && (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                        )}
+                        {isAnswered && isUserPick && !isCorrect && (
+                          <XCircle className="w-5 h-5 text-rose-500 shrink-0" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Time Out Notice */}
+                {isAnswered && !selectedOption && (
+                  <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs font-semibold text-rose-700 flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
+                    <span>Time ran out for this question! Keep your momentum on the next one.</span>
+                  </div>
+                )}
+
+                {/* Explanation Card */}
+                {isAnswered && currentQ.explanation && (
+                  <div className="p-4 rounded-xl bg-brand-50/60 border border-brand-200/80 text-xs text-slate-700 space-y-1 animate-in fade-in duration-150">
+                    <div className="font-bold text-brand-900 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-accent-500" />
+                      <span>Key Takeaway &amp; Explanation:</span>
+                    </div>
+                    <p className="leading-relaxed pl-5">{currentQ.explanation}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Question Footer Controls */}
+              <div className="px-6 sm:px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm("Are you sure you want to end your current quiz session?")) {
+                      setGameState("intro");
+                    }
+                  }}
+                  className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+                >
+                  Quit to Lobby
                 </button>
-              ) : (
-                <span className="text-xs text-slate-500 italic">Select an option to proceed</span>
-              )}
+
+                {isAnswered ? (
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:opacity-95 shadow-md shadow-brand-500/20 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+                  >
+                    <span>
+                      {currentQuestionIndex + 1 >= stageQuestions.length
+                        ? currentStage < 3 && stageMode === "all_stages"
+                          ? "Complete Stage →"
+                          : "Finish Quiz →"
+                        : "Next Question"}
+                    </span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <span className="text-xs text-slate-400 italic">
+                    Select an answer to proceed
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         )}
 
-        {/* 3. FINISHED / RESULT SCREEN */}
-        {gameState === "finished" && (
-          <div className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-sm text-center space-y-6">
-            <div className="w-20 h-20 mx-auto rounded-full bg-amber-50 border-2 border-amber-200 flex items-center justify-center text-amber-500 shadow-sm">
-              <Award className="w-10 h-10" />
+        {/* ============================================================
+            3. STAGE TRANSITION CELEBRATION (Stage-by-Stage Milestone)
+           ============================================================ */}
+        {gameState === "stage_transition" && (
+          <div className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-2xl text-center space-y-6 animate-in zoom-in-95 duration-200 max-w-xl mx-auto">
+            <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-amber-400 to-accent-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-amber-500/25">
+              🏆
             </div>
 
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Quiz Completed!</h2>
-              <p className="text-slate-500 text-sm mt-1">Here is your performance summary</p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 max-w-sm mx-auto space-y-2">
-              <div className="text-4xl font-extrabold text-accent-600">
-                {score} / {activeQuestions.length}
-              </div>
-              <p className="text-xs text-slate-500">
-                Accuracy: {Math.round((score / activeQuestions.length) * 100)}%
+            <div className="space-y-2">
+              <span className="text-xs font-extrabold tracking-wider uppercase px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                Milestone Reached!
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+                Stage {currentStage} Cleared!
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500">
+                {stageNames[currentStage].title} — {stageNames[currentStage].subtitle}
               </p>
-              <div className="pt-2 text-xs font-medium text-emerald-600">
-                {score === activeQuestions.length
-                  ? "🌟 Perfect Score! Outstanding Mastery!"
-                  : score >= activeQuestions.length / 2
-                  ? "👍 Great job! Keep practicing to master all topics."
-                  : "💡 Keep learning and try again to improve your score."}
+            </div>
+
+            {/* Stage Performance Stats */}
+            <div className="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div>
+                <div className="text-xs font-bold text-slate-400">Stage Accuracy</div>
+                <div className="text-xl font-black text-slate-900 font-mono">
+                  {stageStats[currentStage].correct} / {stageStats[currentStage].total}
+                </div>
+              </div>
+              <div>
+                <div className="text-xs font-bold text-slate-400">Total Points</div>
+                <div className="text-xl font-black text-brand-600 font-mono">
+                  {totalPoints} pts
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            {/* Next Stage Preview */}
+            <div className="p-4 rounded-2xl bg-brand-50/70 border border-brand-200 text-left space-y-1">
+              <div className="text-xs font-bold text-brand-900 flex items-center gap-1.5">
+                <Target className="w-4 h-4 text-brand-600" />
+                <span>Up Next: Stage {currentStage + 1} ({stageNames[(currentStage + 1) as QuizStageNumber].title})</span>
+              </div>
+              <p className="text-xs text-slate-600 pl-5">
+                Questions will escalate in complexity to test your intermediate and deep architectural problem solving!
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={proceedToNextStage}
+              className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-brand-600 via-accent-500 to-amber-500 hover:opacity-95 shadow-lg shadow-brand-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+            >
+              <span>Advance to Stage {currentStage + 1}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {/* ============================================================
+            4. FINISHED / COMPREHENSIVE RESULTS SCREEN
+           ============================================================ */}
+        {gameState === "finished" && (
+          <div className="space-y-8 animate-in fade-in duration-300">
+            {/* Top Results Card */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-xl text-center space-y-6">
+              <div className="w-20 h-20 mx-auto rounded-3xl bg-amber-50 border-2 border-amber-200 text-amber-500 flex items-center justify-center text-4xl shadow-sm">
+                <Award className="w-10 h-10" />
+              </div>
+
+              <div className="space-y-1">
+                <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
+                  Assessment Completed!
+                </h2>
+                <p className="text-slate-500 text-sm">
+                  Here is your full skill breakdown across all evaluated stages
+                </p>
+              </div>
+
+              {/* Mastery Badge Card */}
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-slate-900 text-white shadow-md">
+                <span className="text-xl">{masteryRank.icon}</span>
+                <div className="text-left">
+                  <div className="text-[10px] uppercase font-bold text-slate-400">Mastery Rank</div>
+                  <div className="text-sm font-black text-amber-400">{masteryRank.title}</div>
+                </div>
+              </div>
+
+              {/* 4 Performance Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto pt-2">
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-bold text-slate-400">Total Score</div>
+                  <div className="text-2xl font-black text-slate-900 font-mono mt-0.5">
+                    {score} / {totalQuestionsAnswered}
+                  </div>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-bold text-slate-400">Accuracy</div>
+                  <div className="text-2xl font-black text-emerald-600 font-mono mt-0.5">
+                    {overallAccuracy}%
+                  </div>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-bold text-slate-400">Total Points</div>
+                  <div className="text-2xl font-black text-brand-600 font-mono mt-0.5">
+                    {totalPoints}
+                  </div>
+                </div>
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-bold text-slate-400">Max Streak</div>
+                  <div className="text-2xl font-black text-amber-500 font-mono mt-0.5">
+                    {maxStreak}🔥
+                  </div>
+                </div>
+              </div>
+
+              {/* Stage by Stage Breakdown */}
+              <div className="max-w-2xl mx-auto pt-4 border-t border-slate-100 text-left space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Stage by Stage Breakdown
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {([1, 2, 3] as QuizStageNumber[]).map((stg) => {
+                    const st = stageStats[stg];
+                    if (st.total === 0) return null;
+                    const stageAcc = Math.round((st.correct / st.total) * 100);
+
+                    return (
+                      <div
+                        key={stg}
+                        className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1"
+                      >
+                        <div className="flex items-center justify-between text-xs font-bold text-slate-700">
+                          <span>Stage {stg}</span>
+                          <span
+                            className={
+                              stageAcc >= 75
+                                ? "text-emerald-600"
+                                : stageAcc >= 50
+                                ? "text-amber-600"
+                                : "text-slate-500"
+                            }
+                          >
+                            {stageAcc}%
+                          </span>
+                        </div>
+                        <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                          <div
+                            className="bg-brand-500 h-full rounded-full"
+                            style={{ width: `${stageAcc}%` }}
+                          />
+                        </div>
+                        <div className="text-[11px] text-slate-400 pt-1">
+                          {st.correct} of {st.total} correct
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-6">
+                <button
+                  type="button"
+                  onClick={startQuiz}
+                  className="px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-brand-600 to-accent-500 hover:opacity-95 shadow-md shadow-brand-500/20 transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Replay Quiz</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setGameState("intro")}
+                  className="px-6 py-3 rounded-xl font-bold text-xs sm:text-sm text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-2 cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Change Difficulty &amp; Category</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="px-4 py-3 rounded-xl font-bold text-xs sm:text-sm text-brand-700 bg-brand-50 hover:bg-brand-100 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Share2 className="w-4 h-4" />
+                  <span>{copiedLink ? "Copied!" : "Share Result"}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Expandable Question Review Section */}
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
               <button
-                onClick={startQuiz}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-400 hover:to-accent-500 transition-all text-sm shadow-sm"
+                type="button"
+                onClick={() => setReviewOpen(!reviewOpen)}
+                className="w-full flex items-center justify-between text-left cursor-pointer"
               >
-                <RotateCcw className="w-4 h-4" />
-                <span>Replay Quiz</span>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">
+                    Review All Questions &amp; Answers
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Inspect your selections, correct answers, and detailed explanations
+                  </p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                  {reviewOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </div>
               </button>
-              <button
-                onClick={() => setGameState("intro")}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-sm"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Change Category</span>
-              </button>
+
+              {reviewOpen && (
+                <div className="space-y-4 pt-4 border-t border-slate-100 animate-in fade-in duration-200">
+                  {questionResults.map((result, idx) => {
+                    const q = result.question;
+                    return (
+                      <div
+                        key={idx}
+                        className={`p-4 rounded-2xl border text-left space-y-2.5 ${
+                          result.isCorrect
+                            ? "bg-emerald-50/40 border-emerald-200"
+                            : "bg-rose-50/40 border-rose-200"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center gap-2 font-bold">
+                            <span
+                              className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] ${
+                                result.isCorrect ? "bg-emerald-600" : "bg-rose-600"
+                              }`}
+                            >
+                              {result.isCorrect ? "✓" : "✗"}
+                            </span>
+                            <span className="text-slate-900">Question {idx + 1}</span>
+                            <span className="text-slate-400">•</span>
+                            <span className="text-slate-500">Stage {q.stage} ({q.difficulty})</span>
+                          </div>
+                          <span className="text-slate-400 font-mono">{result.timeSpent}s spent</span>
+                        </div>
+
+                        <p className="font-bold text-sm text-slate-900">{q.question}</p>
+
+                        {q.codeSnippet && (
+                          <pre className="quiz-code-box text-xs">
+                            <code>{q.codeSnippet}</code>
+                          </pre>
+                        )}
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                          <div
+                            className={`p-2.5 rounded-xl border ${
+                              result.isCorrect
+                                ? "bg-emerald-100/60 border-emerald-300 text-emerald-900 font-medium"
+                                : "bg-rose-100/60 border-rose-300 text-rose-900 font-medium"
+                            }`}
+                          >
+                            <span className="font-bold">Your Choice: </span>
+                            {result.userAnswer || "(Timed out / No answer)"}
+                          </div>
+                          <div className="p-2.5 rounded-xl bg-emerald-100/60 border border-emerald-300 text-emerald-900 font-medium">
+                            <span className="font-bold">Correct Answer: </span>
+                            {q.answer}
+                          </div>
+                        </div>
+
+                        {q.explanation && (
+                          <p className="text-xs text-slate-600 bg-white/70 p-3 rounded-xl border border-slate-200/60 leading-relaxed">
+                            <strong className="text-slate-900">Explanation: </strong>
+                            {q.explanation}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         )}

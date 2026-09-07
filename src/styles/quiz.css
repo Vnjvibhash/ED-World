@@ -1,9 +1,9 @@
 /* ============================================================
-   Interactive Quiz Styles
+   Interactive Quiz & Stage-by-Stage Progressive Styles
    ============================================================ */
 
 .quiz-container {
-  max-width: 52rem;
+  max-width: 54rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -12,8 +12,8 @@
   background-color: #ffffff;
   color: #0f172a;
   border: 1px solid #e2e8f0;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  border-radius: var(--radius-2xl, 1.5rem);
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.07);
   overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
   justify-content: space-between;
 }
 
-/* 15s Timer Bar */
+/* Timer Bar */
 .quiz-timer-track {
   width: 100%;
   height: 6px;
@@ -37,74 +37,114 @@
 
 .quiz-timer-fill {
   height: 100%;
-  background: linear-gradient(90deg, #173E67 0%, #FF8000 100%);
-  transition: width 1s linear;
-}
-
-.quiz-timer-fill.warning {
-  background: #f43f5e;
+  transition: width 1s linear, background-color 0.3s ease;
 }
 
 /* Option Buttons */
 .quiz-option-btn {
   width: 100%;
-  padding: 1rem 1.25rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid #e2e8f0;
-  background-color: #f8fafc;
-  color: #0f172a;
+  padding: 1.1rem 1.35rem;
+  border-radius: 1rem;
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #1e293b;
   text-align: left;
-  font-size: 0.9375rem;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 .quiz-option-btn:hover:not(:disabled) {
-  border-color: var(--color-brand-500);
-  background-color: rgba(8, 179, 239, 0.08);
-  transform: translateX(4px);
+  border-color: #08b3ef;
+  background-color: #f0f9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(8, 179, 239, 0.12);
 }
 
 .quiz-option-btn.correct {
-  background-color: rgba(16, 185, 129, 0.15);
-  border-color: #10b981;
-  color: #a7f3d0;
+  background-color: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
   font-weight: 600;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.18);
+  animation: correctBounce 0.4s ease;
 }
 
 .quiz-option-btn.incorrect {
-  background-color: rgba(244, 63, 94, 0.15);
-  border-color: #f43f5e;
-  color: #fecdd3;
+  background-color: #fff1f2 !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
   font-weight: 600;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.18);
+  animation: incorrectShake 0.4s ease;
 }
 
 .quiz-option-btn.dimmed {
-  opacity: 0.4;
+  opacity: 0.45;
+  filter: grayscale(20%);
 }
 
-/* Option Index badge (A, B, C, D) */
-.quiz-option-badge {
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--radius-sm);
-  background-color: #1e293b;
+/* Code Snippet Box */
+.quiz-code-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 0.875rem;
+  padding: 1rem 1.25rem;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Stage Stepper Styles */
+.stage-step-pill {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #94a3b8;
-  margin-right: 0.75rem;
-  flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
-/* Result Box */
-.quiz-score-display {
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--color-brand-400);
-  text-shadow: 0 0 20px rgba(8, 179, 239, 0.4);
+.stage-step-pill.active {
+  box-shadow: 0 0 15px rgba(8, 179, 239, 0.3);
+}
+
+/* Animations */
+@keyframes correctBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes incorrectShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+@keyframes streakFire {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(3deg); }
+}
+
+.animate-streak {
+  animation: streakFire 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
 }
