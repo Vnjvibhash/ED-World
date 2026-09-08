@@ -82,6 +82,7 @@ export default function UniversalPracticePage() {
   const [copied, setCopied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState<string>("All");
+  const [activeEngine, setActiveEngine] = useState<string>("Cloud & Local Engine Ready");
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -145,6 +146,7 @@ export default function UniversalPracticePage() {
       });
 
       const data = await res.json();
+      if (data.engine) setActiveEngine(data.engine);
       if (data.compilationError) {
         setSingleOutput({
           stdout: "",
@@ -204,6 +206,7 @@ export default function UniversalPracticePage() {
       });
 
       const data = await res.json();
+      if (data.engine) setActiveEngine(data.engine);
       setSingleOutput({
         stdout: data.stdout || "",
         stderr: data.stderr || "",
@@ -284,7 +287,7 @@ export default function UniversalPracticePage() {
                   Universal IDE &amp; Practice Arena
                 </span>
                 <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                  OnlineGDB &amp; W3 Inspired
+                  Universal Code Lab
                 </span>
               </div>
               <span className="text-[11px] text-slate-400">
@@ -309,7 +312,7 @@ export default function UniversalPracticePage() {
               <option value="python">🐍 Python 3 (v3.12)</option>
               <option value="java">☕ Java (OpenJDK 17)</option>
               <option value="javascript">🟨 JavaScript (Node 24)</option>
-              <option value="web">🌐 HTML / CSS / JS (W3 TryIt)</option>
+              <option value="web">🌐 HTML / CSS / JS (Live Webview)</option>
             </select>
             <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
               ▼
@@ -556,7 +559,7 @@ export default function UniversalPracticePage() {
             />
           </div>
 
-          {/* Bottom Dual Console Panel (OnlineGDB & Test Case System) */}
+          {/* Bottom Dual Console Panel (Test Cases & Terminal System) */}
           <div className="h-72 border-t border-slate-800 bg-slate-900 flex flex-col">
             {/* Console Tabs */}
             <div className="px-4 py-2 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-xs">
@@ -606,7 +609,7 @@ export default function UniversalPracticePage() {
                     }`}
                   >
                     <Globe className="w-3.5 h-3.5 text-blue-400" />
-                    <span>W3 Live Preview</span>
+                    <span>Live Web Preview</span>
                   </button>
                 )}
               </div>
@@ -786,13 +789,13 @@ export default function UniversalPracticePage() {
               </div>
             )}
 
-            {/* Tab 3: W3Schools Style Live Webview */}
+            {/* Tab 3: Interactive Live Webview */}
             {activeConsoleTab === "preview" && (
               <div className="flex-1 p-2 bg-white rounded-b-xl overflow-hidden">
                 <iframe
                   ref={iframeRef}
                   srcDoc={code}
-                  title="W3Schools Live Webview"
+                  title="Interactive Live Webview"
                   sandbox="allow-scripts allow-modals"
                   className="w-full h-full border-0 bg-white"
                 />

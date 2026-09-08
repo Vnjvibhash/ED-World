@@ -30,7 +30,7 @@ export const PRACTICE_PROBLEMS: PracticeProblem[] = [
     category: "Algorithms",
     acceptance: "52.4%",
     description:
-      "Given an array of integers `nums` and an integer `target`, find the two numbers such that they add up to `target`. Print their 0-based indices separated by a space (smaller index first).",
+      "Given an array of integers `nums` and an integer `target`, return the two numbers' 0-based indices that add up to `target`. Print the indices separated by a space (smaller index first).\n\nYou may assume each input would have exactly one solution, and you may not use the same element twice.",
     inputFormat: "Line 1: N (number of elements)\nLine 2: N space-separated integers\nLine 3: target integer",
     outputFormat: "Two space-separated indices: i j",
     constraints: [
@@ -62,7 +62,7 @@ export const PRACTICE_PROBLEMS: PracticeProblem[] = [
       },
       {
         id: "tc4",
-        label: "Case 4 (Negative numbers)",
+        label: "Case 4 (Negative values)",
         input: "4\n-3 4 3 90\n0",
         expectedOutput: "0 2",
       },
@@ -70,28 +70,40 @@ export const PRACTICE_PROBLEMS: PracticeProblem[] = [
     starterCodes: {
       c: `#include <stdio.h>
 
+// User function skeleton:
+// Find indices i, j such that nums[i] + nums[j] == target
+// Print the result as: printf("%d %d\\n", i, j);
+void findTwoSum(int nums[], int n, int target) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+}
+
 int main() {
-    int n, target;
+    int n;
     if (scanf("%d", &n) != 1) return 0;
     int nums[n];
     for (int i = 0; i < n; i++) scanf("%d", &nums[i]);
+    int target;
     scanf("%d", &target);
 
-    // TODO: Find indices i, j such that nums[i] + nums[j] == target
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (nums[i] + nums[j] == target) {
-                printf("%d %d\\n", i, j);
-                return 0;
-            }
-        }
-    }
+    findTwoSum(nums, n, target);
     return 0;
 }`,
       cpp: `#include <iostream>
 #include <vector>
-#include <unordered_map>
 using namespace std;
+
+// User function skeleton:
+// Return pair<int, int> of indices that sum to target
+pair<int, int> findTwoSum(const vector<int>& nums, int target) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return {-1, -1};
+}
 
 int main() {
     int n;
@@ -101,40 +113,52 @@ int main() {
     int target;
     cin >> target;
 
-    unordered_map<int, int> seen;
-    for (int i = 0; i < n; i++) {
-        int complement = target - nums[i];
-        if (seen.count(complement)) {
-            cout << seen[complement] << " " << i << endl;
-            return 0;
-        }
-        seen[nums[i]] = i;
-    }
+    pair<int, int> res = findTwoSum(nums, target);
+    cout << res.first << " " << res.second << endl;
     return 0;
 }`,
       python: `import sys
 
-def solve():
-    lines = sys.stdin.read().split()
-    if not lines:
-        return
-    n = int(lines[0])
-    nums = [int(x) for x in lines[1:n+1]]
-    target = int(lines[n+1])
+def find_two_sum(nums, target):
+    """
+    User Function Skeleton:
+    Args:
+        nums (List[int]): Array of numbers
+        target (int): Target sum
+    Returns:
+        tuple (i, j): 0-based indices where nums[i] + nums[j] == target
+    """
+    # ============================================
+    # TODO: Write your logic here
+    # ============================================
+    
+    return -1, -1
 
-    seen = {}
-    for i, num in enumerate(nums):
-        comp = target - num
-        if comp in seen:
-            print(f"{seen[comp]} {i}")
-            return
-        seen[num] = i
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens: return
+    n = int(tokens[0])
+    nums = [int(x) for x in tokens[1:n+1]]
+    target = int(tokens[n+1])
+
+    i, j = find_two_sum(nums, target)
+    print(f"{i} {j}")
 
 if __name__ == "__main__":
-    solve()`,
+    main()`,
       java: `import java.util.*;
 
 public class Main {
+    // User method skeleton:
+    // Return an array of size 2 with the indices that sum to target
+    public static int[] findTwoSum(int[] nums, int target) {
+        // ============================================
+        // TODO: Write your logic here
+        // ============================================
+        
+        return new int[]{-1, -1};
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!sc.hasNextInt()) return;
@@ -143,35 +167,38 @@ public class Main {
         for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
         int target = sc.nextInt();
 
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            int comp = target - nums[i];
-            if (map.containsKey(comp)) {
-                System.out.println(map.get(comp) + " " + i);
-                return;
-            }
-            map.put(nums[i], i);
-        }
+        int[] result = findTwoSum(nums, target);
+        System.out.println(result[0] + " " + result[1]);
     }
 }`,
       javascript: `const fs = require("fs");
-const input = fs.readFileSync(0, "utf-8").trim().split(/\\s+/);
 
-if (input.length > 1) {
+/**
+ * User Function Skeleton:
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]} [i, j]
+ */
+function findTwoSum(nums, target) {
+  // ============================================
+  // TODO: Write your logic here
+  // ============================================
+  
+  return [-1, -1];
+}
+
+function main() {
+  const input = fs.readFileSync(0, "utf-8").trim().split(/\\s+/);
+  if (input.length <= 1) return;
   const n = parseInt(input[0]);
   const nums = input.slice(1, n + 1).map(Number);
   const target = parseInt(input[n + 1]);
 
-  const map = new Map();
-  for (let i = 0; i < nums.length; i++) {
-    const comp = target - nums[i];
-    if (map.has(comp)) {
-      console.log(\`\${map.get(comp)} \${i}\`);
-      process.exit(0);
-    }
-    map.set(nums[i], i);
-  }
-}`,
+  const [i, j] = findTwoSum(nums, target);
+  console.log(\`\${i} \${j}\`);
+}
+
+main();`,
       web: `<!DOCTYPE html>
 <html>
 <head>
@@ -185,12 +212,13 @@ if (input.length > 1) {
   <div class="card">
     <h3>Two Sum Solver</h3>
     <p>Nums: [2, 7, 11, 15], Target: 9</p>
-    <button onclick="calc()">Find Indices</button>
-    <p id="res" style="font-weight: bold; color: #173E67;"></p>
+    <button onclick="calculateTwoSum()">Find Indices</button>
+    <p id="output" style="font-weight: bold; color: #173E67;"></p>
   </div>
   <script>
-    function calc() {
-      document.getElementById('res').innerText = 'Indices: [0, 1] (2 + 7 = 9)';
+    function calculateTwoSum() {
+      // TODO: Implement your interactive DOM logic here
+      document.getElementById('output').innerText = 'Output will show here';
     }
   </script>
 </body>
@@ -204,7 +232,7 @@ if (input.length > 1) {
     category: "Strings",
     acceptance: "78.1%",
     description:
-      "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Print `true` if it is a palindrome, or `false` otherwise.",
+      "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.\n\nPrint `true` if it is a palindrome, or `false` otherwise.",
     inputFormat: "A single line containing the string S",
     outputFormat: "`true` or `false`",
     constraints: ["1 <= S.length <= 2 * 10^5", "S consists only of printable ASCII characters."],
@@ -225,7 +253,7 @@ if (input.length > 1) {
       },
       {
         id: "pal_3",
-        label: "Case 3 (Single character)",
+        label: "Case 3 (Single space)",
         input: " ",
         expectedOutput: "true",
       },
@@ -238,8 +266,19 @@ if (input.length > 1) {
     ],
     starterCodes: {
       c: `#include <stdio.h>
+#include <stdbool.h>
 #include <ctype.h>
 #include <string.h>
+
+// User function skeleton:
+// Return true if string s is a palindrome (ignoring case & non-alphanumerics)
+bool isPalindrome(const char* s) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return false;
+}
 
 int main() {
     char s[200005];
@@ -247,25 +286,21 @@ int main() {
         printf("true\\n");
         return 0;
     }
-
-    int i = 0, j = strlen(s) - 1;
-    while (i < j) {
-        while (i < j && !isalnum((unsigned char)s[i])) i++;
-        while (i < j && !isalnum((unsigned char)s[j])) j--;
-        if (tolower((unsigned char)s[i]) != tolower((unsigned char)s[j])) {
-            printf("false\\n");
-            return 0;
-        }
-        i++;
-        j--;
-    }
-    printf("true\\n");
+    printf("%s\\n", isPalindrome(s) ? "true" : "false");
     return 0;
 }`,
       cpp: `#include <iostream>
 #include <string>
-#include <cctype>
 using namespace std;
+
+// User function skeleton:
+bool isPalindrome(const string& s) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return false;
+}
 
 int main() {
     string s;
@@ -273,75 +308,75 @@ int main() {
         cout << "true" << endl;
         return 0;
     }
-
-    int left = 0, right = (int)s.length() - 1;
-    while (left < right) {
-        while (left < right && !isalnum(s[left])) left++;
-        while (left < right && !isalnum(s[right])) right--;
-        if (tolower(s[left]) != tolower(s[right])) {
-            cout << "false" << endl;
-            return 0;
-        }
-        left++;
-        right--;
-    }
-    cout << "true" << endl;
+    cout << (isPalindrome(s) ? "true" : "false") << endl;
     return 0;
 }`,
       python: `import sys
 
+def is_palindrome(s: str) -> bool:
+    """
+    User Function Skeleton:
+    Return True if s is a palindrome, ignoring non-alphanumerics and case.
+    """
+    # ============================================
+    # TODO: Write your logic here
+    # ============================================
+    
+    return False
+
 def main():
     s = sys.stdin.read().strip()
-    filtered = [ch.lower() for ch in s if ch.isalnum()]
-    if filtered == filtered[::-1]:
-        print("true")
-    else:
-        print("false")
+    print("true" if is_palindrome(s) else "false")
 
 if __name__ == "__main__":
     main()`,
       java: `import java.util.Scanner;
 
 public class Main {
+    // User method skeleton:
+    public static boolean isPalindrome(String s) {
+        // ============================================
+        // TODO: Write your logic here
+        // ============================================
+        
+        return false;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String s = sc.hasNextLine() ? sc.nextLine() : "";
-        int l = 0, r = s.length() - 1;
-        while (l < r) {
-            while (l < r && !Character.isLetterOrDigit(s.charAt(l))) l++;
-            while (l < r && !Character.isLetterOrDigit(s.charAt(r))) r--;
-            if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r))) {
-                System.out.println("false");
-                return;
-            }
-            l++;
-            r--;
-        }
-        System.out.println("true");
+        System.out.println(isPalindrome(s) ? "true" : "false");
     }
 }`,
       javascript: `const fs = require("fs");
+
+/**
+ * User Function Skeleton:
+ * @param {string} s
+ * @return {boolean}
+ */
+function isPalindrome(s) {
+  // ============================================
+  // TODO: Write your logic here
+  // ============================================
+  
+  return false;
+}
+
 const s = fs.readFileSync(0, "utf-8").trim();
-
-const clean = s.toLowerCase().replace(/[^a-z0-9]/g, "");
-const reversed = clean.split("").reverse().join("");
-
-console.log(clean === reversed ? "true" : "false");`,
+console.log(isPalindrome(s) ? "true" : "false");`,
       web: `<!DOCTYPE html>
 <html>
-<body style="font-family: Arial; padding: 20px;">
-  <h2>Valid Palindrome Checker</h2>
-  <input id="txt" value="racecar" style="padding: 8px; width: 220px;" />
-  <button onclick="check()" style="padding: 8px 12px; background: #173E67; color: white;">Check</button>
-  <div id="out" style="margin-top: 10px; font-weight: bold;"></div>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h2>Palindrome Tester</h2>
+  <input id="str" placeholder="Enter string" value="racecar" style="padding: 8px;" />
+  <button onclick="checkPalindrome()" style="padding: 8px 12px; background: #173E67; color: white;">Test</button>
+  <div id="result" style="margin-top: 10px; font-weight: bold;"></div>
 
   <script>
-    function check() {
-      const s = document.getElementById('txt').value.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const rev = s.split('').reverse().join('');
-      document.getElementById('out').innerText = s === rev ? '✅ Valid Palindrome!' : '❌ Not a Palindrome';
+    function checkPalindrome() {
+      // TODO: Complete palindrome check logic
     }
-    check();
   </script>
 </body>
 </html>`,
@@ -356,7 +391,7 @@ console.log(clean === reversed ? "true" : "false");`,
     description:
       "Given an integer `N`, print comma-separated answers for numbers from 1 to N:\n- For multiples of 3 & 5, print 'FizzBuzz'\n- For multiples of 3, print 'Fizz'\n- For multiples of 5, print 'Buzz'\n- Otherwise print the number.",
     inputFormat: "A single integer N",
-    outputFormat: "Comma-separated string of results",
+    outputFormat: "Comma-separated string of results: e.g. 1, 2, Fizz, 4, Buzz",
     constraints: ["1 <= N <= 100"],
     testCases: [
       {
@@ -383,105 +418,111 @@ console.log(clean === reversed ? "true" : "false");`,
     starterCodes: {
       c: `#include <stdio.h>
 
+// User function skeleton:
+void fizzBuzz(int n) {
+    // ============================================
+    // TODO: Write your logic here
+    // Print comma-separated values from 1 to n
+    // ============================================
+    
+}
+
 int main() {
     int n;
-    if (scanf("%d", &n) != 1) return 0;
-    for (int i = 1; i <= n; i++) {
-        if (i % 15 == 0) printf("FizzBuzz");
-        else if (i % 3 == 0) printf("Fizz");
-        else if (i % 5 == 0) printf("Buzz");
-        else printf("%d", i);
-
-        if (i < n) printf(", ");
+    if (scanf("%d", &n) == 1) {
+        fizzBuzz(n);
     }
-    printf("\\n");
     return 0;
 }`,
       cpp: `#include <iostream>
+#include <string>
 using namespace std;
+
+// User function skeleton:
+void fizzBuzz(int n) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+}
 
 int main() {
     int n;
     if (cin >> n) {
-        for (int i = 1; i <= n; i++) {
-            if (i % 15 == 0) cout << "FizzBuzz";
-            else if (i % 3 == 0) cout << "Fizz";
-            else if (i % 5 == 0) cout << "Buzz";
-            else cout << i;
-
-            if (i < n) cout << ", ";
-        }
-        cout << endl;
+        fizzBuzz(n);
     }
     return 0;
 }`,
       python: `import sys
 
+def fizz_buzz(n: int) -> str:
+    """
+    User Function Skeleton:
+    Return a comma-separated string from 1 to n.
+    """
+    # ============================================
+    # TODO: Write your logic here
+    # ============================================
+    
+    return ""
+
 def main():
     line = sys.stdin.read().strip()
-    if not line: return
-    n = int(line)
-    res = []
-    for i in range(1, n + 1):
-        if i % 15 == 0: res.append("FizzBuzz")
-        elif i % 3 == 0: res.append("Fizz")
-        elif i % 5 == 0: res.append("Buzz")
-        else: res.append(str(i))
-    print(", ".join(res))
+    if line:
+        print(fizz_buzz(int(line)))
 
 if __name__ == "__main__":
     main()`,
-      java: `import java.util.*;
+      java: `import java.util.Scanner;
 
 public class Main {
+    // User method skeleton:
+    public static String fizzBuzz(int n) {
+        // ============================================
+        // TODO: Write your logic here
+        // ============================================
+        
+        return "";
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        if (!sc.hasNextInt()) return;
-        int n = sc.nextInt();
-        List<String> list = new ArrayList<>();
-        for (int i = 1; i <= n; i++) {
-            if (i % 15 == 0) list.add("FizzBuzz");
-            else if (i % 3 == 0) list.add("Fizz");
-            else if (i % 5 == 0) list.add("Buzz");
-            else list.add(String.valueOf(i));
+        if (sc.hasNextInt()) {
+            int n = sc.nextInt();
+            System.out.println(fizzBuzz(n));
         }
-        System.out.println(String.join(", ", list));
     }
 }`,
       javascript: `const fs = require("fs");
-const n = parseInt(fs.readFileSync(0, "utf-8").trim());
 
-const res = [];
-for (let i = 1; i <= n; i++) {
-  if (i % 15 === 0) res.push("FizzBuzz");
-  else if (i % 3 === 0) res.push("Fizz");
-  else if (i % 5 === 0) res.push("Buzz");
-  else res.push(i.toString());
+/**
+ * User Function Skeleton:
+ * @param {number} n
+ * @return {string} comma-separated FizzBuzz sequence
+ */
+function fizzBuzz(n) {
+  // ============================================
+  // TODO: Write your logic here
+  // ============================================
+  
+  return "";
 }
-console.log(res.join(", "));`,
+
+const input = fs.readFileSync(0, "utf-8").trim();
+if (input) {
+  console.log(fizzBuzz(parseInt(input)));
+}`,
       web: `<!DOCTYPE html>
 <html>
-<head>
-  <style>
-    body { font-family: monospace; padding: 20px; }
-    .badge { display: inline-block; padding: 4px 8px; margin: 2px; border-radius: 4px; font-weight: bold; }
-    .fb { background: #fee2e2; color: #dc2626; }
-    .fizz { background: #eff6ff; color: #2563eb; }
-    .buzz { background: #ecfdf5; color: #059669; }
-  </style>
-</head>
-<body>
-  <h3>FizzBuzz Visualizer (1 to 20)</h3>
-  <div id="container"></div>
+<body style="font-family: monospace; padding: 20px;">
+  <h3>Interactive FizzBuzz Generator</h3>
+  <input id="num" type="number" value="15" />
+  <button onclick="runFizzBuzz()">Generate</button>
+  <div id="output" style="margin-top: 15px;"></div>
+
   <script>
-    const el = document.getElementById('container');
-    for (let i = 1; i <= 20; i++) {
-      let label = i, cls = '';
-      if (i % 15 === 0) { label = 'FizzBuzz'; cls = 'badge fb'; }
-      else if (i % 3 === 0) { label = 'Fizz'; cls = 'badge fizz'; }
-      else if (i % 5 === 0) { label = 'Buzz'; cls = 'badge buzz'; }
-      else { cls = 'badge'; }
-      el.innerHTML += \`<span class="\${cls}">\${label}</span>\`;
+    function runFizzBuzz() {
+      // TODO: Populate #output with FizzBuzz sequence
     }
   </script>
 </body>
@@ -490,7 +531,7 @@ console.log(res.join(", "));`,
   },
   {
     id: "max-subarray",
-    title: "4. Maximum Subarray (Kadane's Algorithm)",
+    title: "4. Maximum Subarray (Kadane's)",
     difficulty: "Medium",
     category: "Algorithms",
     acceptance: "50.1%",
@@ -524,27 +565,36 @@ console.log(res.join(", "));`,
     starterCodes: {
       c: `#include <stdio.h>
 
+// User function skeleton:
+int maxSubArray(int nums[], int n) {
+    // ============================================
+    // TODO: Write your logic here (Kadane's Algorithm)
+    // ============================================
+    
+    return 0;
+}
+
 int main() {
     int n;
     if (scanf("%d", &n) != 1) return 0;
-    int max_so_far, current_max;
-    int first;
-    scanf("%d", &first);
-    max_so_far = current_max = first;
+    int nums[n];
+    for (int i = 0; i < n; i++) scanf("%d", &nums[i]);
 
-    for (int i = 1; i < n; i++) {
-        int x;
-        scanf("%d", &x);
-        current_max = (x > current_max + x) ? x : current_max + x;
-        if (current_max > max_so_far) max_so_far = current_max;
-    }
-    printf("%d\\n", max_so_far);
+    printf("%d\\n", maxSubArray(nums, n));
     return 0;
 }`,
       cpp: `#include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
+
+// User function skeleton:
+int maxSubArray(const vector<int>& nums) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return 0;
+}
 
 int main() {
     int n;
@@ -552,76 +602,86 @@ int main() {
     vector<int> nums(n);
     for (int i = 0; i < n; i++) cin >> nums[i];
 
-    int maxSoFar = nums[0];
-    int currMax = nums[0];
-    for (int i = 1; i < n; i++) {
-        currMax = max(nums[i], currMax + nums[i]);
-        maxSoFar = max(maxSoFar, currMax);
-    }
-    cout << maxSoFar << endl;
+    cout << maxSubArray(nums) << endl;
     return 0;
 }`,
       python: `import sys
+
+def max_sub_array(nums):
+    """
+    User Function Skeleton:
+    Find the contiguous subarray which has the largest sum.
+    """
+    # ============================================
+    # TODO: Write your logic here
+    # ============================================
+    
+    return 0
 
 def main():
     data = sys.stdin.read().split()
     if not data: return
     n = int(data[0])
     nums = [int(x) for x in data[1:n+1]]
-
-    max_so_far = nums[0]
-    curr_max = nums[0]
-    for x in nums[1:]:
-        curr_max = max(x, curr_max + x)
-        max_so_far = max(max_so_far, curr_max)
-    print(max_so_far)
+    print(max_sub_array(nums))
 
 if __name__ == "__main__":
     main()`,
       java: `import java.util.Scanner;
 
 public class Main {
+    // User method skeleton:
+    public static int maxSubArray(int[] nums) {
+        // ============================================
+        // TODO: Write your logic here
+        // ============================================
+        
+        return 0;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!sc.hasNextInt()) return;
         int n = sc.nextInt();
-        int maxSoFar = sc.nextInt();
-        int currMax = maxSoFar;
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
 
-        for (int i = 1; i < n; i++) {
-            int x = sc.nextInt();
-            currMax = Math.max(x, currMax + x);
-            maxSoFar = Math.max(maxSoFar, currMax);
-        }
-        System.out.println(maxSoFar);
+        System.out.println(maxSubArray(nums));
     }
 }`,
       javascript: `const fs = require("fs");
-const input = fs.readFileSync(0, "utf-8").trim().split(/\\s+/);
-const n = parseInt(input[0]);
-const nums = input.slice(1, n + 1).map(Number);
 
-let maxSoFar = nums[0];
-let currMax = nums[0];
-
-for (let i = 1; i < nums.length; i++) {
-  currMax = Math.max(nums[i], currMax + nums[i]);
-  maxSoFar = Math.max(maxSoFar, currMax);
+/**
+ * User Function Skeleton:
+ * @param {number[]} nums
+ * @return {number}
+ */
+function maxSubArray(nums) {
+  // ============================================
+  // TODO: Write your logic here
+  // ============================================
+  
+  return 0;
 }
 
-console.log(maxSoFar);`,
+const input = fs.readFileSync(0, "utf-8").trim().split(/\\s+/);
+if (input.length > 1) {
+  const n = parseInt(input[0]);
+  const nums = input.slice(1, n + 1).map(Number);
+  console.log(maxSubArray(nums));
+}`,
       web: `<!DOCTYPE html>
 <html>
-<head>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    .bar { display: inline-block; width: 30px; margin: 4px; text-align: center; border-radius: 4px; color: white; font-weight: bold; }
-  </style>
-</head>
-<body>
-  <h3>Kadane's Algorithm Visualizer</h3>
-  <p>Nums: [-2, 1, -3, 4, -1, 2, 1, -5, 4]</p>
-  <p>Maximum Subarray: [4, -1, 2, 1] &rarr; Sum = <strong>6</strong></p>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h3>Kadane's Algorithm Demonstration</h3>
+  <p>Array: [-2, 1, -3, 4, -1, 2, 1, -5, 4]</p>
+  <button onclick="computeMaxSubArray()">Calculate Max Subarray</button>
+  <p id="ans"></p>
+  <script>
+    function computeMaxSubArray() {
+      // TODO: Calculate max subarray sum and render
+    }
+  </script>
 </body>
 </html>`,
     },
@@ -668,104 +728,257 @@ console.log(maxSoFar);`,
     starterCodes: {
       c: `#include <stdio.h>
 
+// User function skeleton:
+int fibonacci(int n) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return 0;
+}
+
 int main() {
     int n;
-    if (scanf("%d", &n) != 1) return 0;
-    if (n == 0) { printf("0\\n"); return 0; }
-    if (n == 1) { printf("1\\n"); return 0; }
-
-    int a = 0, b = 1;
-    for (int i = 2; i <= n; i++) {
-        int c = a + b;
-        a = b;
-        b = c;
+    if (scanf("%d", &n) == 1) {
+        printf("%d\\n", fibonacci(n));
     }
-    printf("%d\\n", b);
     return 0;
 }`,
       cpp: `#include <iostream>
 using namespace std;
 
+// User function skeleton:
+int fibonacci(int n) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return 0;
+}
+
 int main() {
     int n;
-    if (!(cin >> n)) return 0;
-    if (n == 0) { cout << 0 << endl; return 0; }
-    if (n == 1) { cout << 1 << endl; return 0; }
-
-    int a = 0, b = 1;
-    for (int i = 2; i <= n; i++) {
-        int c = a + b;
-        a = b;
-        b = c;
+    if (cin >> n) {
+        cout << fibonacci(n) << endl;
     }
-    cout << b << endl;
     return 0;
 }`,
       python: `import sys
 
-def fib(n):
-    if n <= 0: return 0
-    if n == 1: return 1
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+def fibonacci(n: int) -> int:
+    """
+    User Function Skeleton:
+    Return F(n) where F(0)=0, F(1)=1, F(n)=F(n-1)+F(n-2)
+    """
+    # ============================================
+    # TODO: Write your logic here
+    # ============================================
+    
+    return 0
 
 def main():
     line = sys.stdin.read().strip()
     if line:
-        print(fib(int(line)))
+        print(fibonacci(int(line)))
 
 if __name__ == "__main__":
     main()`,
       java: `import java.util.Scanner;
 
 public class Main {
+    // User method skeleton:
+    public static int fibonacci(int n) {
+        // ============================================
+        // TODO: Write your logic here
+        // ============================================
+        
+        return 0;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        if (!sc.hasNextInt()) return;
-        int n = sc.nextInt();
-        if (n <= 0) { System.out.println(0); return; }
-        if (n == 1) { System.out.println(1); return; }
-
-        int a = 0, b = 1;
-        for (int i = 2; i <= n; i++) {
-            int c = a + b;
-            a = b;
-            b = c;
+        if (sc.hasNextInt()) {
+            int n = sc.nextInt();
+            System.out.println(fibonacci(n));
         }
-        System.out.println(b);
     }
 }`,
       javascript: `const fs = require("fs");
-const n = parseInt(fs.readFileSync(0, "utf-8").trim());
 
-if (n <= 0) console.log(0);
-else if (n === 1) console.log(1);
-else {
-  let a = 0, b = 1;
-  for (let i = 2; i <= n; i++) {
-    const c = a + b;
-    a = b;
-    b = c;
-  }
-  console.log(b);
+/**
+ * User Function Skeleton:
+ * @param {number} n
+ * @return {number}
+ */
+function fibonacci(n) {
+  // ============================================
+  // TODO: Write your logic here
+  // ============================================
+  
+  return 0;
+}
+
+const input = fs.readFileSync(0, "utf-8").trim();
+if (input) {
+  console.log(fibonacci(parseInt(input)));
 }`,
       web: `<!DOCTYPE html>
 <html>
 <body style="font-family: sans-serif; padding: 20px;">
   <h2>Fibonacci Generator</h2>
-  <input id="num" type="number" value="8" style="padding: 6px; width: 60px;" />
-  <button onclick="calc()" style="padding: 6px 12px; background: #ff8000; color: white; border: none; border-radius: 4px;">Calculate</button>
-  <p id="res" style="font-size: 18px; font-weight: bold; color: #173E67;"></p>
+  <input id="num" type="number" value="8" />
+  <button onclick="calculateFib()">Calculate</button>
+  <p id="result"></p>
   <script>
-    function calc() {
-      const n = parseInt(document.getElementById('num').value);
-      let a = 0, b = 1;
-      for (let i = 2; i <= n; i++) { const c = a + b; a = b; b = c; }
-      document.getElementById('res').innerText = 'F(' + n + ') = ' + (n === 0 ? 0 : b);
+    function calculateFib() {
+      // TODO: Complete logic to calculate F(n)
     }
-    calc();
+  </script>
+</body>
+</html>`,
+    },
+  },
+  {
+    id: "reverse-string",
+    title: "6. Reverse a String",
+    difficulty: "Easy",
+    category: "Strings",
+    acceptance: "85.0%",
+    description:
+      "Write a function that reverses a string. Print the reversed string.",
+    inputFormat: "A single line containing the string S",
+    outputFormat: "The reversed string S",
+    constraints: ["1 <= S.length <= 10^5"],
+    testCases: [
+      {
+        id: "rev_1",
+        label: "Case 1 (Word)",
+        input: "hello",
+        expectedOutput: "olleh",
+        isSample: true,
+      },
+      {
+        id: "rev_2",
+        label: "Case 2 (Sentence)",
+        input: "Antigravity",
+        expectedOutput: "ytivargitnA",
+        isSample: true,
+      },
+      {
+        id: "rev_3",
+        label: "Case 3 (Single char)",
+        input: "x",
+        expectedOutput: "x",
+      },
+    ],
+    starterCodes: {
+      c: `#include <stdio.h>
+#include <string.h>
+
+// User function skeleton:
+void reverseString(char* s) {
+    // ============================================
+    // TODO: Reverse the string in-place
+    // ============================================
+    
+}
+
+int main() {
+    char s[100005];
+    if (fgets(s, sizeof(s), stdin)) {
+        s[strcspn(s, "\\r\\n")] = 0;
+        reverseString(s);
+        printf("%s\\n", s);
+    }
+    return 0;
+}`,
+      cpp: `#include <iostream>
+#include <string>
+using namespace std;
+
+// User function skeleton:
+string reverseString(string s) {
+    // ============================================
+    // TODO: Write your logic here
+    // ============================================
+    
+    return s;
+}
+
+int main() {
+    string s;
+    if (getline(cin, s)) {
+        cout << reverseString(s) << endl;
+    }
+    return 0;
+}`,
+      python: `import sys
+
+def reverse_string(s: str) -> str:
+    """
+    User Function Skeleton:
+    Return the reversed string.
+    """
+    # ============================================
+    # TODO: Write your logic here
+    # ============================================
+    
+    return s
+
+def main():
+    s = sys.stdin.read().strip()
+    print(reverse_string(s))
+
+if __name__ == "__main__":
+    main()`,
+      java: `import java.util.Scanner;
+
+public class Main {
+    // User method skeleton:
+    public static String reverseString(String s) {
+        // ============================================
+        // TODO: Write your logic here
+        // ============================================
+        
+        return s;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (sc.hasNextLine()) {
+            String s = sc.nextLine();
+            System.out.println(reverseString(s));
+        }
+    }
+}`,
+      javascript: `const fs = require("fs");
+
+/**
+ * User Function Skeleton:
+ * @param {string} s
+ * @return {string}
+ */
+function reverseString(s) {
+  // ============================================
+  // TODO: Write your logic here
+  // ============================================
+  
+  return s;
+}
+
+const s = fs.readFileSync(0, "utf-8").trim();
+console.log(reverseString(s));`,
+      web: `<!DOCTYPE html>
+<html>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h2>String Inverter</h2>
+  <input id="input" value="ED-World" />
+  <button onclick="reverse()">Reverse</button>
+  <p id="out"></p>
+  <script>
+    function reverse() {
+      // TODO: Reverse input string and update DOM
+    }
   </script>
 </body>
 </html>`,
