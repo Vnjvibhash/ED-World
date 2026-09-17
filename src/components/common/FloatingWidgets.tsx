@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { MessageCircle, Bot } from "lucide-react";
+import { Bot } from "lucide-react";
+import { WhatsAppIcon } from "@/components/common/SocialIcons";
 import { AIChatBot } from "@/components/chat/AIChatBot";
 
 export function FloatingWidgets() {
@@ -35,34 +36,28 @@ export function FloatingWidgets() {
 
   return (
     <>
-      {/* Floating Action Buttons (Icon/Logo Only) */}
+      {/* Floating Action Buttons (Strictly Logo Only) */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3">
-        {/* WhatsApp Button */}
+        {/* WhatsApp Logo Button */}
         <button
           onClick={openWhatsApp}
-          className="relative w-12 h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl hover:shadow-emerald-500/40 flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 group"
-          aria-label="Chat on WhatsApp"
-          title="WhatsApp Us"
+          className="relative w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl hover:shadow-emerald-500/40 flex items-center justify-center transition-all transform hover:scale-110 active:scale-95"
+          aria-label="WhatsApp"
+          title="WhatsApp"
         >
-          <MessageCircle className="w-6 h-6 text-white" />
-          <span className="absolute right-14 px-2.5 py-1 bg-slate-900/90 text-white text-xs font-medium rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
-            WhatsApp Us
-          </span>
+          <WhatsAppIcon className="w-7 h-7 text-white" />
         </button>
 
-        {/* AI Coding & DSA Tutor Button */}
+        {/* AI Tutor Logo Button */}
         <button
           onClick={() => setShowBot(!showBot)}
-          className="relative w-12 h-12 rounded-full bg-gradient-to-tr from-[#173E67] to-[#FF8000] hover:from-[#1d4b7c] hover:to-[#f07900] text-white shadow-xl hover:shadow-orange-500/30 flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 group border border-white/20"
-          aria-label="Open AI Coding Tutor"
-          title="Student World AI Tutor"
+          className="relative w-12 h-12 rounded-full bg-gradient-to-tr from-[#173E67] to-[#FF8000] hover:from-[#1d4b7c] hover:to-[#f07900] text-white shadow-xl hover:shadow-orange-500/30 flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 border border-white/20"
+          aria-label="AI Tutor"
+          title="AI Tutor"
         >
-          <Bot className="w-6 h-6 text-white" />
+          <Bot className="w-7 h-7 text-white" />
           <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 animate-ping" />
           <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-slate-900" />
-          <span className="absolute right-14 px-2.5 py-1 bg-slate-900/90 text-white text-xs font-medium rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
-            Student World AI Tutor
-          </span>
         </button>
       </div>
 
