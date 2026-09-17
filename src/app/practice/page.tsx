@@ -57,6 +57,12 @@ const LANGUAGE_CONFIG: Record<
   python: { name: "Python 3", ext: "py", badge: "Python 3.12", icon: "🐍", compiler: "CPython 3 Runtime" },
   java: { name: "Java", ext: "java", badge: "OpenJDK 17", icon: "☕", compiler: "Java Development Kit (JDK)" },
   javascript: { name: "JavaScript", ext: "js", badge: "Node.js 24", icon: "🟨", compiler: "Node.js V8 Engine" },
+  typescript: { name: "TypeScript", ext: "ts", badge: "TS 5.6", icon: "🟦", compiler: "Node.js 24 TS Engine" },
+  go: { name: "Go", ext: "go", badge: "Go 1.23", icon: "🐹", compiler: "Go Runtime & Compiler" },
+  rust: { name: "Rust", ext: "rs", badge: "Rust 1.85", icon: "🦀", compiler: "Rustc & Cargo Engine" },
+  csharp: { name: "C#", ext: "cs", badge: "C# .NET", icon: "🟣", compiler: ".NET Core / Mono" },
+  php: { name: "PHP", ext: "php", badge: "PHP 8.3", icon: "🐘", compiler: "PHP 8 Zend Engine" },
+  ruby: { name: "Ruby", ext: "rb", badge: "Ruby 3.x", icon: "💎", compiler: "YARV Ruby Engine" },
   web: { name: "HTML / CSS / JS", ext: "html", badge: "Live TryIt", icon: "🌐", compiler: "In-Browser Webview" },
 };
 
@@ -537,6 +543,12 @@ export default function UniversalPracticePage() {
               <option value="python">🐍 Python 3 (v3.12)</option>
               <option value="java">☕ Java (OpenJDK 17)</option>
               <option value="javascript">🟨 JavaScript (Node 24)</option>
+              <option value="typescript">🟦 TypeScript (TS 5.6)</option>
+              <option value="go">🐹 Go (Go 1.23)</option>
+              <option value="rust">🦀 Rust (Rust 1.85)</option>
+              <option value="csharp">🟣 C# (.NET / Mono)</option>
+              <option value="php">🐘 PHP (PHP 8.3)</option>
+              <option value="ruby">💎 Ruby (Ruby 3.x)</option>
               <option value="web">🌐 HTML / CSS / JS (Live Webview)</option>
             </select>
             <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
@@ -888,7 +900,7 @@ export default function UniversalPracticePage() {
               <div className="space-y-1.5">
                 <span className="text-[11px] font-bold text-slate-400">View Solution in Language:</span>
                 <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-                  {(["cpp", "c", "python", "java", "javascript", "web"] as SupportedLanguage[]).map((langKey) => (
+                  {(Object.keys(LANGUAGE_CONFIG) as SupportedLanguage[]).map((langKey) => (
                     <button
                       key={langKey}
                       onClick={() => setSolutionLanguage(langKey)}
@@ -1525,6 +1537,12 @@ export default function UniversalPracticePage() {
                     <option value="python">🐍 Python 3 (v3.12)</option>
                     <option value="java">☕ Java (OpenJDK 17)</option>
                     <option value="javascript">🟨 JavaScript (Node 24)</option>
+                    <option value="typescript">🟦 TypeScript (TS 5.6)</option>
+                    <option value="go">🐹 Go (Go 1.23)</option>
+                    <option value="rust">🦀 Rust (Rust 1.85)</option>
+                    <option value="csharp">🟣 C# (.NET / Mono)</option>
+                    <option value="php">🐘 PHP (PHP 8.3)</option>
+                    <option value="ruby">💎 Ruby (Ruby 3.x)</option>
                     <option value="web">🌐 HTML / CSS / JS (Live Webview)</option>
                   </select>
                 </div>

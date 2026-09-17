@@ -1,4 +1,18 @@
-export type SupportedLanguage = "c" | "cpp" | "python" | "java" | "javascript" | "web";
+import { ADDITIONAL_LANG_DATA } from "./practiceAdditionalLanguages";
+
+export type SupportedLanguage =
+  | "c"
+  | "cpp"
+  | "python"
+  | "java"
+  | "javascript"
+  | "typescript"
+  | "go"
+  | "rust"
+  | "csharp"
+  | "php"
+  | "ruby"
+  | "web";
 
 export interface TestCase {
   id: string;
@@ -41,8 +55,8 @@ export interface PracticeProblem {
   outputFormat: string;
   constraints: string[];
   testCases: TestCase[];
-  starterCodes: Record<SupportedLanguage, string>;
-  officialSolutions: Record<SupportedLanguage, string>;
+  starterCodes: Record<string, string>;
+  officialSolutions: Record<string, string>;
   solutionExplanation: {
     approach: string;
     timeComplexity: string;
@@ -1890,3 +1904,20 @@ console.log(reverseString(s));`,
     communitySolutions: [],
   },
 ];
+
+// Automatically enrich all practice problems with TypeScript, Go, Rust, C#, PHP, and Ruby
+for (const prob of PRACTICE_PROBLEMS) {
+  const extra = ADDITIONAL_LANG_DATA[prob.id];
+  if (extra) {
+    prob.starterCodes = { ...prob.starterCodes, ...extra.starters };
+    prob.officialSolutions = { ...prob.officialSolutions, ...extra.solutions };
+  }
+}
+
+export function getStarterCode(problem: PracticeProblem, lang: SupportedLanguage): string {
+  return problem.starterCodes[lang] || problem.starterCodes.cpp || "";
+}
+
+export function getOfficialSolution(problem: PracticeProblem, lang: SupportedLanguage): string {
+  return problem.officialSolutions[lang] || problem.officialSolutions.cpp || "";
+}

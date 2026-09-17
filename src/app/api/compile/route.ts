@@ -11,19 +11,36 @@ interface TestCase {
 }
 
 interface CompileRequestBody {
-  language: "c" | "cpp" | "python" | "java" | "javascript";
+  language:
+    | "c"
+    | "cpp"
+    | "python"
+    | "java"
+    | "javascript"
+    | "typescript"
+    | "go"
+    | "rust"
+    | "csharp"
+    | "php"
+    | "ruby";
   code: string;
   stdin?: string;
   testCases?: TestCase[];
 }
 
-// Language ID Mapping for Serverless Cloud Execution
+// Language ID Mapping for Serverless Cloud Execution (Judge0)
 const CLOUD_LANG_IDS: Record<string, number> = {
   c: 50, // C (GCC 9.2.0)
   cpp: 54, // C++ (GCC 9.2.0)
   python: 71, // Python (3.8.1)
   java: 62, // Java (OpenJDK 13.0.1)
   javascript: 63, // JavaScript (Node.js 12.14.0)
+  typescript: 101, // TypeScript (5.6.2)
+  go: 95, // Go (1.18.5)
+  rust: 108, // Rust (1.85.0)
+  csharp: 51, // C# (Mono 6.6.0.161)
+  php: 98, // PHP (8.3.11)
+  ruby: 72, // Ruby (2.7.0)
 };
 
 // Check if a local compiler command exists in PATH
@@ -163,7 +180,13 @@ export async function POST(req: NextRequest) {
       (language === "cpp" && hasLocalCommand("g++")) ||
       (language === "python" && hasLocalCommand("python3")) ||
       (language === "java" && hasLocalCommand("javac")) ||
-      (language === "javascript" && hasLocalCommand("node"));
+      (language === "javascript" && hasLocalCommand("node")) ||
+      (language === "typescript" && hasLocalCommand("node")) ||
+      (language === "ruby" && hasLocalCommand("ruby")) ||
+      (language === "php" && hasLocalCommand("php")) ||
+      (language === "go" && hasLocalCommand("go")) ||
+      (language === "rust" && hasLocalCommand("rustc")) ||
+      (language === "csharp" && (hasLocalCommand("dotnet") || hasLocalCommand("mcs")));
 
     // If local compiler is NOT available, use Cloud execution
     if (!isLocalAvailable) {
@@ -302,6 +325,73 @@ export async function POST(req: NextRequest) {
         fs.writeFileSync(scriptPath, code, "utf-8");
         executable = "python3";
         baseArgs = [scriptPath];
+      } else if (language === "typescript") {
+        const scriptPath = path.join(tmpDir, "solution.ts");
+        fs.writeFileSync(scriptPath, code, "utf-8");
+        executable = "node";
+        baseArgs = ["--experimental-strip-types", scriptPath];
+      } else if (language === "ruby") {
+        const scriptPath = path.join(tmpDir, "solution.rb");
+        fs.writeFileSync(scriptPath, code, "utf-8");
+        executable = "ruby";
+        baseArgs = [scriptPath];
+      } else if (language === "php") {
+        const scriptPath = path.join(tmpDir, "solution.php");
+        fs.writeFileSync(scriptPath, code, "utf-8");
+        executable = "php";
+        baseArgs = [scriptPath];
+      } else if (language === "go") {
+        const scriptPath = path.join(tmpDir, "solution.go");
+        fs.writeFileSync(scriptPath, code, "utf-8");
+        executable = "go";
+        baseArgs = ["run", scriptPath];
+      } else if (language === "rust") {
+        const srcPath = path.join(tmpDir, "solution.rs");
+        const binPath = path.join(tmpDir, "solution_rs");
+        fs.writeFileSync(srcPath, code, "utf-8");
+
+        const comp = spawnSync("rustc", ["-O", srcPath, "-o", binPath], {
+          encoding: "utf-8",
+          timeout: 8000,
+          env: { ...process.env, PATH: ENV_PATH },
+        });
+
+        if (comp.status !== 0) {
+          return NextResponse.json({
+            success: false,
+            compilationError: true,
+            stdout: "",
+            stderr: comp.stderr || "Rust Compilation Error",
+            exitCode: comp.status ?? 1,
+            executionTimeMs: 0,
+            engine: "Local Rustc",
+          });
+        }
+        executable = binPath;
+      } else if (language === "csharp") {
+        const srcPath = path.join(tmpDir, "solution.cs");
+        const binPath = path.join(tmpDir, "solution.exe");
+        fs.writeFileSync(srcPath, code, "utf-8");
+
+        const comp = spawnSync("mcs", [srcPath, `-out:${binPath}`], {
+          encoding: "utf-8",
+          timeout: 7000,
+          env: { ...process.env, PATH: ENV_PATH },
+        });
+
+        if (comp.status !== 0) {
+          return NextResponse.json({
+            success: false,
+            compilationError: true,
+            stdout: "",
+            stderr: comp.stderr || "C# Compilation Error",
+            exitCode: comp.status ?? 1,
+            executionTimeMs: 0,
+            engine: "Local Mono",
+          });
+        }
+        executable = "mono";
+        baseArgs = [binPath];
       } else {
         // JavaScript
         const scriptPath = path.join(tmpDir, "solution.js");
