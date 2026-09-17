@@ -1063,10 +1063,10 @@ export default function DeveloperListPage() {
               <div className="flex items-center justify-between border-b border-white/15 pb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-accent-500 flex items-center justify-center font-bold text-white shadow">
-                    ED
+                    SW
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold tracking-wider uppercase text-white">ED-WORLD ACADEMY</h4>
+                    <h4 className="text-xs font-bold tracking-wider uppercase text-white">STUDENT WORLD ACADEMY</h4>
                     <p className="text-[10px] text-accent-300">Technical Leadership Council</p>
                   </div>
                 </div>

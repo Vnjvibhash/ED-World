@@ -1,67 +1,74 @@
 "use client";
 
-import React, { useState } from "react";
-import { MessageCircle, Bot, X, PhoneCall } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { MessageCircle, Bot } from "lucide-react";
+import { AIChatBot } from "@/components/chat/AIChatBot";
 
 export function FloatingWidgets() {
   const [showBot, setShowBot] = useState(false);
+  const [contextData, setContextData] = useState<{
+    problemTitle?: string;
+    language?: string;
+    code?: string;
+  } | undefined>(undefined);
 
   const openWhatsApp = () => {
     window.open("https://wa.me/917762974716?text=Hello%20Student World%20Team", "_blank");
   };
 
+  // Support opening AI Tutor from any page (e.g. Practice Arena) via custom event
+  useEffect(() => {
+    const handleOpenWithContext = (
+      e: CustomEvent<{ problemTitle?: string; language?: string; code?: string }>
+    ) => {
+      if (e.detail) {
+        setContextData(e.detail);
+      }
+      setShowBot(true);
+    };
+
+    window.addEventListener("open-ai-tutor" as any, handleOpenWithContext as any);
+    return () => {
+      window.removeEventListener("open-ai-tutor" as any, handleOpenWithContext as any);
+    };
+  }, []);
+
   return (
     <>
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         {/* WhatsApp Button */}
         <button
           onClick={openWhatsApp}
           className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl hover:shadow-emerald-500/30 transition-all transform hover:-translate-y-1 text-sm font-semibold group"
           aria-label="Chat on WhatsApp"
         >
-          <MessageCircle className="w-5 h-5 text-white" />
           <span className="hidden sm:inline">WhatsApp Us</span>
+          <MessageCircle className="w-5 h-5 text-white" />
         </button>
 
-        {/* AI Assistant Button */}
+        {/* AI Coding & DSA Tutor Button */}
         <button
           onClick={() => setShowBot(!showBot)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-brand-600 hover:bg-brand-500 text-white shadow-xl hover:shadow-brand-500/30 transition-all transform hover:-translate-y-1 text-sm font-semibold group"
-          aria-label="Open AI Assistant"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#173E67] to-[#FF8000] hover:from-[#1d4b7c] hover:to-[#f07900] text-white shadow-xl hover:shadow-orange-500/25 transition-all transform hover:-translate-y-1 text-sm font-bold group border border-white/20"
+          aria-label="Open AI Coding Tutor"
         >
-          <Bot className="w-5 h-5 text-white" />
-          <span className="hidden sm:inline">AI Help</span>
+          <span className="hidden sm:inline">AI Tutor</span>
+          <div className="relative">
+            <Bot className="w-5 h-5 text-white" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400" />
+          </div>
         </button>
       </div>
 
-      {/* Embedded Dialogflow Assistant Modal */}
-      {showBot && (
-        <div className="fixed bottom-20 left-6 z-50 w-80 sm:w-96 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 duration-200">
-          <div className="flex items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800 text-white">
-            <div className="flex items-center gap-2">
-              <Bot className="w-5 h-5 text-brand-400" />
-              <span className="font-semibold text-sm">Student World AI Assistant</span>
-            </div>
-            <button
-              onClick={() => setShowBot(false)}
-              className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          <div className="h-96 w-full bg-slate-950">
-            <iframe
-              allow="microphone;"
-              width="100%"
-              height="100%"
-              src="https://console.dialogflow.com/api-client/demo/embedded/421c0947-33b9-4b9b-95d7-d666efab5813"
-              className="border-none"
-              title="Dialogflow Chatbot"
-            />
-          </div>
-        </div>
-      )}
+      {/* Native Interactive AI Chatbot Window */}
+      <AIChatBot
+        isOpen={showBot}
+        onClose={() => setShowBot(false)}
+        contextData={contextData}
+      />
     </>
   );
 }
+

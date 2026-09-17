@@ -37,6 +37,7 @@ import {
   ChevronDown,
   ChevronUp,
   MessageCircle,
+  Bot,
 } from "lucide-react";
 import {
   PRACTICE_PROBLEMS,
@@ -563,6 +564,28 @@ export default function UniversalPracticePage() {
           >
             <Zap className="w-3.5 h-3.5 text-amber-300" />
             <span>{isRunning && runMode === "all" ? "Evaluating..." : "Submit / All Tests"}</span>
+          </button>
+
+          {/* AI Tutor Assistant Button */}
+          <button
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(
+                  new CustomEvent("open-ai-tutor", {
+                    detail: {
+                      problemTitle: selectedProblem.title,
+                      language: LANGUAGE_CONFIG[language].name,
+                      code,
+                    },
+                  })
+                );
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#173E67] to-[#FF8000] hover:from-[#1d4d80] hover:to-[#ea7600] shadow-md shadow-orange-500/20 border border-white/20 transition-all active:scale-95"
+            title="Ask AI Tutor for hints or logic analysis"
+          >
+            <Bot className="w-3.5 h-3.5 text-amber-300" />
+            <span>AI Tutor</span>
           </button>
 
           {/* Reset Code */}

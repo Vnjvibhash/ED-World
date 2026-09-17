@@ -18,7 +18,7 @@ const config: Config = {
           200: '#bad0e7',
           300: '#8db3d8',
           400: '#4a8bc4',
-          500: '#173E67', // ED-World Primary Navy (from Logo)
+          500: '#173E67', // Student World Primary Navy (from Logo)
           600: '#133355',
           700: '#0f2742',
           800: '#0a1b2e',
@@ -31,7 +31,7 @@ const config: Config = {
           200: '#fed7aa',
           300: '#fdba74',
           400: '#fb923c',
-          500: '#FF8000', // ED-World Radiant Orange (from Logo)
+          500: '#FF8000', // Student World Radiant Orange (from Logo)
           600: '#ea6c00',
           700: '#c25400',
           800: '#9a4204',
