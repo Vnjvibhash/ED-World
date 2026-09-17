@@ -35,30 +35,34 @@ export function FloatingWidgets() {
 
   return (
     <>
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+      {/* Floating Action Buttons (Icon/Logo Only) */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3">
         {/* WhatsApp Button */}
         <button
           onClick={openWhatsApp}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl hover:shadow-emerald-500/30 transition-all transform hover:-translate-y-1 text-sm font-semibold group"
+          className="relative w-12 h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl hover:shadow-emerald-500/40 flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 group"
           aria-label="Chat on WhatsApp"
+          title="WhatsApp Us"
         >
-          <span className="hidden sm:inline">WhatsApp Us</span>
-          <MessageCircle className="w-5 h-5 text-white" />
+          <MessageCircle className="w-6 h-6 text-white" />
+          <span className="absolute right-14 px-2.5 py-1 bg-slate-900/90 text-white text-xs font-medium rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
+            WhatsApp Us
+          </span>
         </button>
 
         {/* AI Coding & DSA Tutor Button */}
         <button
           onClick={() => setShowBot(!showBot)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#173E67] to-[#FF8000] hover:from-[#1d4b7c] hover:to-[#f07900] text-white shadow-xl hover:shadow-orange-500/25 transition-all transform hover:-translate-y-1 text-sm font-bold group border border-white/20"
+          className="relative w-12 h-12 rounded-full bg-gradient-to-tr from-[#173E67] to-[#FF8000] hover:from-[#1d4b7c] hover:to-[#f07900] text-white shadow-xl hover:shadow-orange-500/30 flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 group border border-white/20"
           aria-label="Open AI Coding Tutor"
+          title="Student World AI Tutor"
         >
-          <span className="hidden sm:inline">AI Tutor</span>
-          <div className="relative">
-            <Bot className="w-5 h-5 text-white" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400" />
-          </div>
+          <Bot className="w-6 h-6 text-white" />
+          <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 animate-ping" />
+          <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-slate-900" />
+          <span className="absolute right-14 px-2.5 py-1 bg-slate-900/90 text-white text-xs font-medium rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-700">
+            Student World AI Tutor
+          </span>
         </button>
       </div>
 
